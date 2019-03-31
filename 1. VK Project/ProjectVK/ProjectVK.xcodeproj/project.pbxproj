@@ -12,10 +12,6 @@
 		CEB7552B224F9B5000E5A718 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEB75529224F9B5000E5A718 /* Main.storyboard */; };
 		CEB7552D224F9B5200E5A718 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEB7552C224F9B5200E5A718 /* Assets.xcassets */; };
 		CEB75530224F9B5200E5A718 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEB7552E224F9B5200E5A718 /* LaunchScreen.storyboard */; };
-		CEB75539224F9E2700E5A718 /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB75538224F9E2700E5A718 /* NewsViewController.swift */; };
-		CEB7553B224F9E3600E5A718 /* FinderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7553A224F9E3600E5A718 /* FinderViewController.swift */; };
-		CEB7553D224F9E4D00E5A718 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7553C224F9E4D00E5A718 /* MessageViewController.swift */; };
-		CEB7553F224F9E8400E5A718 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7553E224F9E8400E5A718 /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,10 +22,6 @@
 		CEB7552C224F9B5200E5A718 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEB7552F224F9B5200E5A718 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CEB75531224F9B5200E5A718 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CEB75538224F9E2700E5A718 /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
-		CEB7553A224F9E3600E5A718 /* FinderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderViewController.swift; sourceTree = "<group>"; };
-		CEB7553C224F9E4D00E5A718 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
-		CEB7553E224F9E8400E5A718 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +54,7 @@
 		CEB75524224F9B5000E5A718 /* ProjectVK */ = {
 			isa = PBXGroup;
 			children = (
-				CEB75537224F9E0400E5A718 /* New Group */,
+				CEB75537224F9E0400E5A718 /* Tab Bar Group */,
 				CEB75525224F9B5000E5A718 /* AppDelegate.swift */,
 				CEB1E11C224FB04D00991D1D /* LoginViewController.swift */,
 				CEB75529224F9B5000E5A718 /* Main.storyboard */,
@@ -73,15 +65,11 @@
 			path = ProjectVK;
 			sourceTree = "<group>";
 		};
-		CEB75537224F9E0400E5A718 /* New Group */ = {
+		CEB75537224F9E0400E5A718 /* Tab Bar Group */ = {
 			isa = PBXGroup;
 			children = (
-				CEB75538224F9E2700E5A718 /* NewsViewController.swift */,
-				CEB7553A224F9E3600E5A718 /* FinderViewController.swift */,
-				CEB7553C224F9E4D00E5A718 /* MessageViewController.swift */,
-				CEB7553E224F9E8400E5A718 /* ProfileViewController.swift */,
 			);
-			path = "New Group";
+			path = "Tab Bar Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -156,11 +144,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEB1E11D224FB04D00991D1D /* LoginViewController.swift in Sources */,
-				CEB7553F224F9E8400E5A718 /* ProfileViewController.swift in Sources */,
-				CEB7553B224F9E3600E5A718 /* FinderViewController.swift in Sources */,
-				CEB75539224F9E2700E5A718 /* NewsViewController.swift in Sources */,
 				CEB75526224F9B5000E5A718 /* AppDelegate.swift in Sources */,
-				CEB7553D224F9E4D00E5A718 /* MessageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
