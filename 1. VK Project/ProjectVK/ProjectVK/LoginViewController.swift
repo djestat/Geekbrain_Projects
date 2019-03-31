@@ -21,7 +21,7 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func autorizationButton(_ sender: UIButton) {
-        if loginTextField.text == "", passwordTextField.text == "" {
+        if loginTextField.text == "1", passwordTextField.text == "1" {
             print("Авторизация успешна.")
         } else {
             print("Введен неверный логин или пароль.")
