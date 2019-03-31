@@ -32,59 +32,59 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Для авторизации введите логин и пароль." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ct-ay-51A">
-                                        <rect key="frame" x="46" y="165" width="322" height="18"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <rect key="frame" x="27" y="165" width="360" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" red="0.1803921568627451" green="0.25098039215686274" blue="0.35294117647058826" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Логин:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ArK-kg-Hwx">
-                                        <rect key="frame" x="132" y="208" width="150" height="20"/>
+                                        <rect key="frame" x="132" y="210.5" width="150" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="7bA-9t-OmR"/>
-                                            <constraint firstAttribute="height" constant="20" id="ve2-6g-s1g"/>
+                                            <constraint firstAttribute="height" constant="25" id="ve2-6g-s1g"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" red="0.22352941176470589" green="0.31372549019607843" blue="0.4392156862745098" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Agy-8b-obB">
-                                        <rect key="frame" x="132" y="238" width="150" height="30"/>
+                                        <rect key="frame" x="132" y="245.5" width="150" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="150" id="DFh-9X-0c9"/>
-                                            <constraint firstAttribute="height" constant="30" id="L1q-lW-3ej"/>
+                                            <constraint firstAttribute="height" constant="35" id="L1q-lW-3ej"/>
                                         </constraints>
                                         <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Пароль:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L4M-JV-qK4">
-                                        <rect key="frame" x="132" y="278" width="150" height="20"/>
+                                        <rect key="frame" x="132" y="290.5" width="150" height="25"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="20" id="3oa-yg-Pw3"/>
+                                            <constraint firstAttribute="height" constant="25" id="3oa-yg-Pw3"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="VRc-nc-7Mf"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" red="0.22352941176470589" green="0.31372549019607843" blue="0.4392156862745098" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BGK-PP-huo">
-                                        <rect key="frame" x="132" y="308" width="150" height="30"/>
+                                        <rect key="frame" x="132" y="325.5" width="150" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="150" id="DMI-lo-bXo"/>
-                                            <constraint firstAttribute="height" constant="30" id="Nym-uS-peM"/>
+                                            <constraint firstAttribute="height" constant="35" id="Nym-uS-peM"/>
                                         </constraints>
                                         <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="evO-by-4in">
-                                        <rect key="frame" x="132" y="358" width="150" height="35"/>
+                                        <rect key="frame" x="132" y="380.5" width="150" height="45"/>
                                         <color key="backgroundColor" red="0.31372549020000001" green="0.4039215686" blue="0.52156862749999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="35" id="C7b-z6-08E"/>
+                                            <constraint firstAttribute="height" constant="45" id="C7b-z6-08E"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="D02-Ji-cgz"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="tintColor" red="0.31372549020000001" green="0.4039215686" blue="0.52156862749999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <state key="normal" title="Вход">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
