@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE8EF5CC2258AB2C0015EC00 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8EF5CB2258AB2C0015EC00 /* FriendsViewController.swift */; };
+		CE8EF5CE2258AB410015EC00 /* GroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8EF5CD2258AB410015EC00 /* GroupsViewController.swift */; };
 		CEB1E11D224FB04D00991D1D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB1E11C224FB04D00991D1D /* LoginViewController.swift */; };
 		CEB75526224F9B5000E5A718 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB75525224F9B5000E5A718 /* AppDelegate.swift */; };
 		CEB7552B224F9B5000E5A718 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEB75529224F9B5000E5A718 /* Main.storyboard */; };
@@ -15,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE8EF5CB2258AB2C0015EC00 /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
+		CE8EF5CD2258AB410015EC00 /* GroupsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsViewController.swift; sourceTree = "<group>"; };
 		CEB1E11C224FB04D00991D1D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CEB75522224F9B5000E5A718 /* ProjectVK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectVK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEB75525224F9B5000E5A718 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -64,8 +68,8 @@
 		CEB75524224F9B5000E5A718 /* ProjectVK */ = {
 			isa = PBXGroup;
 			children = (
-				CEB75537224F9E0400E5A718 /* Controllers Group */,
 				CEB75525224F9B5000E5A718 /* AppDelegate.swift */,
+				CEB75537224F9E0400E5A718 /* Controllers Group */,
 				CE8EF5C6225897870015EC00 /* UI Group */,
 				CEB75531224F9B5200E5A718 /* Info.plist */,
 			);
@@ -76,6 +80,8 @@
 			isa = PBXGroup;
 			children = (
 				CEB1E11C224FB04D00991D1D /* LoginViewController.swift */,
+				CE8EF5CB2258AB2C0015EC00 /* FriendsViewController.swift */,
+				CE8EF5CD2258AB410015EC00 /* GroupsViewController.swift */,
 			);
 			path = "Controllers Group";
 			sourceTree = "<group>";
@@ -152,6 +158,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEB1E11D224FB04D00991D1D /* LoginViewController.swift in Sources */,
+				CE8EF5CC2258AB2C0015EC00 /* FriendsViewController.swift in Sources */,
+				CE8EF5CE2258AB410015EC00 /* GroupsViewController.swift in Sources */,
 				CEB75526224F9B5000E5A718 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

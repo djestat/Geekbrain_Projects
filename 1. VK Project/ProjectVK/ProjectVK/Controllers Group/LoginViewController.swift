@@ -10,27 +10,19 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
-    //MARK: Outlets
-    
+    //MARK: - Outlets
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var scrollView: UIScrollView!
     
+    //MARK: - Controller Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        let tapGR = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        scrollView.addGestureRecognizer(tapGR)
     }
 
-    @IBAction func autorizationButton(_ sender: UIButton) {
-        if loginTextField.text == "1", passwordTextField.text == "1" {
-            print("Авторизация успешна.")
-        } else {
-            print("Введен неверный логин или пароль.")
-        }
-    }
-    
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -47,7 +39,20 @@ class LoginViewController: UIViewController {
     }
     
     
-    @objc func keyboardWasShow(notification: Notification) {
+    //MARK: - Actions
+    @IBAction func autorizationButton(_ sender: UIButton) {
+      
+        
+        if loginTextField.text == "", passwordTextField.text == "" {
+            performSegue(withIdentifier: "Show Tab Bar Controller", sender: sender)
+        } else {
+            showLoginError()
+        }
+        
+    }
+    
+    //MARK: - Private API
+    @objc private func keyboardWasShow(notification: Notification) {
         let info = notification.userInfo as NSDictionary?
         let keyboardSize = (info?.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size
         let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
@@ -56,14 +61,34 @@ class LoginViewController: UIViewController {
         scrollView.scrollIndicatorInsets = contentInsets
     }
     
-    @objc func keyboardWasHidden(notification: Notification) {
+    @objc private func keyboardWasHidden(notification: Notification) {
         let contentInsets = UIEdgeInsets.zero
         
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
     }
     
+    @objc private func hideKeyboard() {
+        scrollView.endEditing(true)
+    }
     
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        guard identifier == "Show Tab Bar Controller" else { return true }
+        
+        if loginTextField.text == "", passwordTextField.text == "" {
+            return true
+        } else {
+            showLoginError()
+            return false
+        }
+    }
     
-    
+    private func showLoginError() {
+        let loginAlert = UIAlertController(title: "Error!", message: "Login or Password is incorrect!", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default) { _ in
+            self.passwordTextField.text = ""
+        }
+        loginAlert.addAction(action)
+        present(loginAlert, animated: true)
+    }
 }

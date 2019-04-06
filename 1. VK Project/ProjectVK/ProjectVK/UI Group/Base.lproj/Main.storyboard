@@ -71,7 +71,6 @@
                                         </state>
                                         <connections>
                                             <action selector="autorizationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dav-YH-QCY"/>
-                                            <segue destination="Pg0-f1-oli" kind="show" id="cSR-NB-7SF"/>
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="LPF-wn-17q">
@@ -137,11 +136,12 @@
                         <outlet property="loginTextField" destination="Agy-8b-obB" id="g4H-UL-aGf"/>
                         <outlet property="passwordTextField" destination="BGK-PP-huo" id="ZaI-JE-YLd"/>
                         <outlet property="scrollView" destination="NWN-V4-hI4" id="KCb-8m-mEK"/>
+                        <segue destination="Pg0-f1-oli" kind="presentation" identifier="Show Tab Bar Controller" modalTransitionStyle="crossDissolve" id="whm-mh-rYK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2279.1999999999998" y="-5.9113300492610836"/>
+            <point key="canvasLocation" x="-2087" y="-5"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="6vV-j1-lXZ">
@@ -162,10 +162,10 @@
             </objects>
             <point key="canvasLocation" x="-1086" y="-5"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Друзья-->
         <scene sceneID="y1A-Bq-Ehf">
             <objects>
-                <tableViewController id="UAN-Co-uAv" sceneMemberID="viewController">
+                <tableViewController id="UAN-Co-uAv" customClass="FriendsViewController" customModule="ProjectVK" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Vfp-vW-hEO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -178,6 +178,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="4Vf-kZ-QAc" kind="show" id="kev-xw-xKj"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -185,16 +188,16 @@
                             <outlet property="delegate" destination="UAN-Co-uAv" id="pzr-5n-6ei"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="sVA-p5-TYH"/>
+                    <navigationItem key="navigationItem" title="Друзья" id="sVA-p5-TYH"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xh3-Q4-Qb6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1050" y="-364"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Группы-->
         <scene sceneID="srR-PS-JJN">
             <objects>
-                <tableViewController id="M3f-D4-f0F" sceneMemberID="viewController">
+                <tableViewController id="M3f-D4-f0F" customClass="GroupsViewController" customModule="ProjectVK" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="mFu-YZ-kel">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -207,6 +210,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="Nwn-Ld-iCV" kind="show" id="S5U-vE-MGI"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -214,7 +220,7 @@
                             <outlet property="delegate" destination="M3f-D4-f0F" id="ops-7l-QxN"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="oX9-fH-8Oe"/>
+                    <navigationItem key="navigationItem" title="Группы" id="oX9-fH-8Oe"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4IS-dp-ioS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -252,7 +258,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6DS-yd-ogW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1951" y="369"/>
+            <point key="canvasLocation" x="1946" y="-364"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="hbJ-CS-P25">
@@ -280,13 +286,13 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FZf-m9-Ucs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1950" y="-364"/>
+            <point key="canvasLocation" x="1946" y="369"/>
         </scene>
-        <!--Item-->
+        <!--Друзья-->
         <scene sceneID="OTM-Ba-J3j">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JOE-XA-kOJ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="mcs-kJ-ttF"/>
+                    <tabBarItem key="tabBarItem" title="Друзья" id="mcs-kJ-ttF"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="EUb-Ux-ib3">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
@@ -301,11 +307,11 @@
             </objects>
             <point key="canvasLocation" x="142" y="-363"/>
         </scene>
-        <!--Item-->
+        <!--Группы-->
         <scene sceneID="klw-7q-OJS">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Y1z-Xw-mlz" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="biF-WS-eoA"/>
+                    <tabBarItem key="tabBarItem" title="Группы" id="biF-WS-eoA"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="VNM-Cf-rOv">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
