@@ -35,6 +35,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE8EF5C6225897870015EC00 /* UI Group */ = {
+			isa = PBXGroup;
+			children = (
+				CEB75529224F9B5000E5A718 /* Main.storyboard */,
+				CEB7552C224F9B5200E5A718 /* Assets.xcassets */,
+				CEB7552E224F9B5200E5A718 /* LaunchScreen.storyboard */,
+			);
+			path = "UI Group";
+			sourceTree = "<group>";
+		};
 		CEB75519224F9B5000E5A718 = {
 			isa = PBXGroup;
 			children = (
@@ -54,22 +64,20 @@
 		CEB75524224F9B5000E5A718 /* ProjectVK */ = {
 			isa = PBXGroup;
 			children = (
-				CEB75537224F9E0400E5A718 /* Tab Bar Group */,
+				CEB75537224F9E0400E5A718 /* Controllers Group */,
 				CEB75525224F9B5000E5A718 /* AppDelegate.swift */,
-				CEB1E11C224FB04D00991D1D /* LoginViewController.swift */,
-				CEB75529224F9B5000E5A718 /* Main.storyboard */,
-				CEB7552C224F9B5200E5A718 /* Assets.xcassets */,
-				CEB7552E224F9B5200E5A718 /* LaunchScreen.storyboard */,
+				CE8EF5C6225897870015EC00 /* UI Group */,
 				CEB75531224F9B5200E5A718 /* Info.plist */,
 			);
 			path = ProjectVK;
 			sourceTree = "<group>";
 		};
-		CEB75537224F9E0400E5A718 /* Tab Bar Group */ = {
+		CEB75537224F9E0400E5A718 /* Controllers Group */ = {
 			isa = PBXGroup;
 			children = (
+				CEB1E11C224FB04D00991D1D /* LoginViewController.swift */,
 			);
-			path = "Tab Bar Group";
+			path = "Controllers Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
