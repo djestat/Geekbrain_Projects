@@ -11,17 +11,17 @@ import UIKit
 class GroupsFinderController: UITableViewController {
     
     public let groupList: [Groups] = [
-        Groups(groupName: "Batman", imageGroup: "batman"),
-        Groups(groupName: "Goose", imageGroup: "goose"),
-        Groups(groupName: "Shazam", imageGroup: "shazam"),
-        Groups(groupName: "Backy Barnes", imageGroup: "backyb"),
-        Groups(groupName: "Hope Van Dine", imageGroup: "hvd"),
-        Groups(groupName: "Loki", imageGroup: "loki"),
-        Groups(groupName: "Stiven Strange", imageGroup: "dss"),
-        Groups(groupName: "Nike Furi", imageGroup: "nf"),
-        Groups(groupName: "Peter Quill", imageGroup: "pq"),
-        Groups(groupName: "Sam Wilson", imageGroup: "sw"),
-        Groups(groupName: "Wanda Maximoff", imageGroup: "wm")]
+        Groups(groupName: "Batman - Group", imageGroup: "batman"),
+        Groups(groupName: "Goose - Group", imageGroup: "goose"),
+        Groups(groupName: "Shazam - Group", imageGroup: "shazam"),
+        Groups(groupName: "Backy Barnes - Group", imageGroup: "backyb"),
+        Groups(groupName: "Hope Van Dine - Group", imageGroup: "hvd"),
+        Groups(groupName: "Loki - Group", imageGroup: "loki"),
+        Groups(groupName: "Stiven Strange - Group", imageGroup: "dss"),
+        Groups(groupName: "Nike Furi - Group", imageGroup: "nf"),
+        Groups(groupName: "Peter Quill - Group", imageGroup: "pq"),
+        Groups(groupName: "Sam Wilson - Group", imageGroup: "sw"),
+        Groups(groupName: "Wanda Maximoff - Group", imageGroup: "wm")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
