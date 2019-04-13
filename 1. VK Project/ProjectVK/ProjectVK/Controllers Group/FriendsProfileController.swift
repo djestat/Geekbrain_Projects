@@ -32,7 +32,6 @@ class FriendsProfileController: UICollectionViewController {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FriendsPhotoCell.reuseID, for: indexPath) as? FriendsPhotoCell else { fatalError() }
     
         // Configure the cell
-        //ПО ЭТОЙ СТРОКЕ СПРАШИВАЛ КАК ИЗ КОНТРОЛЛЕРА FriendsViewController ПЕРЕДАТЬ В ЯЧЕЙКУ СЛЕДУЮЩЕГО КОНТРОЛЛЕРА (ЭТОГО) ДАННЫЕ ПО КАРТИНКЕ И ПРИМЕНИТЬ ЕГО К ЯЧЕЙКЕ
         cell.friendProfilePhoto.image = UIImage(named: friendProfilePhoto)
     
         return cell
