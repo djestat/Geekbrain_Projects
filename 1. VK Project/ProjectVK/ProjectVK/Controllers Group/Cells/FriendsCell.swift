@@ -8,7 +8,8 @@
 
 import UIKit
 
-@IBDesignable class FriendsCell: UITableViewCell {
+//@IBDesignable
+class FriendsCell: UITableViewCell {
     
     static let reuseID = "FriendsCell"
     
@@ -17,15 +18,17 @@ import UIKit
     
     //Shadow layer 
     var avatarShadowSublayer = CAShapeLayer()
-    @IBInspectable var shadowRadius: CGFloat = 6
-    @IBInspectable var shadowColor: UIColor = .clear
-    @IBInspectable var shadowOpacity: Float = 0.85
+    
+//    @IBInspectable
+    var shadowRadius: CGFloat = 10
+//    @IBInspectable
+    var shadowColor: UIColor = .purple
+//    @IBInspectable
+    var shadowOpacity: Float = 0.95
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        configureMask()
-        configureShadow()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -34,27 +37,35 @@ import UIKit
         // Configure the view for the selected state
     }
     
+   
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        configureMask()
+        configureShadow()
+    }
+    
+    
+    
     // MARK: - Layers configure
     
     func configureMask() {
         friendPhoto.layer.cornerRadius = friendPhoto.frame.height / 2
         friendPhoto.layer.maskedCorners = CACornerMask(rawValue: CACornerMask.RawValue.init(bitPattern: 7))
         friendPhoto.layer.masksToBounds = true
+        
     }
     
     func configureShadow() {
         
-//        avatarShadowSublayer.path = UIBezierPath(roundedRect: bounds, cornerRadius: 15).cgPath
-//        avatarShadowSublayer.path = UIBezierPath(roundedRect: friendPhoto.layer.contentsRect, cornerRadius: 6).cgPath
-//        avatarShadowSublayer.path = UIBezierPath(rect: friendPhoto.layer.frame).cgPath
-        avatarShadowSublayer.path = UIBezierPath(roundedRect: friendPhoto.layer.frame, cornerRadius: friendPhoto.frame.height).cgPath
+        avatarShadowSublayer.backgroundColor = UIColor.white.cgColor
+        avatarShadowSublayer.path = UIBezierPath(roundedRect: friendPhoto.layer.frame, byRoundingCorners: [.bottomLeft, .topLeft, .topRight], cornerRadii: CGSize(width: friendPhoto.frame.height / 2, height: friendPhoto.frame.height / 2)).cgPath
         
         avatarShadowSublayer.shadowColor = shadowColor.cgColor
         avatarShadowSublayer.shadowPath = avatarShadowSublayer.path
         avatarShadowSublayer.shadowOffset = .zero
         avatarShadowSublayer.shadowOpacity = shadowOpacity
         avatarShadowSublayer.shadowRadius = shadowRadius
-
+        
         layer.insertSublayer(avatarShadowSublayer, at: 0)
         
     }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CE33DAB3225E95B600B2389B /* GroupsFinderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE33DAB2225E95B600B2389B /* GroupsFinderController.swift */; };
+		CE65CF582265271700D5221A /* LikeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE65CF572265271700D5221A /* LikeControl.swift */; };
 		CE7208AB225D34980069A952 /* FriendsProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7208AA225D34980069A952 /* FriendsProfileController.swift */; };
 		CE8EF5CC2258AB2C0015EC00 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8EF5CB2258AB2C0015EC00 /* FriendsViewController.swift */; };
 		CE8EF5CE2258AB410015EC00 /* GroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8EF5CD2258AB410015EC00 /* GroupsViewController.swift */; };
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		CE33DAB2225E95B600B2389B /* GroupsFinderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsFinderController.swift; sourceTree = "<group>"; };
+		CE65CF572265271700D5221A /* LikeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeControl.swift; sourceTree = "<group>"; };
 		CE7208AA225D34980069A952 /* FriendsProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsProfileController.swift; sourceTree = "<group>"; };
 		CE8EF5CB2258AB2C0015EC00 /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
 		CE8EF5CD2258AB410015EC00 /* GroupsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsViewController.swift; sourceTree = "<group>"; };
@@ -53,6 +55,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE65CF56226526B000D5221A /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				CE65CF572265271700D5221A /* LikeControl.swift */,
+			);
+			path = Controls;
+			sourceTree = "<group>";
+		};
 		CE8EF5C6225897870015EC00 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -113,6 +123,7 @@
 		CEB75537224F9E0400E5A718 /* Controllers Group */ = {
 			isa = PBXGroup;
 			children = (
+				CE65CF56226526B000D5221A /* Controls */,
 				CEA61482225BE4D90012F4F6 /* Cells */,
 				CEB1E11C224FB04D00991D1D /* LoginViewController.swift */,
 				CE8EF5CB2258AB2C0015EC00 /* FriendsViewController.swift */,
@@ -204,6 +215,7 @@
 				CE8EF5CE2258AB410015EC00 /* GroupsViewController.swift in Sources */,
 				CEA61484225BE7BB0012F4F6 /* Profiles.swift in Sources */,
 				CEA6147F225BDA620012F4F6 /* GroupsCell.swift in Sources */,
+				CE65CF582265271700D5221A /* LikeControl.swift in Sources */,
 				CEB75526224F9B5000E5A718 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -13,5 +13,6 @@ class FriendsPhotoCell: UICollectionViewCell {
     static let reuseID = "FriendsPhotoCell"
     
     @IBOutlet var friendProfilePhoto: UIImageView!
-    
+
+ 
 }
