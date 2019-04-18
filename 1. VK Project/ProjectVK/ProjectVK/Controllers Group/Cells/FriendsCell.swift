@@ -66,7 +66,7 @@ class FriendsCell: UITableViewCell {
         avatarShadowSublayer.shadowOpacity = shadowOpacity
         avatarShadowSublayer.shadowRadius = shadowRadius
         
-        layer.insertSublayer(avatarShadowSublayer, at: 0)
+        contentView.layer.insertSublayer(avatarShadowSublayer, at: 0)
         
     }
     

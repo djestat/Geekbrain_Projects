@@ -51,9 +51,11 @@ class LikeControl: UIControl {
         isLike.toggle()
         if isLike == true {
             likeControlView.image = UIImage(named: "Like")
-            likeCount.text = String(likeCounts + 1)
+            likeCounts += 1
+            likeCount.text = String(likeCounts)
         } else {
             likeControlView.image = UIImage(named: "nonLike")
+            likeCounts -= 1
             likeCount.text = String(likeCounts)
         }
         

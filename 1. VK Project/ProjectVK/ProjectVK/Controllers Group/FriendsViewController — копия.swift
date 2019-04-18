@@ -10,9 +10,6 @@ import UIKit
 
 class FriendsViewController: UITableViewController {
     
-    var lastnameTitle = [String]()
-    var lastnameDictionary = [String: [MyFriends]]()
-    
     private var friendsList = [MyFriends(name: "Tony Stark", avatarImage: "ts"),
         MyFriends(name: "Stive Rogers", avatarImage: "sr"),
         MyFriends(name: "Natasha Romanoff", avatarImage: "nr"),
@@ -33,36 +30,15 @@ class FriendsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        for lastname in friendsList {
-            let lastnameKey = String(lastname.name.prefix(1))
-            if var lastnameValues = lastnameDictionary[lastnameKey] {
-                lastnameValues.append(MyFriends(name: lastname.name, avatarImage: lastname.avatarImage))
-                lastnameDictionary[lastnameKey] = lastnameValues
-            } else {
-                lastnameDictionary[lastnameKey] = [MyFriends(name: lastname.name, avatarImage: lastname.avatarImage)]
-            }
-        }
-        
-        
-        lastnameTitle = [String](lastnameDictionary.keys)
-        lastnameTitle = lastnameTitle.sorted(by: { $0 < $1 })
-        
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return lastnameTitle.count
-    }
+    
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        let lastnameKey = lastnameTitle[section]
-        if let lastnameValues = lastnameDictionary[lastnameKey] {
-            return lastnameValues.count
-        }
-        return 0
+        return friendsList.count
     }
 
     
@@ -70,41 +46,24 @@ class FriendsViewController: UITableViewController {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FriendsCell.reuseID, for: indexPath) as? FriendsCell else { fatalError("Cell cannot be dequeued") }
         
-        let lastnameKey = lastnameTitle[indexPath.section]
-        if let lastnameValues = lastnameDictionary[lastnameKey] {
-            cell.friendName.text = lastnameValues[indexPath.row].name
-            cell.friendPhoto.image = UIImage(named:(lastnameValues[indexPath.row]).avatarImage)
-            
-        }
-        
+        cell.friendName.text = friendsList[indexPath.row].name
+        cell.friendPhoto.image = UIImage(named: friendsList[indexPath.row].avatarImage)
+
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return lastnameTitle[section]
-    }
 
-    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        return lastnameTitle
-    }
-    
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "FriendsProfileController",
             let friendsProfileVC = segue.destination as? FriendsProfileController,
-            // section - indexrow
             let indexPath = tableView.indexPathForSelectedRow {
-            let lastnameKey = lastnameTitle[indexPath.section]
-            if let lastnameValues = lastnameDictionary[lastnameKey] {
-                let friendProfileName = lastnameValues[indexPath.row].name
-                let friendProfilePhoto = lastnameValues[indexPath.row].avatarImage
-                friendsProfileVC.friendProfileName = friendProfileName
-                friendsProfileVC.friendProfilePhoto = friendProfilePhoto
-            
-            }
+            let friendProfileName = friendsList[indexPath.row].name
+            let friendProfilePhoto = friendsList[indexPath.row].avatarImage
+            friendsProfileVC.friendProfileName = friendProfileName
+            friendsProfileVC.friendProfilePhoto = friendProfilePhoto
         }
-        
     }
  
 
