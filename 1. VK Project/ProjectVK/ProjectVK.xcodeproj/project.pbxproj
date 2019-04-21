@@ -17,6 +17,8 @@
 		CEA6147F225BDA620012F4F6 /* GroupsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA6147E225BDA620012F4F6 /* GroupsCell.swift */; };
 		CEA61484225BE7BB0012F4F6 /* Profiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA61483225BE7BB0012F4F6 /* Profiles.swift */; };
 		CEA61486225BE7D20012F4F6 /* Groups.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA61485225BE7D20012F4F6 /* Groups.swift */; };
+		CEACD2C6226B9549003400B4 /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEACD2C5226B9549003400B4 /* NewsCell.swift */; };
+		CEACD2C8226B958F003400B4 /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEACD2C7226B958F003400B4 /* NewsViewController.swift */; };
 		CEB1E11D224FB04D00991D1D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB1E11C224FB04D00991D1D /* LoginViewController.swift */; };
 		CEB75526224F9B5000E5A718 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB75525224F9B5000E5A718 /* AppDelegate.swift */; };
 		CEB7552B224F9B5000E5A718 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEB75529224F9B5000E5A718 /* Main.storyboard */; };
@@ -35,6 +37,8 @@
 		CEA6147E225BDA620012F4F6 /* GroupsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsCell.swift; sourceTree = "<group>"; };
 		CEA61483225BE7BB0012F4F6 /* Profiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profiles.swift; sourceTree = "<group>"; };
 		CEA61485225BE7D20012F4F6 /* Groups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Groups.swift; sourceTree = "<group>"; };
+		CEACD2C5226B9549003400B4 /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
+		CEACD2C7226B958F003400B4 /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		CEB1E11C224FB04D00991D1D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CEB75522224F9B5000E5A718 /* ProjectVK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectVK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEB75525224F9B5000E5A718 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +92,7 @@
 				CEA6147A225BD7750012F4F6 /* FriendsCell.swift */,
 				CEA6147C225BD7C40012F4F6 /* FriendsPhotoCell.swift */,
 				CEA6147E225BDA620012F4F6 /* GroupsCell.swift */,
+				CEACD2C5226B9549003400B4 /* NewsCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -130,6 +135,7 @@
 				CE7208AA225D34980069A952 /* FriendsProfileController.swift */,
 				CE8EF5CD2258AB410015EC00 /* GroupsViewController.swift */,
 				CE33DAB2225E95B600B2389B /* GroupsFinderController.swift */,
+				CEACD2C7226B958F003400B4 /* NewsViewController.swift */,
 			);
 			path = "Controllers Group";
 			sourceTree = "<group>";
@@ -216,6 +222,8 @@
 				CEA61484225BE7BB0012F4F6 /* Profiles.swift in Sources */,
 				CEA6147F225BDA620012F4F6 /* GroupsCell.swift in Sources */,
 				CE65CF582265271700D5221A /* LikeControl.swift in Sources */,
+				CEACD2C8226B958F003400B4 /* NewsViewController.swift in Sources */,
+				CEACD2C6226B9549003400B4 /* NewsCell.swift in Sources */,
 				CEB75526224F9B5000E5A718 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

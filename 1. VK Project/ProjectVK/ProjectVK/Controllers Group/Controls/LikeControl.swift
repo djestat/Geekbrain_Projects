@@ -35,7 +35,7 @@ class LikeControl: UIControl {
         likeControlView.addGestureRecognizer(tapGR)
             
         addSubview(likeControlView)
-        likeControlView.image = UIImage(named: "nonLike")
+        likeControlView.image = UIImage(named: "Like_nonfill")
     }
     
     
@@ -50,11 +50,11 @@ class LikeControl: UIControl {
     @objc func likeTapped() {
         isLike.toggle()
         if isLike == true {
-            likeControlView.image = UIImage(named: "Like")
+            likeControlView.image = UIImage(named: "Like_fill")
             likeCounts += 1
             likeCount.text = String(likeCounts)
         } else {
-            likeControlView.image = UIImage(named: "nonLike")
+            likeControlView.image = UIImage(named: "Like_nonfill")
             likeCounts -= 1
             likeCount.text = String(likeCounts)
         }

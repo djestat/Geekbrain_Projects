@@ -10,12 +10,11 @@ import UIKit
 
 class FriendsViewController: UITableViewController {
     
+    @IBOutlet var searchBarTextField: UITextField!
+    
     var sectionTitle = [String]()
     var sectionDictionary = [String: [MyFriends]]()
     var searchingDictionary = [String: [MyFriends]]()
-    var searchingFriendList = [MyFriends]()
-    
-    let searchController = UISearchController(searchResultsController: nil)
     
     private var friendsList = [MyFriends(name: "Tony Stark", avatarImage: "ts"),
         MyFriends(name: "Stive Rogers", avatarImage: "sr"),
@@ -39,21 +38,15 @@ class FriendsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
      
-        sectionArrayPrepare()
-        
-        // Setup the SearchBar Controller
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Поиск друзей......"
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
+        searchBarTextField.text = ""
+//        sectionArrayPrepare()
+        textFieldDidEndEditing(searchBarTextField, reason: .committed)
      
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-    
         return sectionTitle.count
     }
     
@@ -64,20 +57,11 @@ class FriendsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        
-        var dictionary = sectionDictionary
-        
-        if isFiltering() {
-            dictionary = searchingDictionary
-        }
-        
         let lastnameKey = sectionTitle[section]
-        if let lastnameValues = dictionary[lastnameKey] {
+        if let lastnameValues = sectionDictionary[lastnameKey] {
             return lastnameValues.count
         }
-        
         return 0
-        
     }
 
     
@@ -85,14 +69,8 @@ class FriendsViewController: UITableViewController {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FriendsCell.reuseID, for: indexPath) as? FriendsCell else { fatalError("Cell cannot be dequeued") }
         
-        var dictionary = sectionDictionary
-        
-        if isFiltering() {
-            dictionary = searchingDictionary
-        }
-        
         let lastnameKey = sectionTitle[indexPath.section]
-        if let lastnameValues = dictionary[lastnameKey] {
+        if let lastnameValues = sectionDictionary[lastnameKey] {
             cell.friendName.text = lastnameValues[indexPath.row].name
             cell.friendPhoto.image = UIImage(named:(lastnameValues[indexPath.row]).avatarImage)
             
@@ -117,14 +95,7 @@ class FriendsViewController: UITableViewController {
             // section - indexrow
             let indexPath = tableView.indexPathForSelectedRow {
             let lastnameKey = sectionTitle[indexPath.section]
-            
-            var dictionary = sectionDictionary
-            
-            if isFiltering() {
-                dictionary = searchingDictionary
-            }
-            
-            if let lastnameValues = dictionary[lastnameKey] {
+            if let lastnameValues = sectionDictionary[lastnameKey] {
                 let friendProfileName = lastnameValues[indexPath.row].name
                 let friendProfilePhoto = lastnameValues[indexPath.row].avatarImage
                 friendsProfileVC.friendProfileName = friendProfileName
@@ -138,7 +109,6 @@ class FriendsViewController: UITableViewController {
         // MARK: - Extantion function
 
     func sectionArrayPrepare() {
-        
         for lastname in friendsList {
             let lastnameKey = String(lastname.name.prefix(1))
             if var lastnameValues = sectionDictionary[lastnameKey] {
@@ -155,43 +125,33 @@ class FriendsViewController: UITableViewController {
         
     }
     
-    // MARK: SearcBar functions
-    
-    func searchBarIsEmpty() -> Bool {
-        return searchController.searchBar.text?.isEmpty ?? true
-    }
-    
-    
-    
-    func filterContentForSearchText(_ searchText: String) {
-        searchingFriendList = friendsList.filter({( name : MyFriends) -> Bool in
-            return name.name.lowercased().contains(searchText.lowercased())
-        })
-        
-        searchingDictionary.removeAll()
-
-        for lastname in searchingFriendList {
-            let lastnameKey = String(lastname.name.prefix(1))
-            if var lastnameValues = searchingDictionary[lastnameKey] {
-                lastnameValues.append(MyFriends(name: lastname.name, avatarImage: lastname.avatarImage))
-                searchingDictionary[lastnameKey] = lastnameValues
-            } else {
-                searchingDictionary[lastnameKey] = [MyFriends(name: lastname.name, avatarImage: lastname.avatarImage)]
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        if textField.text!.isEmpty {
+            sectionArrayPrepare()
+            tableView.reloadData()
+        } else {
+            let searchingName = textField.text
+            
+            for lastname in friendsList {
+                if lastname.name.contains(searchingName!) {
+                    let lastnameKey = String(lastname.name.prefix(1))
+                    if var lastnameValues = searchingDictionary[lastnameKey] {
+                        lastnameValues.append(MyFriends(name: lastname.name, avatarImage: lastname.avatarImage))
+                        searchingDictionary[lastnameKey] = lastnameValues
+                    } else {
+                        searchingDictionary[lastnameKey] = [MyFriends(name: lastname.name, avatarImage: lastname.avatarImage)]
+                    }
+                }
             }
+            
+            sectionTitle = [String](searchingDictionary.keys)
+            sectionTitle = sectionTitle.sorted(by: { $0 < $1 })
+            sectionDictionary = searchingDictionary
+            
+            tableView.reloadData()
         }
-
-        tableView.reloadData()
-    }
-    
-    func isFiltering() -> Bool {
-        return searchController.isActive && !searchBarIsEmpty()
     }
 
 }
 
-extension FriendsViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        // todo
-        filterContentForSearchText(searchController.searchBar.text!)
-    }
-}
+
