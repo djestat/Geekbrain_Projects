@@ -179,7 +179,6 @@ class FriendsViewController: UITableViewController {
                 searchingDictionary[lastnameKey] = [MyFriends(name: lastname.name, avatarImage: lastname.avatarImage)]
             }
         }
-
         tableView.reloadData()
     }
     
