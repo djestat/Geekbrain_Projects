@@ -28,6 +28,7 @@ class NewsCell: UITableViewCell {
         likeCountsLabel.text = String(98765)
         commentsCountsLabel.text = String(976)
         viewsCountsLabel.text = String(235)
+        animationTappedPhoto()
         
     }
 
@@ -35,6 +36,31 @@ class NewsCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func animationTappedPhoto() {
+        
+        let tapGR = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        newsPhotosView.isUserInteractionEnabled = true
+        newsPhotosView.addGestureRecognizer(tapGR)
+        
+    }
+    
+    @objc func handleTap(sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
+            // handling code
+            self.newsPhotosView.transform = CGAffineTransform(scaleX: 0.2, y: 0.2)
+            
+            UIView.animate(withDuration: 0.75,
+                           delay: 0,
+                           usingSpringWithDamping: 0.3,
+                           initialSpringVelocity: 5,
+                           options: .curveEaseInOut,
+                           animations: {
+                            self.newsPhotosView.transform = .identity
+            },
+                           completion: nil)
+        }
     }
 
     

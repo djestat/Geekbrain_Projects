@@ -10,35 +10,54 @@ import UIKit
 
 class GroupsViewController: UITableViewController {
     
+    @IBOutlet weak var searchBar: UISearchBar! {
+        didSet {
+            searchBar.delegate = self
+        }
+    }
+    
     private var groupList = [
-        Groups(groupName: "Drax - Group", imageGroup: "drax"),
-        Groups(groupName: "Gamora - Group", imageGroup: "gamora"),
-        Groups(groupName: "Groot - Group", imageGroup: "groot"),
-        Groups(groupName: "Mantis - Group", imageGroup: "mantis"),
-        Groups(groupName: "Peter Parker - Group", imageGroup: "pet"),
-        Groups(groupName: "Shuri - Group", imageGroup: "shuri"),
-        Groups(groupName: "T'challa - Group", imageGroup: "tchalla"),
-        Groups(groupName: "Vision - Group", imageGroup: "vision")]
+        Group(groupName: "Drax", groupImage: "drax"),
+        Group(groupName: "Gamora", groupImage: "gamora"),
+        Group(groupName: "Groot", groupImage: "groot"),
+        Group(groupName: "Mantis", groupImage: "mantis"),
+        Group(groupName: "Peter Parker", groupImage: "pet"),
+        Group(groupName: "Shuri", groupImage: "shuri"),
+        Group(groupName: "T'challa", groupImage: "tchalla"),
+        Group(groupName: "Vision", groupImage: "vision")]
+    
+    private var filteredGroupList = [Group]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        filteredGroupList = groupList
 
     }
+    
+    // MARK: - Helpers
 
+    private func filterGroups(with text: String) {
+        filteredGroupList = groupList.filter { group in
+            return group.groupName.lowercased().contains(text.lowercased())
+        }
+        tableView.reloadData()
+    }
+    
     // MARK: - Table view data source
 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return groupList.count
+        return filteredGroupList.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupsCell.reuseID, for: indexPath) as? GroupsCell else { fatalError("Cell cannot be dequeued") }
         
-        cell.groupName.text = groupList[indexPath.row].groupName
-        cell.groupPhoto.image = UIImage(named: groupList[indexPath.row].imageGroup)
+        cell.groupName.text = filteredGroupList[indexPath.row].groupName
+        cell.groupPhoto.image = UIImage(named: filteredGroupList[indexPath.row].groupImage)
         
         return cell
     }
@@ -48,8 +67,12 @@ class GroupsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            groupList.remove(at: indexPath.row)
+            let group = filteredGroupList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            if let index = groupList.firstIndex(where: { $0.groupName == group.groupName }) {
+                groupList.remove(at: index)
+            }
         }
     }
 
@@ -61,15 +84,26 @@ class GroupsViewController: UITableViewController {
             let indexPath = groupFinderController.tableView.indexPathForSelectedRow {
             let newGroup = groupFinderController.groupList[indexPath.row]
             
-            guard !groupList.contains(where: { group -> Bool in
+            guard !filteredGroupList.contains(where: { group -> Bool in
                 return group.groupName == newGroup.groupName
             }) else { return }
             
-            groupList.append(newGroup)
-            let newIndexPath = IndexPath(item: groupList.count-1, section: 0)
+            filteredGroupList.append(newGroup)
+            let newIndexPath = IndexPath(item: filteredGroupList.count-1, section: 0)
             tableView.insertRows(at: [newIndexPath], with: .automatic)
         }
     }
     
     
+}
+
+extension GroupsViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            filteredGroupList = groupList
+            tableView.reloadData()
+            return
+        }
+        filterGroups(with: searchText)
+    }
 }

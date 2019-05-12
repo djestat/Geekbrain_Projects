@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct Groups {
+struct Group {
     let groupName: String
-    let imageGroup: String
+    let groupImage: String
 }
 
