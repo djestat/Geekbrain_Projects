@@ -9,6 +9,8 @@
 import UIKit
 
 class LoginViewController: UIViewController {
+    //MARK: - transition animator
+    private let transitionAnimator = Animator()
 
     //MARK: - Outlets
     @IBOutlet weak var loginTextField: UITextField!
@@ -28,6 +30,7 @@ class LoginViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
     }
     
     
@@ -41,10 +44,16 @@ class LoginViewController: UIViewController {
     
     //MARK: - Actions
     @IBAction func autorizationButton(_ sender: UIButton) {
-      
+        //CustomPushAnimator
+//        let currentVKcontroller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CurrentVKcontroller")
+//        currentVKcontroller.transitioningDelegate = self
+//
         
         if loginTextField.text == "", passwordTextField.text == "" {
-            performSegue(withIdentifier: "Show Tab Bar Controller", sender: sender)
+            //Segue transition
+            self.performSegue(withIdentifier: "Show Tab Bar Controller", sender: sender)
+            //CustomPushAnimator
+//            present(currentVKcontroller, animated: true)
         } else {
             showLoginError()
         }
@@ -90,5 +99,16 @@ class LoginViewController: UIViewController {
         }
         loginAlert.addAction(action)
         present(loginAlert, animated: true)
+    }
+}
+
+// MARK: - Property transition animator
+extension LoginViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return transitionAnimator
+    }
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return transitionAnimator
     }
 }

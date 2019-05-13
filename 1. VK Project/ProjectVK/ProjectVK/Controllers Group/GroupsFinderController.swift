@@ -10,18 +10,18 @@ import UIKit
 
 class GroupsFinderController: UITableViewController {
     
-    public let groupList: [Groups] = [
-        Groups(groupName: "Batman - Group", imageGroup: "batman"),
-        Groups(groupName: "Goose - Group", imageGroup: "goose"),
-        Groups(groupName: "Shazam - Group", imageGroup: "shazam"),
-        Groups(groupName: "Backy Barnes - Group", imageGroup: "backyb"),
-        Groups(groupName: "Hope Van Dine - Group", imageGroup: "hvd"),
-        Groups(groupName: "Loki - Group", imageGroup: "loki"),
-        Groups(groupName: "Stiven Strange - Group", imageGroup: "dss"),
-        Groups(groupName: "Nike Furi - Group", imageGroup: "nf"),
-        Groups(groupName: "Peter Quill - Group", imageGroup: "pq"),
-        Groups(groupName: "Sam Wilson - Group", imageGroup: "sw"),
-        Groups(groupName: "Wanda Maximoff - Group", imageGroup: "wm")]
+    public let groupList: [Group] = [
+        Group(groupName: "Batman", groupImage: "batman"),
+        Group(groupName: "Goose", groupImage: "goose"),
+        Group(groupName: "Shazam", groupImage: "shazam"),
+        Group(groupName: "Backy Barnes", groupImage: "backyb"),
+        Group(groupName: "Hope Van Dine", groupImage: "hvd"),
+        Group(groupName: "Loki", groupImage: "loki"),
+        Group(groupName: "Stiven Strange", groupImage: "dss"),
+        Group(groupName: "Nike Furi", groupImage: "nf"),
+        Group(groupName: "Peter Quill", groupImage: "pq"),
+        Group(groupName: "Sam Wilson", groupImage: "sw"),
+        Group(groupName: "Wanda Maximoff", groupImage: "wm")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +40,7 @@ class GroupsFinderController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupsCell.reuseID, for: indexPath) as? GroupsCell else { fatalError() }
 
         cell.groupName.text = groupList[indexPath.row].groupName
-        cell.groupPhoto.image = UIImage(named:groupList[indexPath.row].imageGroup)
+        cell.groupPhoto.image = UIImage(named:groupList[indexPath.row].groupImage)
 
         return cell
     }

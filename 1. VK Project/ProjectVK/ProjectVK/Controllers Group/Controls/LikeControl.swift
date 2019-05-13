@@ -50,13 +50,19 @@ class LikeControl: UIControl {
     @objc func likeTapped() {
         isLike.toggle()
         if isLike == true {
-            likeControlView.image = UIImage(named: "Like_fill")
-            likeCounts += 1
-            likeCount.text = String(likeCounts)
+            UIView.transition(with: likeControlView, duration: 0.45, options: .transitionCurlUp, animations: {
+                self.likeControlView.image = UIImage(named: "Like_fill")
+            }) { _ in
+                self.likeCounts += 1
+                self.likeCount.text = String(self.likeCounts)
+            }
         } else {
-            likeControlView.image = UIImage(named: "Like_nonfill")
-            likeCounts -= 1
-            likeCount.text = String(likeCounts)
+            UIView.transition(with: likeControlView, duration: 0.2, options: .transitionCrossDissolve, animations: {
+                self.likeControlView.image = UIImage(named: "Like_nonfill")
+            }) { _ in
+                self.likeCounts -= 1
+                self.likeCount.text = String(self.likeCounts)
+            }
         }
         
     }

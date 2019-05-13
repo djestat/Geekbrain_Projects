@@ -12,20 +12,24 @@ class FriendsProfileController: UICollectionViewController {
 
     public var friendProfileName = ""
     public var friendProfilePhoto = ""
+    public var friendsPhotoCounts = 14
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let size = CGSize(width: 166, height: 185)
+        let layout = collectionViewLayout as! UICollectionViewFlowLayout
+        layout.itemSize = CGSize(width: size.width, height: size.height)
+//        layout.sectionHeadersPinToVisibleBounds = true
         
         title = friendProfileName
     
     }
 
     // MARK: UICollectionViewDataSource
-
-
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 3
+        return friendsPhotoCounts
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -36,5 +40,19 @@ class FriendsProfileController: UICollectionViewController {
     
         return cell
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowPhoto",
+            let friendsBigPhotoVC = segue.destination as? FriendsBigPhotoCollectionViewController{
+            // section - indexrow
+//            let indexPath = collectionView.indexPathsForSelectedItems {
+            
+            let bigPhoto = friendProfilePhoto
+            friendsBigPhotoVC.bigPhotoName = bigPhoto
+            friendsBigPhotoVC.photoCounts = friendsPhotoCounts
 
+        }
+        
+    }
+    
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MyFriends {
+struct MyFriend {
     let name: String
     let avatarImage: String
 }
