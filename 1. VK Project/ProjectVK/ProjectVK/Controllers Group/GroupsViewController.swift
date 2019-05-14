@@ -33,6 +33,8 @@ class GroupsViewController: UITableViewController {
         
         filteredGroupList = groupList
 
+        let tapGR = UITapGestureRecognizer(target: self, action: #selector(dissmissKeyboard))
+        view.addGestureRecognizer(tapGR)
     }
     
     // MARK: - Helpers
@@ -43,6 +45,11 @@ class GroupsViewController: UITableViewController {
         }
         tableView.reloadData()
     }
+    
+    @objc func dissmissKeyboard() {
+        view.endEditing(true)
+    }
+    
     
     // MARK: - Table view data source
 
@@ -88,12 +95,12 @@ class GroupsViewController: UITableViewController {
                 return group.groupName == newGroup.groupName
             }) else { return }
             
+            groupList.append(newGroup)
             filteredGroupList.append(newGroup)
             let newIndexPath = IndexPath(item: filteredGroupList.count-1, section: 0)
             tableView.insertRows(at: [newIndexPath], with: .automatic)
         }
     }
-    
     
 }
 
@@ -101,6 +108,7 @@ extension GroupsViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
             filteredGroupList = groupList
+            view.endEditing(true)
             tableView.reloadData()
             return
         }
