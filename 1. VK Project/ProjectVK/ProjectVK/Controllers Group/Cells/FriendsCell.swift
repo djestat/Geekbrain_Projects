@@ -30,11 +30,11 @@ class FriendsCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        //Animation
-        UIView.animate(withDuration: 0.6, delay: 0.3, animations: {
-            self.friendPhoto.bounds = CGRect(x: 0, y: 0, width: 500, height: 500)
-            self.friendName.bounds = CGRect(x: 0, y: 0, width: 500, height: 500)
-        })
+        //Animation not do here
+//        UIView.animate(withDuration: 0.6, delay: 0.3, animations: {
+//            self.friendPhoto.bounds = CGRect(x: 0, y: 0, width: 500, height: 500)
+//            self.friendName.bounds = CGRect(x: 0, y: 0, width: 500, height: 500)
+//        })
         
     }
 
