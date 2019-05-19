@@ -52,8 +52,6 @@ class GroupsViewController: UITableViewController {
     
     
     // MARK: - Table view data source
-
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return filteredGroupList.count
@@ -91,15 +89,18 @@ class GroupsViewController: UITableViewController {
             let indexPath = groupFinderController.tableView.indexPathForSelectedRow {
             let newGroup = groupFinderController.groupList[indexPath.row]
             
-            guard !filteredGroupList.contains(where: { group -> Bool in
+            guard !groupList.contains(where: { group -> Bool in
                 return group.groupName == newGroup.groupName
             }) else { return }
             
             groupList.append(newGroup)
-            filteredGroupList.append(newGroup)
-            let newIndexPath = IndexPath(item: filteredGroupList.count-1, section: 0)
-            tableView.insertRows(at: [newIndexPath], with: .automatic)
+//            filteredGroupList.append(newGroup)
+//            let newIndexPath = IndexPath(item: filteredGroupList.count-1, section: 0)
+//            tableView.insertRows(at: [newIndexPath], with: .automatic)
+            filteredGroupList = groupList
+            
         }
+        tableView.reloadData()
     }
     
 }

@@ -21,7 +21,15 @@ class GroupsFinderController: UITableViewController {
         Group(groupName: "Nike Furi", groupImage: "nf"),
         Group(groupName: "Peter Quill", groupImage: "pq"),
         Group(groupName: "Sam Wilson", groupImage: "sw"),
-        Group(groupName: "Wanda Maximoff", groupImage: "wm")]
+        Group(groupName: "Wanda Maximoff", groupImage: "wm"),
+        Group(groupName: "Drax", groupImage: "drax"),
+        Group(groupName: "Gamora", groupImage: "gamora"),
+        Group(groupName: "Groot", groupImage: "groot"),
+        Group(groupName: "Mantis", groupImage: "mantis"),
+        Group(groupName: "Peter Parker", groupImage: "pet"),
+        Group(groupName: "Shuri", groupImage: "shuri"),
+        Group(groupName: "T'challa", groupImage: "tchalla"),
+        Group(groupName: "Vision", groupImage: "vision")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
