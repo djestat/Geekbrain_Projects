@@ -9,6 +9,9 @@
 import UIKit
 
 class FriendsProfileController: UICollectionViewController {
+    
+    let request = VKAPIRequests()
+    public let userID = Session.authData.userid
 
     public var friendProfileName = ""
     public var friendProfilePhoto = ""
@@ -16,6 +19,7 @@ class FriendsProfileController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        request.loadPhotos(userID)
         
         let size = CGSize(width: 166, height: 185)
         let layout = collectionViewLayout as! UICollectionViewFlowLayout

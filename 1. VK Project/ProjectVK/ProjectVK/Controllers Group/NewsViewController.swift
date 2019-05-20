@@ -9,9 +9,11 @@
 import UIKit
 
 class NewsViewController: UITableViewController {
+    let request = VKAPIRequests()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        request.loadNews()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

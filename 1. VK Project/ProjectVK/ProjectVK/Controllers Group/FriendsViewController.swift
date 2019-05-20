@@ -10,6 +10,8 @@ import UIKit
 
 class FriendsViewController: UITableViewController {
     
+    let requests = VKAPIRequests()
+    
     var sectionTitle = [String]()
     var sectionDictionary = [String: [MyFriend]]()
     var searchingSectionTitle = [String]()
@@ -39,6 +41,7 @@ class FriendsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        requests.loadFriends()
      
         if !isFiltering() {
             

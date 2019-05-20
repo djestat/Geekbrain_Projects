@@ -10,6 +10,8 @@ import UIKit
 
 class GroupsViewController: UITableViewController {
     
+    let request = VKAPIRequests()
+    
     @IBOutlet weak var searchBar: UISearchBar! {
         didSet {
             searchBar.delegate = self
@@ -30,6 +32,7 @@ class GroupsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        request.loadFriends()
         
         filteredGroupList = groupList
 

@@ -11,7 +11,7 @@ import Foundation
 class Session {
     private init() { }
     
-    public static let sessionVK = Session()
+    public static let authData = Session()
     
     var token: String = ""
     var userid: Int = 0

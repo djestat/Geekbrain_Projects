@@ -10,6 +10,9 @@ import UIKit
 
 class GroupsFinderController: UITableViewController {
     
+    var searchingText = "Something"
+    let request = VKAPIRequests()
+    
     public let groupList: [Group] = [
         Group(groupName: "Batman", groupImage: "batman"),
         Group(groupName: "Goose", groupImage: "goose"),
@@ -33,6 +36,7 @@ class GroupsFinderController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        request.loadFindedGroups(searchingText)
 
     }
 

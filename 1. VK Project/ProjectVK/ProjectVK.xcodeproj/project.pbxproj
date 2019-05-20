@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE2914942291B9BD003A86B2 /* VKLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2914932291B9BD003A86B2 /* VKLoginViewController.swift */; };
+		CE2914952291CAAB003A86B2 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2914912291AC4F003A86B2 /* WebKit.framework */; };
+		CE2914982291DAEA003A86B2 /* VKAPIRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2914972291DAEA003A86B2 /* VKAPIRequests.swift */; };
 		CE33DAB3225E95B600B2389B /* GroupsFinderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE33DAB2225E95B600B2389B /* GroupsFinderController.swift */; };
 		CE65CF582265271700D5221A /* LikeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE65CF572265271700D5221A /* LikeControl.swift */; };
 		CE7208AB225D34980069A952 /* FriendsProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7208AA225D34980069A952 /* FriendsProfileController.swift */; };
@@ -34,6 +37,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE2914912291AC4F003A86B2 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		CE2914932291B9BD003A86B2 /* VKLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKLoginViewController.swift; sourceTree = "<group>"; };
+		CE2914972291DAEA003A86B2 /* VKAPIRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKAPIRequests.swift; sourceTree = "<group>"; };
 		CE33DAB2225E95B600B2389B /* GroupsFinderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsFinderController.swift; sourceTree = "<group>"; };
 		CE65CF572265271700D5221A /* LikeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeControl.swift; sourceTree = "<group>"; };
 		CE7208AA225D34980069A952 /* FriendsProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsProfileController.swift; sourceTree = "<group>"; };
@@ -67,12 +73,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE2914952291CAAB003A86B2 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE2914902291AC4E003A86B2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CE2914912291AC4F003A86B2 /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CE2914962291D964003A86B2 /* NetworkingService */ = {
+			isa = PBXGroup;
+			children = (
+				CE2914972291DAEA003A86B2 /* VKAPIRequests.swift */,
+			);
+			path = NetworkingService;
+			sourceTree = "<group>";
+		};
 		CE65CF56226526B000D5221A /* Controls */ = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +141,7 @@
 			children = (
 				CEB75524224F9B5000E5A718 /* ProjectVK */,
 				CEB75523224F9B5000E5A718 /* Products */,
+				CE2914902291AC4E003A86B2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -145,6 +169,7 @@
 		CEB75537224F9E0400E5A718 /* Controllers Group */ = {
 			isa = PBXGroup;
 			children = (
+				CE2914962291D964003A86B2 /* NetworkingService */,
 				CEE7AC29228711B500C0668D /* Transitions */,
 				CE65CF56226526B000D5221A /* Controls */,
 				CEA61482225BE4D90012F4F6 /* Cells */,
@@ -155,6 +180,7 @@
 				CE8EF5CD2258AB410015EC00 /* GroupsViewController.swift */,
 				CE33DAB2225E95B600B2389B /* GroupsFinderController.swift */,
 				CEACD2C7226B958F003400B4 /* NewsViewController.swift */,
+				CE2914932291B9BD003A86B2 /* VKLoginViewController.swift */,
 			);
 			path = "Controllers Group";
 			sourceTree = "<group>";
@@ -257,9 +283,11 @@
 				CEE7AC2D2287232900C0668D /* CustomSegue.swift in Sources */,
 				CEA18FAE22859C8C00A25FD6 /* FriendsBigPhotoCollectionViewController.swift in Sources */,
 				CE8EF5CC2258AB2C0015EC00 /* FriendsViewController.swift in Sources */,
+				CE2914942291B9BD003A86B2 /* VKLoginViewController.swift in Sources */,
 				CEA6147D225BD7C40012F4F6 /* FriendsPhotoCell.swift in Sources */,
 				CEE7AC2B2287126700C0668D /* CustomAnimator.swift in Sources */,
 				CE8EF5CE2258AB410015EC00 /* GroupsViewController.swift in Sources */,
+				CE2914982291DAEA003A86B2 /* VKAPIRequests.swift in Sources */,
 				CEA61484225BE7BB0012F4F6 /* Profiles.swift in Sources */,
 				CEA6147F225BDA620012F4F6 /* GroupsCell.swift in Sources */,
 				CE65CF582265271700D5221A /* LikeControl.swift in Sources */,
