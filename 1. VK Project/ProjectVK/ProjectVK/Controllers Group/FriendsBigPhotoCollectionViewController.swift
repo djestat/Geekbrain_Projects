@@ -12,8 +12,7 @@ private let reuseIdentifier = "Cell"
 
 class FriendsBigPhotoCollectionViewController: UICollectionViewController {
     
-    public var bigPhotoName = ""
-    public var photoCounts = 0
+    public var friendProfilePhoto = [FriendProfilePhoto]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,14 +45,15 @@ class FriendsBigPhotoCollectionViewController: UICollectionViewController {
     // MARK: UICollectionViewDataSource
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photoCounts
+        return friendProfilePhoto.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FriendsBigPhotoCell.reuseID, for: indexPath) as? FriendsBigPhotoCell else { fatalError() }
     
         // Configure the cell
-        cell.bigFriendPhoto.image = UIImage(named: bigPhotoName)
+//        cell.bigFriendPhoto.image = UIImage(named: bigPhotoName)
+        cell.bigFriendPhoto.kf.setImage(with: URL(string: friendProfilePhoto[indexPath.row].photo))
         
         return cell
     }

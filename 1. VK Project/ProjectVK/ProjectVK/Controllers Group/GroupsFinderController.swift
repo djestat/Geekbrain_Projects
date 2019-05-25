@@ -7,36 +7,29 @@
 //
 
 import UIKit
+import Kingfisher
+
 
 class GroupsFinderController: UITableViewController {
     
     var searchingText = "Something"
     let request = VKAPIRequests()
+    public var groupList = [Group]()
     
-    public let groupList: [Group] = [
-        Group(groupName: "Batman", groupImage: "batman"),
-        Group(groupName: "Goose", groupImage: "goose"),
-        Group(groupName: "Shazam", groupImage: "shazam"),
-        Group(groupName: "Backy Barnes", groupImage: "backyb"),
-        Group(groupName: "Hope Van Dine", groupImage: "hvd"),
-        Group(groupName: "Loki", groupImage: "loki"),
-        Group(groupName: "Stiven Strange", groupImage: "dss"),
-        Group(groupName: "Nike Furi", groupImage: "nf"),
-        Group(groupName: "Peter Quill", groupImage: "pq"),
-        Group(groupName: "Sam Wilson", groupImage: "sw"),
-        Group(groupName: "Wanda Maximoff", groupImage: "wm"),
-        Group(groupName: "Drax", groupImage: "drax"),
-        Group(groupName: "Gamora", groupImage: "gamora"),
-        Group(groupName: "Groot", groupImage: "groot"),
-        Group(groupName: "Mantis", groupImage: "mantis"),
-        Group(groupName: "Peter Parker", groupImage: "pet"),
-        Group(groupName: "Shuri", groupImage: "shuri"),
-        Group(groupName: "T'challa", groupImage: "tchalla"),
-        Group(groupName: "Vision", groupImage: "vision")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        request.loadFindedGroups(searchingText)
+        request.findGroups(searchingText)
+        request.findGroups(searchingText) { result in
+            switch result {
+            case .success(let groupList):
+                self.groupList = groupList
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+
 
     }
 
@@ -52,7 +45,8 @@ class GroupsFinderController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupsCell.reuseID, for: indexPath) as? GroupsCell else { fatalError() }
 
         cell.groupName.text = groupList[indexPath.row].groupName
-        cell.groupPhoto.image = UIImage(named:groupList[indexPath.row].groupImage)
+//        cell.groupPhoto.image = UIImage(named:groupList[indexPath.row].groupImage)
+        cell.groupPhoto.kf.setImage(with: URL(string: groupList[indexPath.row].groupImage))
 
         return cell
     }

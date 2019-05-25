@@ -13,7 +13,7 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="ProjectVK" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OldLoginViewConttroller" id="BYZ-38-t0r" customClass="LoginViewController" customModule="ProjectVK" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -783,14 +783,14 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Comments" width="240" height="240"/>
-        <image name="Like_nonfill" width="240" height="240"/>
-        <image name="Repost" width="240" height="240"/>
-        <image name="Views" width="240" height="240"/>
+        <image name="Comments" width="100" height="100"/>
+        <image name="Like_nonfill" width="100" height="100"/>
+        <image name="Repost" width="100" height="100"/>
+        <image name="Views" width="100" height="100"/>
         <image name="Vkontakte" width="1662" height="413"/>
         <image name="avatar" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="eh1-y3-qab"/>
+        <segue reference="whm-mh-rYK"/>
     </inferredMetricsTieBreakers>
 </document>
