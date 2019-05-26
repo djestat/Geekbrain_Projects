@@ -12,6 +12,12 @@ import Kingfisher
 
 class GroupsFinderController: UITableViewController {
     
+    @IBOutlet weak var searchBar: UISearchBar! {
+        didSet {
+            searchBar.delegate = self
+        }
+    }
+    
     var searchingText = "Something"
     let request = VKAPIRequests()
     public var groupList = [Group]()
@@ -19,18 +25,9 @@ class GroupsFinderController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        request.findGroups(searchingText)
-        request.findGroups(searchingText) { result in
-            switch result {
-            case .success(let groupList):
-                self.groupList = groupList
-                self.tableView.reloadData()
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-
-
+        
+        let tapGR = UITapGestureRecognizer(target: self, action: #selector(dissmissKeyboard))
+        view.addGestureRecognizer(tapGR)
     }
 
     // MARK: - Table view data source
@@ -45,11 +42,35 @@ class GroupsFinderController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupsCell.reuseID, for: indexPath) as? GroupsCell else { fatalError() }
 
         cell.groupName.text = groupList[indexPath.row].groupName
-//        cell.groupPhoto.image = UIImage(named:groupList[indexPath.row].groupImage)
         cell.groupPhoto.kf.setImage(with: URL(string: groupList[indexPath.row].groupImage))
 
         return cell
     }
     
+    // MARK: - Helpers
+    @objc func dissmissKeyboard() {
+        view.endEditing(true)
+    }
 
+}
+
+extension GroupsFinderController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            groupList.removeAll()
+            view.endEditing(true)
+            tableView.reloadData()
+            return
+        }
+        request.findGroups(searchText) { result in
+            switch result {
+            case .success(let groupList):
+                self.groupList.removeAll()
+                self.groupList = groupList
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
 }

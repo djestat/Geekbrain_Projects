@@ -22,8 +22,8 @@ class GroupsViewController: UITableViewController {
     
     private var filteredGroupList = [Group]()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         request.userGroups { result in
             switch result {
             case .success(let groupList):
@@ -34,7 +34,11 @@ class GroupsViewController: UITableViewController {
                 print(error.localizedDescription)
             }
         }
-        
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
         let tapGR = UITapGestureRecognizer(target: self, action: #selector(dissmissKeyboard))
         view.addGestureRecognizer(tapGR)
     }
@@ -72,6 +76,7 @@ class GroupsViewController: UITableViewController {
 
     
     // Override to support editing the table view.
+    /*
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
@@ -82,12 +87,14 @@ class GroupsViewController: UITableViewController {
                 groupList.remove(at: index)
             }
         }
-    }
+    } */
 
     
     // MARK: - Navigation
-  
+    /*
     @IBAction func addGroup(segue: UIStoryboardSegue) {
+        
+     
         if let groupFinderController = segue.source as? GroupsFinderController,
             let indexPath = groupFinderController.tableView.indexPathForSelectedRow {
             let newGroup = groupFinderController.groupList[indexPath.row]
@@ -104,7 +111,7 @@ class GroupsViewController: UITableViewController {
             
         }
         tableView.reloadData()
-    }
+    }*/
     
 }
 

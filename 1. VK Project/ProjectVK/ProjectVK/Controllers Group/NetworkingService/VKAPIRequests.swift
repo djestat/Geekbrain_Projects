@@ -101,7 +101,7 @@ class VKAPIRequests {
         let params: Parameters = [
             "access_token" : token,
             "owner_id" : userID,
-            "count" : "60",
+            "count" : "100",
             "v" : "5.95"
         ]
         
@@ -119,40 +119,29 @@ class VKAPIRequests {
     }
     
     // MARK: - Load VKnews
-    public func loadNews() {
+    public func loadNews(completion: ((Swift.Result<[News], Error>) -> Void)? = nil) {
         
-        var urlComponents = URLComponents()
-        urlComponents.scheme = "https"
-        urlComponents.host = "api.vk.com"
-        urlComponents.path = "/method/newsfeed.get"
+        let baseURL = "https://api.vk.com"
+        let path = "/method/newsfeed.get"
         
-        urlComponents.queryItems = [
-            URLQueryItem(name: "access_token", value: token),
-            URLQueryItem(name: "filters", value: "post,photo,photo_tag,wall_photo"),
-            URLQueryItem(name: "v", value: "5.95")
+        let params: Parameters = [
+            "access_token" : token,
+            "filters" : "post",
+            "count" : "100",
+            "v" : "5.95"
         ]
         
-        guard let url = urlComponents.url else { fatalError("URL is badly formatted.")}
-        
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        
-        
-        let configuration = URLSessionConfiguration.default
-        configuration.allowsCellularAccess = true
-        let session = URLSession(configuration: configuration)
-        
-        let task = session.dataTask(with: request) { (data, response, error) in
-            
-            guard let data = data else { return }
-            let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments)
-            
-            print(json ?? "")
-            
+        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON {
+            response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                let newsList = json["response"]["items"].arrayValue.map { News($0) }
+                completion?(.success(newsList))
+            case .failure(let error):
+                completion?(.failure(error))
+            }
         }
-        
-        task.resume()
     }
     
 

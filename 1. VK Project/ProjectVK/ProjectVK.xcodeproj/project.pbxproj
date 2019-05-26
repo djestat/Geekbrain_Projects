@@ -23,6 +23,7 @@
 		CEA6147F225BDA620012F4F6 /* GroupsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA6147E225BDA620012F4F6 /* GroupsCell.swift */; };
 		CEA61484225BE7BB0012F4F6 /* Profiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA61483225BE7BB0012F4F6 /* Profiles.swift */; };
 		CEA61486225BE7D20012F4F6 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA61485225BE7D20012F4F6 /* Group.swift */; };
+		CEA87625229B28C7000CAC9A /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA87624229B28C7000CAC9A /* News.swift */; };
 		CEACD2C6226B9549003400B4 /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEACD2C5226B9549003400B4 /* NewsCell.swift */; };
 		CEACD2C8226B958F003400B4 /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEACD2C7226B958F003400B4 /* NewsViewController.swift */; };
 		CEB1E11D224FB04D00991D1D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB1E11C224FB04D00991D1D /* LoginViewController.swift */; };
@@ -55,6 +56,7 @@
 		CEA6147E225BDA620012F4F6 /* GroupsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsCell.swift; sourceTree = "<group>"; };
 		CEA61483225BE7BB0012F4F6 /* Profiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profiles.swift; sourceTree = "<group>"; };
 		CEA61485225BE7D20012F4F6 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		CEA87624229B28C7000CAC9A /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
 		CEACD2C5226B9549003400B4 /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
 		CEACD2C7226B958F003400B4 /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		CEB1E11C224FB04D00991D1D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -91,7 +93,6 @@
 				6953169940E4749696549195 /* Pods-ProjectVK.debug.xcconfig */,
 				81C8ADCFDCED6E798569FFB5 /* Pods-ProjectVK.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -135,6 +136,7 @@
 			children = (
 				CEA61483225BE7BB0012F4F6 /* Profiles.swift */,
 				CEA61485225BE7D20012F4F6 /* Group.swift */,
+				CEA87624229B28C7000CAC9A /* News.swift */,
 				CEE938362290483A005E3E08 /* Session.swift */,
 			);
 			path = Model;
@@ -362,6 +364,7 @@
 				CEA6147F225BDA620012F4F6 /* GroupsCell.swift in Sources */,
 				CE65CF582265271700D5221A /* LikeControl.swift in Sources */,
 				CEACD2C8226B958F003400B4 /* NewsViewController.swift in Sources */,
+				CEA87625229B28C7000CAC9A /* News.swift in Sources */,
 				CEE7AC2F228731B100C0668D /* CustomNavigationController.swift in Sources */,
 				CEE938372290483A005E3E08 /* Session.swift in Sources */,
 				CEACD2C6226B9549003400B4 /* NewsCell.swift in Sources */,

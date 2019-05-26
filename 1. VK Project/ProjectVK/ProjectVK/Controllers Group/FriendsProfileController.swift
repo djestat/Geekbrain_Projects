@@ -16,6 +16,7 @@ class FriendsProfileController: UICollectionViewController {
     
     public var friendProfileUserId: Int = 1
     public var friendProfileName = ""
+    public var friendProfileLastname = ""
     public var friendProfilePhoto = [FriendProfilePhoto]()
     
     override func viewDidLoad() {
@@ -35,7 +36,7 @@ class FriendsProfileController: UICollectionViewController {
         layout.itemSize = CGSize(width: size.width, height: size.height)
 //        layout.sectionHeadersPinToVisibleBounds = true
         
-        title = friendProfileName
+        title = friendProfileName + " " + friendProfileLastname
     
     }
 

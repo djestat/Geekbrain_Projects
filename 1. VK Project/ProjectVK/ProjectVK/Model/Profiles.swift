@@ -9,25 +9,23 @@
 import Foundation
 import SwiftyJSON
 
-struct MyFriend {
-    let name: String
-    let avatarImage: String
-}
-
 class FriendProfile {
     let userid: Int
     let name: String
+    let lastname: String
     let avatarImage: String
     
-    init(userid: Int, name: String, avatarImage: String) {
+    init(userid: Int, name: String, lastname: String, avatarImage: String) {
         self.userid = userid
         self.name = name
+        self.lastname = lastname
         self.avatarImage = avatarImage
     }
     
     init(_ json: JSON) {
         self.userid = json["id"].intValue
-        self.name = String(json["first_name"].stringValue + " " + json["last_name"].stringValue)
+        self.name = json["first_name"].stringValue
+        self.lastname = json["last_name"].stringValue
         self.avatarImage = json["photo_200_orig"].stringValue
     }
     
@@ -44,19 +42,3 @@ struct FriendProfilePhoto {
     }
     
 }
-
-/*
-"response": {
-    "count": 11,
-    "items": [{
-                "id": 354621649,
-                "album_id": -6,
-                "owner_id": 35436,
-                "sizes": [{
-                        "type": "m",
-                        "url": "https://pp.userap...9a0/xWmk-pf1ZgQ.jpg",
-                        "width": 130,
-                        "height": 130
-                        }, {
-                        "type": "o
-*/
