@@ -7,45 +7,38 @@
 //
 
 import UIKit
+import Kingfisher
 
 class FriendsViewController: UITableViewController {
     
-    let requests = VKAPIRequests()
+    let vkRequest = VKAPIRequests()
+    private var friendsList = [FriendProfile]()
     
     var sectionTitle = [String]()
-    var sectionDictionary = [String: [MyFriend]]()
+    var sectionDictionary = [String: [FriendProfile]]()
     var searchingSectionTitle = [String]()
-    var searchingSectionDictionary = [String: [MyFriend]]()
-    var searchingFriendList = [MyFriend]()
+    var searchingSectionDictionary = [String: [FriendProfile]]()
+    var searchingFriendList = [FriendProfile]()
     
     let searchController = UISearchController(searchResultsController: nil)
     
-    private var friendsList = [MyFriend(name: "Tony Stark", avatarImage: "ts"),
-        MyFriend(name: "Stive Rogers", avatarImage: "sr"),
-        MyFriend(name: "Natasha Romanoff", avatarImage: "nr"),
-        MyFriend(name: "Bruce Benner", avatarImage: "bb"),
-        MyFriend(name: "Happy Hogan", avatarImage: "hh"),
-        MyFriend(name: "Pepper Pots", avatarImage: "pp"),
-        MyFriend(name: "Okoye", avatarImage: "okoye"),
-        MyFriend(name: "Thor", avatarImage: "thor"),
-        MyFriend(name: "James Royde", avatarImage: "jr"),
-        MyFriend(name: "Karol Danvers", avatarImage: "kd"),
-        MyFriend(name: "Klint Barton", avatarImage: "kb"),
-        MyFriend(name: "Nebula", avatarImage: "nebula"),
-        MyFriend(name: "Rocket", avatarImage: "rocket"),
-        MyFriend(name: "Skot Lang", avatarImage: "sl"),
-        MyFriend(name: "Valkiria", avatarImage: "valkiria"),
-        MyFriend(name: "Wade Wilson", avatarImage: "ww"),
-        MyFriend(name: "Wong", avatarImage: "wong")]
-    
-    
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
-        requests.loadFriends()
-     
+        
+        vkRequest.loadFriends { result in
+            switch result {
+            case .success(let friendList):
+                self.friendsList = friendList
+                self.sectionArrayPrepare()
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
         if !isFiltering() {
-            
-            sectionArrayPrepare()
+//            sectionArrayPrepare()
         }
         
         // Setup the SearchBar Controller
@@ -55,6 +48,7 @@ class FriendsViewController: UITableViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
      
+ 
     }
 
     // MARK: - Table view data source
@@ -110,9 +104,9 @@ class FriendsViewController: UITableViewController {
         
         let lastnameKey = sections[indexPath.section]
         if let lastnameValues = dictionary[lastnameKey] {
-            cell.friendName.text = lastnameValues[indexPath.row].name
-            cell.friendPhoto.image = UIImage(named:(lastnameValues[indexPath.row]).avatarImage)
-            
+            cell.friendName.text = lastnameValues[indexPath.row].name + " " + lastnameValues[indexPath.row].lastname
+//            cell.friendPhoto.image = UIImage(named:(lastnameValues[indexPath.row]).avatarImage)
+            cell.friendPhoto.kf.setImage(with: URL(string: lastnameValues[indexPath.row].avatarImage))
         }
         
         return cell
@@ -155,10 +149,12 @@ class FriendsViewController: UITableViewController {
             let lastnameKey = sections[indexPath.section]
             
             if let lastnameValues = dictionary[lastnameKey] {
+                let friendProfileUserId = lastnameValues[indexPath.row].userid
                 let friendProfileName = lastnameValues[indexPath.row].name
-                let friendProfilePhoto = lastnameValues[indexPath.row].avatarImage
+                let friendProfileLastname = lastnameValues[indexPath.row].lastname
+                friendsProfileVC.friendProfileUserId = friendProfileUserId
                 friendsProfileVC.friendProfileName = friendProfileName
-                friendsProfileVC.friendProfilePhoto = friendProfilePhoto
+                friendsProfileVC.friendProfileLastname = friendProfileLastname
             
             }
         }
@@ -170,18 +166,18 @@ class FriendsViewController: UITableViewController {
     func sectionArrayPrepare() {
         
         for lastname in friendsList {
-            let lastnameKey = String(lastname.name.prefix(1))
+            let lastnameKey = String(lastname.lastname.prefix(1))
             if var lastnameValues = sectionDictionary[lastnameKey] {
-                lastnameValues.append(MyFriend(name: lastname.name, avatarImage: lastname.avatarImage))
+                lastnameValues.append(FriendProfile(userid: lastname.userid, name: lastname.name, lastname: lastname.lastname, avatarImage: lastname.avatarImage))
                 sectionDictionary[lastnameKey] = lastnameValues
             } else {
-                sectionDictionary[lastnameKey] = [MyFriend(name: lastname.name, avatarImage: lastname.avatarImage)]
+                sectionDictionary[lastnameKey] = [FriendProfile(userid: lastname.userid, name: lastname.name, lastname: lastname.lastname, avatarImage: lastname.avatarImage)]
             }
         }
         
         sectionTitle = [String](sectionDictionary.keys)
         sectionTitle = sectionTitle.sorted(by: { $0 < $1 })
-        
+ 
     }
     
     // MARK: SearcBar functions
@@ -193,20 +189,20 @@ class FriendsViewController: UITableViewController {
     
     
     func filterContentForSearchText(_ searchText: String) {
-        searchingFriendList = friendsList.filter({( name : MyFriend) -> Bool in
-            return name.name.lowercased().contains(searchText.lowercased())
+        searchingFriendList = friendsList.filter({( name : FriendProfile) -> Bool in
+            return name.name.lowercased().contains(searchText.lowercased()) || name.lastname.lowercased().contains(searchText.lowercased())
         })
         
         searchingSectionDictionary.removeAll()
         searchingSectionTitle.removeAll()
 
         for lastname in searchingFriendList {
-            let lastnameKey = String(lastname.name.prefix(1))
+            let lastnameKey = String(lastname.lastname.prefix(1))
             if var lastnameValues = searchingSectionDictionary[lastnameKey] {
-                lastnameValues.append(MyFriend(name: lastname.name, avatarImage: lastname.avatarImage))
+                lastnameValues.append(FriendProfile(userid: lastname.userid, name: lastname.name, lastname: lastname.lastname, avatarImage: lastname.avatarImage))
                 searchingSectionDictionary[lastnameKey] = lastnameValues
             } else {
-                searchingSectionDictionary[lastnameKey] = [MyFriend(name: lastname.name, avatarImage: lastname.avatarImage)]
+                searchingSectionDictionary[lastnameKey] = [FriendProfile(userid: lastname.userid, name: lastname.name, lastname: lastname.lastname, avatarImage: lastname.avatarImage)]
             }
         }
         

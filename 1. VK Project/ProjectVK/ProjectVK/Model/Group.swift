@@ -7,9 +7,14 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 struct Group {
     let groupName: String
     let groupImage: String
+    
+    init(_ json: JSON) {
+        self.groupName = json["name"].stringValue
+        self.groupImage = json["photo_200"].stringValue
+    }
 }
-

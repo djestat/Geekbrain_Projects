@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import Kingfisher
 
 class GroupsViewController: UITableViewController {
     
     let request = VKAPIRequests()
+    private var groupList = [Group]()
     
     @IBOutlet weak var searchBar: UISearchBar! {
         didSet {
@@ -18,23 +20,24 @@ class GroupsViewController: UITableViewController {
         }
     }
     
-    private var groupList = [
-        Group(groupName: "Drax", groupImage: "drax"),
-        Group(groupName: "Gamora", groupImage: "gamora"),
-        Group(groupName: "Groot", groupImage: "groot"),
-        Group(groupName: "Mantis", groupImage: "mantis"),
-        Group(groupName: "Peter Parker", groupImage: "pet"),
-        Group(groupName: "Shuri", groupImage: "shuri"),
-        Group(groupName: "T'challa", groupImage: "tchalla"),
-        Group(groupName: "Vision", groupImage: "vision")]
-    
     private var filteredGroupList = [Group]()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        request.userGroups { result in
+            switch result {
+            case .success(let groupList):
+                self.groupList = groupList
+                self.filteredGroupList = self.groupList
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        request.loadFriends()
-        
-        filteredGroupList = groupList
 
         let tapGR = UITapGestureRecognizer(target: self, action: #selector(dissmissKeyboard))
         view.addGestureRecognizer(tapGR)
@@ -65,13 +68,15 @@ class GroupsViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupsCell.reuseID, for: indexPath) as? GroupsCell else { fatalError("Cell cannot be dequeued") }
         
         cell.groupName.text = filteredGroupList[indexPath.row].groupName
-        cell.groupPhoto.image = UIImage(named: filteredGroupList[indexPath.row].groupImage)
+//        cell.groupPhoto.image = UIImage(named: filteredGroupList[indexPath.row].groupImage)
+        cell.groupPhoto.kf.setImage(with: URL(string: filteredGroupList[indexPath.row].groupImage))
         
         return cell
     }
 
     
     // Override to support editing the table view.
+    /*
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
@@ -82,12 +87,14 @@ class GroupsViewController: UITableViewController {
                 groupList.remove(at: index)
             }
         }
-    }
+    } */
 
     
     // MARK: - Navigation
-  
+    /*
     @IBAction func addGroup(segue: UIStoryboardSegue) {
+        
+     
         if let groupFinderController = segue.source as? GroupsFinderController,
             let indexPath = groupFinderController.tableView.indexPathForSelectedRow {
             let newGroup = groupFinderController.groupList[indexPath.row]
@@ -104,7 +111,7 @@ class GroupsViewController: UITableViewController {
             
         }
         tableView.reloadData()
-    }
+    }*/
     
 }
 
