@@ -32,35 +32,3 @@ struct News {
     
 }
 
-/*
- 
- "type": "post",
- "source_id": -57846937,
- "date": 1558902300,
- "post_type": "post",
- "text": "",
- "marked_as_ads": 0,
- "attachments": [{...}],
- "post_source": {
-                "type": "vk"
-                            },
-                            "comments": {
-                                        "count": 11,
-                                        "can_post": 1,
-                                        "groups_can_post": true
-                            },
-                            "likes": {
-                                        "count": 39,
-                                        "user_likes": 0,
-                                        "can_like": 1,
-                                        "can_publish": 1
-                            },
-                            "reposts": {
-                                        "count": 0,
-                                        "user_reposted": 0
-                            },
-                            "views": {
-                                        "count": 1778
- },
- "is_favorite": false,
- "post_id": 30247551 */

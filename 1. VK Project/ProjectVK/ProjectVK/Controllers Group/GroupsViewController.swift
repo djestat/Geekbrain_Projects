@@ -73,45 +73,8 @@ class GroupsViewController: UITableViewController {
         
         return cell
     }
-
-    
-    // Override to support editing the table view.
-    /*
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            let group = filteredGroupList.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            
-            if let index = groupList.firstIndex(where: { $0.groupName == group.groupName }) {
-                groupList.remove(at: index)
-            }
-        }
-    } */
-
     
     // MARK: - Navigation
-    /*
-    @IBAction func addGroup(segue: UIStoryboardSegue) {
-        
-     
-        if let groupFinderController = segue.source as? GroupsFinderController,
-            let indexPath = groupFinderController.tableView.indexPathForSelectedRow {
-            let newGroup = groupFinderController.groupList[indexPath.row]
-            
-            guard !groupList.contains(where: { group -> Bool in
-                return group.groupName == newGroup.groupName
-            }) else { return }
-            
-            groupList.append(newGroup)
-//            filteredGroupList.append(newGroup)
-//            let newIndexPath = IndexPath(item: filteredGroupList.count-1, section: 0)
-//            tableView.insertRows(at: [newIndexPath], with: .automatic)
-            filteredGroupList = groupList
-            
-        }
-        tableView.reloadData()
-    }*/
     
 }
 
