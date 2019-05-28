@@ -14,6 +14,12 @@ class Group: Object {
     @objc dynamic var groupName: String = ""
     @objc dynamic var groupImage: String = ""
     
+    convenience init(groupName: String, groupImage: String) {
+        self.init()
+        self.groupName = groupName
+        self.groupImage = groupImage
+    }
+    
     convenience init(_ json: JSON) {
         self.init()
         

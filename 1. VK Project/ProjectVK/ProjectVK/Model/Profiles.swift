@@ -16,12 +16,13 @@ class FriendProfile: Object {
     @objc dynamic var lastname: String = ""
     @objc dynamic var avatarImage: String = ""
     
-    /*init(userid: Int, name: String, lastname: String, avatarImage: String) {
+    convenience init(userid: Int, name: String, lastname: String, avatarImage: String) {
+        self.init()
         self.userid = userid
         self.name = name
         self.lastname = lastname
         self.avatarImage = avatarImage
-    }*/
+    }
     
     convenience init(_ json: JSON) {
         self.init()
@@ -37,6 +38,12 @@ class FriendProfile: Object {
 class FriendProfilePhoto: Object {
     @objc dynamic var userid: Int = 0
     @objc dynamic var photo: String = ""
+    
+    convenience init(userid: Int, photo: String) {
+        self.init()
+        self.userid = userid
+        self.photo = photo
+    }
     
     convenience init(_ json: JSON) {
         self.init()
