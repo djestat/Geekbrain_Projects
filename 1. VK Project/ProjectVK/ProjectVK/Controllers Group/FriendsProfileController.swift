@@ -31,11 +31,17 @@ class FriendsProfileController: UICollectionViewController {
             }
         }
         
+        let width = collectionView.bounds.width / 3.05
+        let layout = collectionViewLayout as! UICollectionViewFlowLayout
+        layout.itemSize = CGSize(width: width, height: width * 1.25)
+        layout.minimumInteritemSpacing = 2
+        layout.minimumLineSpacing = 2
+        /*
         let size = CGSize(width: 166, height: 185)
         let layout = collectionViewLayout as! UICollectionViewFlowLayout
         layout.itemSize = CGSize(width: size.width, height: size.height)
 //        layout.sectionHeadersPinToVisibleBounds = true
-        
+        */
         title = friendProfileName + " " + friendProfileLastname
     
     }
