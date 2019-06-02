@@ -122,6 +122,7 @@ class NewsViewController: UITableViewController {
             cell.likeCountsLabel.text = String(newsList[indexPath.row].photos.items[0].likes.count)
             cell.commentsCountsLabel.text = String(newsList[indexPath.row].photos.items[0].comments.count)
             
+            
         }
         
         let autorId = newsList[indexPath.row].sourceID
