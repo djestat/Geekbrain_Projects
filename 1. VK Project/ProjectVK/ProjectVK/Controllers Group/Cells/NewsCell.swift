@@ -14,10 +14,12 @@ class NewsCell: UITableViewCell {
     
     @IBOutlet weak var groupImageView: UIImageView!
     @IBOutlet weak var groupNameLabel: UILabel!
+    @IBOutlet weak var newsText: UITextView!
     @IBOutlet weak var newsPhotosView: UIImageView!
     @IBOutlet weak var newsTextLabel: UITextView!
     @IBOutlet weak var likeCountsLabel: UILabel!
     @IBOutlet weak var commentsCountsLabel: UILabel!
+    @IBOutlet weak var viewsIcon: UIImageView!
     @IBOutlet weak var viewsCountsLabel: UILabel!
     
     

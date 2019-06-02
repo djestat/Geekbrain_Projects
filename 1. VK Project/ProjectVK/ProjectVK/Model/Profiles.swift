@@ -52,3 +52,42 @@ class FriendProfilePhoto: Object {
     }
     
 }
+
+/*
+// MARK: - Profile
+class Profile: Codable {
+    let id: Int
+    let firstName, lastName: String
+    let isClosed, canAccessClosed: Bool
+    let sex: Int
+    let screenName: String
+    let photo50, photo100: String
+    let online: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case firstName
+        case lastName
+        case isClosed
+        case canAccessClosed
+        case sex
+        case screenName
+        case photo50
+        case photo100
+        case online
+    }
+    
+    init(id: Int, firstName: String, lastName: String, isClosed: Bool, canAccessClosed: Bool, sex: Int, screenName: String, photo50: String, photo100: String, online: Int) {
+        self.id = id
+        self.firstName = firstName
+        self.lastName = lastName
+        self.isClosed = isClosed
+        self.canAccessClosed = canAccessClosed
+        self.sex = sex
+        self.screenName = screenName
+        self.photo50 = photo50
+        self.photo100 = photo100
+        self.online = online
+    }
+} */
+ 

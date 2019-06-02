@@ -13,7 +13,14 @@ private let reuseIdentifier = "Cell"
 class FriendsBigPhotoCollectionViewController: UICollectionViewController {
     
     public var friendProfilePhoto = [FriendProfilePhoto]()
+    public var indexPhoto = 0
 
+    override func viewWillAppear(_ animated: Bool) {
+        let indexPath = IndexPath(row: indexPhoto, section: 0)
+        collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

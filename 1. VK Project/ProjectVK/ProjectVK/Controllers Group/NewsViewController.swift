@@ -11,14 +11,32 @@ import UIKit
 class NewsViewController: UITableViewController {
     let request = VKAPIRequests()
     
-    var newsList = [News]()
+    var newsList = [ResponseItem]()
+    var friendList = [FriendProfile]()
+    var groupList = [Group]()
+    var nextList = ""
+
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        cell.contentView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+        let propertyAnimator = UIViewPropertyAnimator(duration: 0.6, curve: .easeOut) {
+            cell.contentView.transform = .identity
+        }
+        
+        propertyAnimator.startAnimation()
+        
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        request.loadNews() { result in
+        request.loadNews2(nextList) { result in
             switch result {
-            case .success(let newsList):
-                self.newsList = newsList
+            case .success(let newsList2):
+                self.newsList = newsList2.items
+                self.friendList = newsList2.profiles
+                self.groupList = newsList2.groups
+                self.nextList = newsList2.nextFrom
                 self.tableView.reloadData()
             case .failure(let error):
                 print(error.localizedDescription)
@@ -45,14 +63,94 @@ class NewsViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseID, for: indexPath) as? NewsCell else { fatalError() }
         
         // Configure the cell...
-//        cell.groupImageView.image
+        /*
         cell.groupNameLabel.text = String(newsList[indexPath.row].groupName)
         cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].newsPhotos))
         cell.newsTextLabel.text = String(newsList[indexPath.row].textNews)
         cell.likeCountsLabel.text = String(newsList[indexPath.row].likeCounts)
         cell.commentsCountsLabel.text = String(newsList[indexPath.row].commentsCount)
         cell.viewsCountsLabel.text = String(newsList[indexPath.row].viewsCounts)
-
+        */
+         // Configure the cell VERSION2 EXTENDED...
+        cell.newsPhotosView.image = nil
+        if newsList[indexPath.row].type == "photo" {
+            let countPhotos = newsList[indexPath.row].photos.items[0].sizes.count
+            cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].photos.items[0].sizes[countPhotos - 1].url))
+            cell.newsTextLabel.text = String(newsList[indexPath.row].type)
+            cell.likeCountsLabel.text = String(newsList[indexPath.row].photos.items[0].likes.count)
+            cell.commentsCountsLabel.text = String(newsList[indexPath.row].photos.items[0].comments.count)
+            cell.viewsCountsLabel.alpha = 0
+            cell.viewsIcon.alpha = 0
+            cell.newsText.backgroundColor = .cyan
+        } else if newsList[indexPath.row].type == "post" {
+            cell.newsTextLabel.text = String(newsList[indexPath.row].type + "\n" + newsList[indexPath.row].text)
+            cell.newsText.backgroundColor = .green
+            cell.groupNameLabel.text = String(newsList[indexPath.row].sourceID)
+            if newsList[indexPath.row].attachments.count != 0 {
+                cell.newsTextLabel.text = String(newsList[indexPath.row].type + "\n" + newsList[indexPath.row].text + "\n" + newsList[indexPath.row].attachments[0].type)
+                if newsList[indexPath.row].attachments[0].type == "photo" {
+                    let countPhotos = newsList[indexPath.row].attachments[0].photo.sizes.count
+                    cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].attachments[0].photo.sizes[countPhotos - 1].url))
+                } else if newsList[indexPath.row].attachments[0].type == "link" {
+                    cell.newsTextLabel.text = String(newsList[indexPath.row].type + "\n" + newsList[indexPath.row].text + "\n" + "ЭТО LINK НАДО ОБРАБОТАТЬ" + "\n"  + newsList[indexPath.row].attachments[0].type)
+                    cell.newsText.backgroundColor = .red
+                } else {
+                    cell.newsTextLabel.text = String(newsList[indexPath.row].type + "\n" + newsList[indexPath.row].text + "\n" + "ЭТО НАДО ОБРАБОТАТЬ" + "\n"  + newsList[indexPath.row].attachments[0].type)
+                    cell.newsText.backgroundColor = .red
+                }
+            } else if newsList[indexPath.row].copyhistory.count != 0 {
+                cell.newsTextLabel.text = String(newsList[indexPath.row].type + "\n" + "ЭТО РЕПОСТ НАДО ОБРАБОТАТЬ" + "\n" + newsList[indexPath.row].text)
+                cell.newsText.backgroundColor = .red
+            }
+            
+            cell.likeCountsLabel.text = String(newsList[indexPath.row].likes.count)
+            cell.commentsCountsLabel.text = String(newsList[indexPath.row].comments.count)
+            cell.viewsCountsLabel.text = String(newsList[indexPath.row].views.count)
+           
+        }  else if newsList[indexPath.row].type == "wall_photo" {
+            
+            cell.newsTextLabel.text = String(newsList[indexPath.row].type + "\n" + newsList[indexPath.row].photos.items[0].text)
+            cell.newsText.backgroundColor = .magenta
+            cell.groupNameLabel.text = String(newsList[indexPath.row].sourceID)
+            var countPhotos = 0
+            if newsList[indexPath.row].photos.items[0].sizes.count > 0 {
+                countPhotos = newsList[indexPath.row].photos.items[0].sizes.count
+                cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].photos.items[0].sizes[countPhotos - 1].url))
+            } else {
+                cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].photos.items[0].sizes[countPhotos].url))
+            }
+            cell.likeCountsLabel.text = String(newsList[indexPath.row].photos.items[0].likes.count)
+            cell.commentsCountsLabel.text = String(newsList[indexPath.row].photos.items[0].comments.count)
+            
+        }
+        
+        let autorId = newsList[indexPath.row].sourceID
+        var currentIndex = 0
+        
+        if autorId > 0 {
+            for i in 0...friendList.count - 1 {
+                if autorId == friendList[i].userid {
+                break
+                }
+                currentIndex += 1
+            }
+            cell.groupNameLabel.text = String(friendList[currentIndex].name + " " + friendList[currentIndex].lastname)
+            cell.groupImageView.kf.setImage(with: URL(string: friendList[currentIndex].avatarImage))
+            
+        } else if autorId < 0 {
+            for i in 0...groupList.count - 1 {
+                if -autorId == groupList[i].id {
+                break
+                }
+                currentIndex += 1
+            
+            }
+            cell.groupNameLabel.text = String(groupList[currentIndex].groupName)
+            cell.groupImageView.kf.setImage(with: URL(string: groupList[currentIndex].groupImage))
+            
+        }
+        
+        
         return cell
     }
     
