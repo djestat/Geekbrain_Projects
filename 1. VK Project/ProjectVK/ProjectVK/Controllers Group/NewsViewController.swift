@@ -30,7 +30,8 @@ class NewsViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        request.loadNews2(nextList) { result in
+        request.loadNews2(nextList) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let newsList2):
                 self.newsList = newsList2.items
@@ -130,7 +131,7 @@ class NewsViewController: UITableViewController {
         
         if autorId > 0 {
             for i in 0...friendList.count - 1 {
-                if autorId == friendList[i].userid {
+                if autorId == friendList[i].id {
                 break
                 }
                 currentIndex += 1

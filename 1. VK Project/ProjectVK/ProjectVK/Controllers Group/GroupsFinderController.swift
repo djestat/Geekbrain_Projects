@@ -62,7 +62,8 @@ extension GroupsFinderController: UISearchBarDelegate {
             tableView.reloadData()
             return
         }
-        request.findGroups(searchText) { result in
+        request.findGroups(searchText) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let groupList):
                 self.groupList.removeAll()

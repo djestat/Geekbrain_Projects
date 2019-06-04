@@ -28,6 +28,10 @@ class Group: Object {
         self.groupName = json["name"].stringValue
         self.groupImage = json["photo_200"].stringValue
     }
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }
 
 

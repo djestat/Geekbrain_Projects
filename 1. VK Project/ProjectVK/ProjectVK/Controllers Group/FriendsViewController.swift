@@ -23,25 +23,29 @@ class FriendsViewController: UITableViewController {
     
     let searchController = UISearchController(searchResultsController: nil)
     
- 
+    override func viewWillAppear(_ animated: Bool) {
+//
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        vkRequest.loadFriends { result in
+        vkRequest.loadFriends { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let friendList):
-                self.friendsList = friendList
-                self.sectionArrayPrepare()
-                self.tableView.reloadData()
+                self.saveToRealm(friendList)
             case .failure(let error):
                 print(error.localizedDescription)
             }
+            self.readFromRealm()
         }
         
         if !isFiltering() {
 //            sectionArrayPrepare()
+            print("???????????????????????????????????????????")
         }
         
+
         // Setup the SearchBar Controller
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -150,7 +154,7 @@ class FriendsViewController: UITableViewController {
             let lastnameKey = sections[indexPath.section]
             
             if let lastnameValues = dictionary[lastnameKey] {
-                let friendProfileUserId = lastnameValues[indexPath.row].userid
+                let friendProfileUserId = lastnameValues[indexPath.row].id
                 let friendProfileName = lastnameValues[indexPath.row].name
                 let friendProfileLastname = lastnameValues[indexPath.row].lastname
                 friendsProfileVC.friendProfileUserId = friendProfileUserId
@@ -169,10 +173,10 @@ class FriendsViewController: UITableViewController {
         for lastname in friendsList {
             let lastnameKey = String(lastname.lastname.prefix(1))
             if var lastnameValues = sectionDictionary[lastnameKey] {
-                lastnameValues.append(FriendProfile(userid: lastname.userid, name: lastname.name, lastname: lastname.lastname, avatarImage: lastname.avatarImage))
+                lastnameValues.append(FriendProfile(id: lastname.id, name: lastname.name, lastname: lastname.lastname, avatarImage: lastname.avatarImage))
                 sectionDictionary[lastnameKey] = lastnameValues
             } else {
-                sectionDictionary[lastnameKey] = [FriendProfile(userid: lastname.userid, name: lastname.name, lastname: lastname.lastname, avatarImage: lastname.avatarImage)]
+                sectionDictionary[lastnameKey] = [FriendProfile(id: lastname.id, name: lastname.name, lastname: lastname.lastname, avatarImage: lastname.avatarImage)]
             }
         }
         
@@ -200,10 +204,10 @@ class FriendsViewController: UITableViewController {
         for lastname in searchingFriendList {
             let lastnameKey = String(lastname.lastname.prefix(1))
             if var lastnameValues = searchingSectionDictionary[lastnameKey] {
-                lastnameValues.append(FriendProfile(userid: lastname.userid, name: lastname.name, lastname: lastname.lastname, avatarImage: lastname.avatarImage))
+                lastnameValues.append(FriendProfile(id: lastname.id, name: lastname.name, lastname: lastname.lastname, avatarImage: lastname.avatarImage))
                 searchingSectionDictionary[lastnameKey] = lastnameValues
             } else {
-                searchingSectionDictionary[lastnameKey] = [FriendProfile(userid: lastname.userid, name: lastname.name, lastname: lastname.lastname, avatarImage: lastname.avatarImage)]
+                searchingSectionDictionary[lastnameKey] = [FriendProfile(id: lastname.id, name: lastname.name, lastname: lastname.lastname, avatarImage: lastname.avatarImage)]
             }
         }
         
@@ -215,6 +219,27 @@ class FriendsViewController: UITableViewController {
     
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
+    }
+    
+    //MARK: - REALM Function
+    
+    func saveToRealm(_ data: [FriendProfile]) {
+        let realmConfig = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
+        let realm = try! Realm(configuration: realmConfig)
+        try! realm.write {
+            realm.add(data, update: .modified)
+        }
+        print(realm.configuration.fileURL!)
+        print("WRITING INTO REALM FRIENDS NOW!! WOWOWOW I'M HERE!!")
+    }
+    
+    func readFromRealm() {
+        let realm = try! Realm()
+        let friendList = Array(realm.objects(FriendProfile.self))
+        friendsList = friendList
+        sectionArrayPrepare()
+        tableView.reloadData()
+        print("WAS HERE NOW!! READING REALM FRIENDS DATA NOW HERE!!")
     }
 
 }

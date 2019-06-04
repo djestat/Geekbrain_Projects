@@ -21,7 +21,8 @@ class FriendsProfileController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        request.loadPhotos(friendProfileUserId) { result in
+        request.loadPhotos(friendProfileUserId) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let photoList):
                 self.friendProfilePhoto = photoList

@@ -155,8 +155,8 @@ class VKAPIRequests {
         
         let params: Parameters = [
             "access_token" : token,
-//            "filters" : "post",
-            "filters" : "post,photo,wall_photo",
+            "filters" : "post,photo",
+//            "filters" : "post,photo,wall_photo",
 //            "source_id" : sourceID,
             "start_from" : nextList,
             "count" : "100",

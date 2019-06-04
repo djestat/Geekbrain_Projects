@@ -11,14 +11,14 @@ import SwiftyJSON
 import RealmSwift
 
 class FriendProfile: Object {
-    @objc dynamic var userid: Int = 0
+    @objc dynamic var id: Int = 0
     @objc dynamic var name: String = ""
     @objc dynamic var lastname: String = ""
     @objc dynamic var avatarImage: String = ""
     
-    convenience init(userid: Int, name: String, lastname: String, avatarImage: String) {
+    convenience init(id: Int, name: String, lastname: String, avatarImage: String) {
         self.init()
-        self.userid = userid
+        self.id = id
         self.name = name
         self.lastname = lastname
         self.avatarImage = avatarImage
@@ -27,31 +27,56 @@ class FriendProfile: Object {
     convenience init(_ json: JSON) {
         self.init()
         
-        self.userid = json["id"].intValue
+        self.id = json["id"].intValue
         self.name = json["first_name"].stringValue
         self.lastname = json["last_name"].stringValue
         self.avatarImage = json["photo_200_orig"].stringValue
     }
     
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+    
+    
 }
 
 class FriendProfilePhoto: Object {
-    @objc dynamic var userid: Int = 0
+    @objc dynamic var id: Int = 0
+    @objc dynamic var ownerid: Int = 0
     @objc dynamic var photo: String = ""
     
-    convenience init(userid: Int, photo: String) {
+    convenience init(id: Int, ownerid: Int, photo: String) {
         self.init()
-        self.userid = userid
+        self.id = id
+        self.ownerid = ownerid
         self.photo = photo
     }
     
     convenience init(_ json: JSON) {
         self.init()
-        self.userid = json["owner_id"].intValue
-        self.photo = json["sizes"][3]["url"].stringValue
+        self.id = json["id"].intValue
+        self.ownerid = json["owner_id"].intValue
+        let sizes = json["sizes"].arrayValue.count
+        self.photo = json["sizes"][sizes - 1]["url"].stringValue
+    }
+    
+    override static func primaryKey() -> String? {
+        return "id"
     }
     
 }
+
+
+
+/*
+ "id": 456244681,
+ "album_id": -6,
+ "owner_id": 2644744,
+ "sizes": [...],
+ "text": "",
+ "date": 1558817427,
+ "post_id": 1650
+ */
 
 /*
 // MARK: - Profile
