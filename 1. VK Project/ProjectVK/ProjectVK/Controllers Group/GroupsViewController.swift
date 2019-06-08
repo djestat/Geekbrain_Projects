@@ -105,7 +105,7 @@ class GroupsViewController: UITableViewController {
                 self.groupsList = Array(collection)
                 self.filteredGroupList = self.groupsList
                 self.tableView.reloadData()
-                print("INITIAAAAAAAALLLLLLLLLLLLL")
+                print("INITIAAAAAAAAALLLLLLLLLLLLLL")
             case .update(let collection, deletions: let deletion, insertions: let insertions, modifications: let modification):
                 self.groupsList = Array(collection)
                 self.filteredGroupList = self.groupsList
