@@ -270,39 +270,37 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FriendsCell" rowHeight="66" id="GAP-Hz-8iq" customClass="FriendsCell" customModule="ProjectVK" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="66"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FriendsCell" id="GAP-Hz-8iq" customClass="FriendsCell" customModule="ProjectVK" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GAP-Hz-8iq" id="8We-vu-ysX">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="65.666666666666671"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GAP-Hz-8iq" id="8We-vu-ysX">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friends Name  &amp; Lastname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qig-TV-jR8">
-                                            <rect key="frame" x="65.999999999999986" y="20.666666666666664" width="205.66666666666663" height="25"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friend Name + Lastname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qig-TV-jR8">
+                                            <rect key="frame" x="66" y="20.666666666666671" width="192" height="25"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="25" id="HGN-td-JMe"/>
+                                                <constraint firstAttribute="height" constant="25" id="BWE-U0-fKC"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7RK-co-hBt">
-                                            <rect key="frame" x="8" y="8.3333333333333357" width="50" height="50"/>
+                                            <rect key="frame" x="8" y="8.0000000000000036" width="50" height="50.333333333333343"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="50" id="H8r-Ls-6aP"/>
-                                                <constraint firstAttribute="width" secondItem="7RK-co-hBt" secondAttribute="height" multiplier="1:1" id="YfC-sH-eum"/>
-                                                <constraint firstAttribute="height" constant="50" id="aND-T8-XPU"/>
+                                                <constraint firstAttribute="width" secondItem="7RK-co-hBt" secondAttribute="height" multiplier="1:1" id="PxH-12-2mV"/>
+                                                <constraint firstAttribute="height" constant="50" identifier="id50" id="UVx-W2-GxF"/>
                                             </constraints>
                                         </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="Qig-TV-jR8" firstAttribute="leading" secondItem="7RK-co-hBt" secondAttribute="trailing" constant="8" id="2tB-TY-LqT"/>
-                                        <constraint firstItem="Qig-TV-jR8" firstAttribute="centerY" secondItem="8We-vu-ysX" secondAttribute="centerY" id="8oK-JT-0KZ"/>
-                                        <constraint firstItem="7RK-co-hBt" firstAttribute="top" secondItem="8We-vu-ysX" secondAttribute="top" constant="8" id="Y5J-14-Gcq"/>
-                                        <constraint firstAttribute="bottom" secondItem="7RK-co-hBt" secondAttribute="bottom" constant="8" id="YEJ-PR-FFZ"/>
-                                        <constraint firstItem="7RK-co-hBt" firstAttribute="leading" secondItem="8We-vu-ysX" secondAttribute="leading" constant="8" id="aNl-Jq-GPW"/>
-                                        <constraint firstItem="7RK-co-hBt" firstAttribute="centerY" secondItem="8We-vu-ysX" secondAttribute="centerY" id="bKN-7G-F7l"/>
-                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Qig-TV-jR8" secondAttribute="trailing" constant="12" id="fBH-MP-fSu"/>
+                                        <constraint firstAttribute="bottom" secondItem="7RK-co-hBt" secondAttribute="bottom" constant="8" id="29W-vb-Pe6"/>
+                                        <constraint firstItem="7RK-co-hBt" firstAttribute="leading" secondItem="8We-vu-ysX" secondAttribute="leading" constant="8" id="FlG-gc-0EK"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Qig-TV-jR8" secondAttribute="trailing" constant="25" id="Lw7-pG-cL1"/>
+                                        <constraint firstItem="Qig-TV-jR8" firstAttribute="leading" secondItem="7RK-co-hBt" secondAttribute="trailing" constant="8" id="eSR-w6-841"/>
+                                        <constraint firstItem="Qig-TV-jR8" firstAttribute="centerY" secondItem="7RK-co-hBt" secondAttribute="centerY" id="vdg-zE-GK1"/>
+                                        <constraint firstItem="7RK-co-hBt" firstAttribute="top" secondItem="8We-vu-ysX" secondAttribute="top" constant="8" id="wAE-W3-fuh"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -491,7 +489,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="justified" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mYs-bX-181">
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mYs-bX-181">
                                             <rect key="frame" x="10" y="62" width="355" height="33.666666666666657"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
@@ -589,37 +587,36 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R3j-2c-fqq" customClass="LikeControl" customModule="ProjectVK" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="204" width="25" height="25"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="R3j-2c-fqq" secondAttribute="height" multiplier="1:1" id="oYh-Se-yb3"/>
-                                                <constraint firstAttribute="width" constant="25" id="zAI-pf-ZhR"/>
-                                            </constraints>
-                                            <connections>
-                                                <outlet property="likeCount" destination="FPJ-qS-kUN" id="m44-oa-xwY"/>
-                                            </connections>
-                                        </view>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O5m-Wi-Ukg">
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="O5m-Wi-Ukg" secondAttribute="height" multiplier="1:1" id="zA7-Tv-apI"/>
                                             </constraints>
                                         </imageView>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0xu-DL-auI">
+                                            <rect key="frame" x="0.0" y="204" width="25" height="25"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="0xu-DL-auI" secondAttribute="height" multiplier="1:1" id="8bf-rw-fNi"/>
+                                                <constraint firstAttribute="height" constant="25" id="CTt-Ak-p2D"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="FPJ-qS-kUN" firstAttribute="leading" secondItem="R3j-2c-fqq" secondAttribute="trailing" constant="10" id="66D-6t-0eZ"/>
+                                    <constraint firstItem="0xu-DL-auI" firstAttribute="leading" secondItem="bhc-yu-Ova" secondAttribute="leading" id="6Ch-rQ-bSp"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="FPJ-qS-kUN" secondAttribute="trailing" symbolic="YES" id="6e9-gW-4O8"/>
                                     <constraint firstAttribute="trailing" secondItem="O5m-Wi-Ukg" secondAttribute="trailing" id="7Lj-67-QhZ"/>
-                                    <constraint firstItem="R3j-2c-fqq" firstAttribute="top" secondItem="O5m-Wi-Ukg" secondAttribute="bottom" constant="4" id="TIi-0g-hB2"/>
+                                    <constraint firstItem="FPJ-qS-kUN" firstAttribute="centerY" secondItem="0xu-DL-auI" secondAttribute="centerY" id="VxE-c1-fOW"/>
                                     <constraint firstItem="O5m-Wi-Ukg" firstAttribute="top" secondItem="bhc-yu-Ova" secondAttribute="top" id="dKy-U5-d8o"/>
                                     <constraint firstItem="O5m-Wi-Ukg" firstAttribute="leading" secondItem="bhc-yu-Ova" secondAttribute="leading" id="dkO-Qj-o3l"/>
-                                    <constraint firstItem="R3j-2c-fqq" firstAttribute="leading" secondItem="O5m-Wi-Ukg" secondAttribute="leading" id="lNE-c0-acc"/>
-                                    <constraint firstItem="R3j-2c-fqq" firstAttribute="centerY" secondItem="FPJ-qS-kUN" secondAttribute="centerY" id="nLL-yz-EHU"/>
+                                    <constraint firstItem="0xu-DL-auI" firstAttribute="top" secondItem="O5m-Wi-Ukg" secondAttribute="bottom" constant="4" id="m5s-CQ-cfN"/>
+                                    <constraint firstItem="FPJ-qS-kUN" firstAttribute="leading" secondItem="0xu-DL-auI" secondAttribute="trailing" constant="10" id="tzt-Ro-fT7"/>
                                 </constraints>
                                 <size key="customSize" width="200" height="230"/>
                                 <connections>
                                     <outlet property="friendProfilePhoto" destination="O5m-Wi-Ukg" id="z1y-M5-65X"/>
+                                    <outlet property="likeCountsLabel" destination="FPJ-qS-kUN" id="mSr-3G-yxc"/>
+                                    <outlet property="likedImage" destination="0xu-DL-auI" id="UKL-zt-5gY"/>
                                     <segue destination="qmR-UA-MMl" kind="show" identifier="ShowPhoto" id="6sD-sT-RNF"/>
                                 </connections>
                             </collectionViewCell>
@@ -808,13 +805,13 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Comments" width="100" height="100"/>
+        <image name="Comments" width="25" height="25"/>
         <image name="Friends" width="25" height="25"/>
         <image name="Groups" width="25" height="25"/>
-        <image name="Like_nonfill" width="100" height="100"/>
+        <image name="Like_nonfill" width="25" height="25"/>
         <image name="News" width="25" height="25"/>
-        <image name="Repost" width="100" height="100"/>
-        <image name="Views" width="100" height="100"/>
+        <image name="Repost" width="25" height="25"/>
+        <image name="Views" width="25" height="25"/>
         <image name="Vkontakte" width="1662" height="413"/>
         <image name="avatar" width="512" height="512"/>
     </resources>

@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import RealmSwift
 
 private let reuseIdentifier = "Cell"
 
 class FriendsBigPhotoCollectionViewController: UICollectionViewController {
     
-    public var friendProfilePhoto = [FriendProfilePhoto]()
+    public var friendProfilePhoto: Results<FriendPhoto> = try! Realm().objects(FriendPhoto.self)
     public var indexPhoto = 0
 
     override func viewWillAppear(_ animated: Bool) {
@@ -61,6 +62,7 @@ class FriendsBigPhotoCollectionViewController: UICollectionViewController {
         // Configure the cell
 //        cell.bigFriendPhoto.image = UIImage(named: bigPhotoName)
         cell.bigFriendPhoto.kf.setImage(with: URL(string: friendProfilePhoto[indexPath.row].photo))
+        cell.bigFriendPhoto.isMultipleTouchEnabled = true
         
         return cell
     }

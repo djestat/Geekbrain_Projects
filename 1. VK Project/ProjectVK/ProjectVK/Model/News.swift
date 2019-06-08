@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-struct News {
+struct News3 {
     
 //    let groupImage: String
     let groupName: Int
@@ -21,7 +21,7 @@ struct News {
     var sizes: Int
     
     init(_ json: JSON) {
-//        self.groupImage = json["type"].stringValue
+//        self.image = json["type"].stringValue
         self.groupName = json["source_id"].intValue
         self.sizes = json["attachments"][0]["link"]["photo"]["sizes"].arrayValue.count
         self.newsPhotos = json["attachments"][0]["link"]["photo"]["sizes"][sizes - 1]["url"].stringValue
@@ -38,7 +38,7 @@ struct News {
 
 
 //MARK: News2 Extended
-class News2 {
+class News {
     let items: [ResponseItem]
     let profiles: [FriendProfile]
     let groups: [Group]

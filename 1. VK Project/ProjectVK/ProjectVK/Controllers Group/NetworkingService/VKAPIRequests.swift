@@ -93,13 +93,14 @@ class VKAPIRequests {
     }
     
     // MARK: - Load Friend photo
-    public func loadPhotos(_ userID: Int, completion: ((Swift.Result<[FriendProfilePhoto], Error>) -> Void)? = nil) {
+    public func loadPhotos(_ userID: Int, completion: ((Swift.Result<[FriendPhoto], Error>) -> Void)? = nil) {
 
         let baseURL = "https://api.vk.com"
         let path = "/method/photos.getAll"
         
         let params: Parameters = [
             "access_token" : token,
+            "extended": "1",
             "owner_id" : userID,
             "count" : "100",
             "v" : "5.95"
@@ -110,7 +111,7 @@ class VKAPIRequests {
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                let photoList = json["response"]["items"].arrayValue.map { FriendProfilePhoto($0) }
+                let photoList = json["response"]["items"].arrayValue.map { FriendPhoto($0) }
                 completion?(.success(photoList))
             case .failure(let error):
                 completion?(.failure(error))
@@ -119,7 +120,7 @@ class VKAPIRequests {
     }
     
     // MARK: - Load VKnews
-    public func loadNews(_ nextList: String, completion: ((Swift.Result<[News], Error>) -> Void)? = nil) {
+    public func loadNews3(_ nextList: String, completion: ((Swift.Result<[News3], Error>) -> Void)? = nil) {
         
         let baseURL = "https://api.vk.com"
         let path = "/method/newsfeed.get"
@@ -138,7 +139,7 @@ class VKAPIRequests {
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                let newsList = json["response"]["items"].arrayValue.map { News($0) }
+                let newsList = json["response"]["items"].arrayValue.map { News3($0) }
                 completion?(.success(newsList))
             case .failure(let error):
                 completion?(.failure(error))
@@ -148,7 +149,7 @@ class VKAPIRequests {
     
 
     // MARK: - Load VKnews
-    public func loadNews2(_ nextList: String, completion: ((Swift.Result<News2, Error>) -> Void)? = nil) {
+    public func loadNews(_ nextList: String, completion: ((Swift.Result<News, Error>) -> Void)? = nil) {
         
         let baseURL = "https://api.vk.com"
         let path = "/method/newsfeed.get"
@@ -169,7 +170,7 @@ class VKAPIRequests {
             case .success(let value):
                 let json = JSON(value)
                 let response = json["response"].self
-                let newsList = News2(response)
+                let newsList = News(response)
                 completion?(.success(newsList))
             case .failure(let error):
                 completion?(.failure(error))

@@ -10,9 +10,9 @@ import UIKit
 
 class LikeControl: UIControl {
     
-    public var isLike: Bool = false
+    public var isLiked: Bool = false
+    public var likeCounts = 0
     
-    var likeCounts = 110
     let likeControlView = UIImageView()
     
     @IBOutlet var likeCount: UILabel!
@@ -48,8 +48,8 @@ class LikeControl: UIControl {
     
     //MARK: - Extended Functionn
     @objc func likeTapped() {
-        isLike.toggle()
-        if isLike == true {
+        isLiked.toggle()
+        if isLiked == true {
             UIView.transition(with: likeControlView, duration: 0.45, options: .transitionCurlUp, animations: {
                 self.likeControlView.image = UIImage(named: "Like_fill")
             }) { _ in

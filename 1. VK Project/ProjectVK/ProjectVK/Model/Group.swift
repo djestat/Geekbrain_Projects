@@ -12,21 +12,21 @@ import RealmSwift
 
 class Group: Object {
     @objc dynamic var id: Int = 0
-    @objc dynamic var groupName: String = ""
-    @objc dynamic var groupImage: String = ""
+    @objc dynamic var name: String = ""
+    @objc dynamic var image: String = ""
     
     convenience init(id: Int, groupName: String, groupImage: String) {
         self.init()
         self.id = id
-        self.groupName = groupName
-        self.groupImage = groupImage
+        self.name = groupName
+        self.image = groupImage
     }
     
     convenience init(_ json: JSON) {
         self.init()
         self.id = json["id"].intValue
-        self.groupName = json["name"].stringValue
-        self.groupImage = json["photo_200"].stringValue
+        self.name = json["name"].stringValue
+        self.image = json["photo_200"].stringValue
     }
     
     override static func primaryKey() -> String? {

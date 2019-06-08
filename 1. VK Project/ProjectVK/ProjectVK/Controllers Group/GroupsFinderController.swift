@@ -41,8 +41,8 @@ class GroupsFinderController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupsCell.reuseID, for: indexPath) as? GroupsCell else { fatalError() }
 
-        cell.groupName.text = groupList[indexPath.row].groupName
-        cell.groupPhoto.kf.setImage(with: URL(string: groupList[indexPath.row].groupImage))
+        cell.groupName.text = groupList[indexPath.row].name
+        cell.groupPhoto.kf.setImage(with: URL(string: groupList[indexPath.row].image))
 
         return cell
     }

@@ -22,7 +22,7 @@ class FriendsCell: UITableViewCell {
 //    @IBInspectable
     var shadowRadius: CGFloat = 10
 //    @IBInspectable
-    var shadowColor: UIColor = .gray
+    public var shadowColor: UIColor = .gray
 //    @IBInspectable
     var shadowOpacity: Float = 0.95
     

@@ -8,29 +8,35 @@
 
 import UIKit
 import Kingfisher
-
+import RealmSwift
 
 class FriendsProfileController: UICollectionViewController {
     
     let request = VKAPIRequests()
+    var resultNotificationToken: NotificationToken?
     
     public var friendProfileUserId: Int = 1
     public var friendProfileName = ""
     public var friendProfileLastname = ""
-    public var friendProfilePhoto = [FriendProfilePhoto]()
+    public var friendProfilePhoto: Results<FriendPhoto> = try! Realm().objects(FriendPhoto.self)
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
         request.loadPhotos(friendProfileUserId) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let photoList):
-                self.friendProfilePhoto = photoList
-                self.collectionView.reloadData()
+                self.saveToRealm(photoList)
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
+        resultNotificationObjects()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         let width = collectionView.bounds.width / 3.05
         let layout = collectionViewLayout as! UICollectionViewFlowLayout
@@ -40,6 +46,10 @@ class FriendsProfileController: UICollectionViewController {
 
         title = friendProfileName + " " + friendProfileLastname
     
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        resultNotificationToken?.invalidate()
     }
 
     // MARK: UICollectionViewDataSource
@@ -52,7 +62,17 @@ class FriendsProfileController: UICollectionViewController {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FriendsPhotoCell.reuseID, for: indexPath) as? FriendsPhotoCell else { fatalError() }
     
         // Configure the cell
+        
+        if friendProfilePhoto[indexPath.row].isLiked == 1 {
+            cell.likeToggle = true
+        } else {
+            cell.likeToggle = false
+        }
+
+        cell.isLiked = friendProfilePhoto[indexPath.row].isLiked
+        cell.likeCounts = friendProfilePhoto[indexPath.row].likes
         cell.friendProfilePhoto.kf.setImage(with: URL(string: friendProfilePhoto[indexPath.row].photo))
+        cell.awakeFromNib()
     
         return cell
     }
@@ -71,4 +91,35 @@ class FriendsProfileController: UICollectionViewController {
         
     }
     
+    //MARK: - REALM Function
+    
+    func saveToRealm(_ data: [FriendPhoto]) {
+        let realmConfig = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
+        let realm = try! Realm(configuration: realmConfig)
+        try! realm.write {
+            realm.add(data, update: .modified)
+        }
+        print(realm.configuration.fileURL!)
+        print("WRITING INTO REALM FRIENDS PHOTOS NOW!! WOWOWOW I'M HERE!!")
+    }
+    
+    func resultNotificationObjects() {
+        let realm = try! Realm()
+        let friendPhotos = realm.objects(FriendPhoto.self).filter("ownerid = \(friendProfileUserId)")
+        resultNotificationToken = friendPhotos.observe { change in
+            switch change {
+            case .initial(let collection):
+                self.friendProfilePhoto = collection.sorted(byKeyPath: "id", ascending: false)
+                self.collectionView.reloadData()
+                print("INITIAAAAAAAALLLLLLLLLLLLL")
+            case .update(let collection, deletions: let deletion, insertions: let insertions, modifications: let modification):
+                self.friendProfilePhoto = collection.sorted(byKeyPath: "id", ascending: false)
+                self.collectionView.reloadData()
+                print("UPDAAAAAAAAATEEEEEE")
+                print("\(collection.count) , \(deletion.count), \(insertions.count), \(modification.count)")
+            case .error(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
 }

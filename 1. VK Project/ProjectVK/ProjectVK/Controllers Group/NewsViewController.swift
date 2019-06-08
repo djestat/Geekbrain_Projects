@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import RealmSwift
 
 class NewsViewController: UITableViewController {
     let request = VKAPIRequests()
+    var resultNotificationToken: NotificationToken?
     
     var newsList = [ResponseItem]()
     var friendList = [FriendProfile]()
@@ -17,20 +19,16 @@ class NewsViewController: UITableViewController {
     var nextList = ""
 
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-        cell.contentView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-        let propertyAnimator = UIViewPropertyAnimator(duration: 0.6, curve: .easeOut) {
-            cell.contentView.transform = .identity
-        }
-        
-        propertyAnimator.startAnimation()
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         
     }
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        request.loadNews2(nextList) { [weak self] result in
+        request.loadNews(nextList) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let newsList2):
@@ -44,15 +42,10 @@ class NewsViewController: UITableViewController {
             }
         }
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
     }
 
     // MARK: - Table view data source
-
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -62,16 +55,7 @@ class NewsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseID, for: indexPath) as? NewsCell else { fatalError() }
-        
-        // Configure the cell...
-        /*
-        cell.groupNameLabel.text = String(newsList[indexPath.row].groupName)
-        cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].newsPhotos))
-        cell.newsTextLabel.text = String(newsList[indexPath.row].textNews)
-        cell.likeCountsLabel.text = String(newsList[indexPath.row].likeCounts)
-        cell.commentsCountsLabel.text = String(newsList[indexPath.row].commentsCount)
-        cell.viewsCountsLabel.text = String(newsList[indexPath.row].viewsCounts)
-        */
+    
          // Configure the cell VERSION2 EXTENDED...
         cell.newsPhotosView.image = nil
         if newsList[indexPath.row].type == "photo" {
@@ -147,8 +131,8 @@ class NewsViewController: UITableViewController {
                 currentIndex += 1
             
             }
-            cell.groupNameLabel.text = String(groupList[currentIndex].groupName)
-            cell.groupImageView.kf.setImage(with: URL(string: groupList[currentIndex].groupImage))
+            cell.groupNameLabel.text = String(groupList[currentIndex].name)
+            cell.groupImageView.kf.setImage(with: URL(string: groupList[currentIndex].image))
             
         }
         
@@ -156,4 +140,48 @@ class NewsViewController: UITableViewController {
         return cell
     }
     
+    // MARK: - Table view animation initialising
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        cell.contentView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+        let propertyAnimator = UIViewPropertyAnimator(duration: 0.6, curve: .easeOut) {
+            cell.contentView.transform = .identity
+        }
+        
+        propertyAnimator.startAnimation()
+        
+    }
+    
+    //MARK: - REALM Function
+    
+    func saveToRealm(_ data: [Group]) {
+        let realmConfig = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
+        let realm = try! Realm(configuration: realmConfig)
+        try! realm.write {
+            realm.add(data, update: .modified)
+        }
+        print(realm.configuration.fileURL!)
+        print("WRITING GROUP TO REALM HERE RIGHT NOW!! WOWOWOW I'M HERE!!")
+    }
+    
+/*    func resultNotificationObjects() {
+        let realm = try! Realm()
+        let newsList = realm.objects(Group.self)
+        resultNotificationToken = newsList.observe { change in
+            switch change {
+            case .initial(let collection):
+                self.newsList = Array(collection)
+                self.tableView.reloadData()
+                print("INITIAAAAAAAALLLLLLLLLLLLL")
+            case .update(let collection, deletions: let deletion, insertions: let insertions, modifications: let modification):
+                self.newsList = Array(collection)
+                self.tableView.reloadData()
+                print("UPDAAAAAAAAATEEEEEE")
+                print("\(collection.count) , \(deletion.count), \(insertions.count), \(modification.count)")
+            case .error(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }*/
 }
