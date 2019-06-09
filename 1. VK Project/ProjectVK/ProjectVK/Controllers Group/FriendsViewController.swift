@@ -24,12 +24,12 @@ class FriendsViewController: UITableViewController {
     
     let searchController = UISearchController(searchResultsController: nil)
     
+     // MARK: - View lifecycle
     override func viewWillAppear(_ animated: Bool) {
-        vkRequest.loadFriends { [weak self] result in
-            guard let self = self else { return }
+        vkRequest.loadFriends { result in
             switch result {
             case .success(let friendList):
-                self.saveToRealm(friendList)
+                RealmProvider.save(data: friendList)
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -227,15 +227,6 @@ class FriendsViewController: UITableViewController {
     }
     
     //MARK: - REALM Function
-    func saveToRealm(_ data: [FriendProfile]) {
-        let realmConfig = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
-        let realm = try! Realm(configuration: realmConfig)
-        try! realm.write {
-            realm.add(data, update: .modified)
-        }
-        print(realm.configuration.fileURL!)
-        print("WRITING INTO REALM FRIENDS NOW!! WOWOWOW I'M HERE!!")
-    }
     
     func resultNotificationObjects() {
         let realmConfig = Realm.Configuration(deleteRealmIfMigrationNeeded: true)

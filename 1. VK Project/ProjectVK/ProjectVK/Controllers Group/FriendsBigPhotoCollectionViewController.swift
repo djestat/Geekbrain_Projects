@@ -13,8 +13,10 @@ private let reuseIdentifier = "Cell"
 
 class FriendsBigPhotoCollectionViewController: UICollectionViewController {
     
-    public var friendProfilePhoto: Results<FriendPhoto> = try! Realm().objects(FriendPhoto.self)
+    public var friendProfilePhoto: Results<FriendPhoto> = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(FriendPhoto.self)
     public var indexPhoto = 0
+
+    // MARK: - View lifecycle
 
     override func viewWillAppear(_ animated: Bool) {
         let indexPath = IndexPath(row: indexPhoto, section: 0)

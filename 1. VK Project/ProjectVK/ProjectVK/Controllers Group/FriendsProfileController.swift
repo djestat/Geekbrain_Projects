@@ -20,14 +20,13 @@ class FriendsProfileController: UICollectionViewController {
     public var friendProfileLastname = ""
     public var friendProfilePhoto: Results<FriendPhoto> = try! Realm().objects(FriendPhoto.self)
     
-    
+    // MARK: - View lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
-        request.loadPhotos(friendProfileUserId) { [weak self] result in
-            guard let self = self else { return }
+        request.loadPhotos(friendProfileUserId) { result in
             switch result {
             case .success(let photoList):
-                self.saveToRealm(photoList)
+                RealmProvider.save(data: photoList)
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -53,6 +52,7 @@ class FriendsProfileController: UICollectionViewController {
     }
 
     // MARK: UICollectionViewDataSource
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         return friendProfilePhoto.count
@@ -92,16 +92,6 @@ class FriendsProfileController: UICollectionViewController {
     }
     
     //MARK: - REALM Function
-    
-    func saveToRealm(_ data: [FriendPhoto]) {
-        let realmConfig = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
-        let realm = try! Realm(configuration: realmConfig)
-        try! realm.write {
-            realm.add(data, update: .modified)
-        }
-        print(realm.configuration.fileURL!)
-        print("WRITING INTO REALM FRIENDS PHOTOS NOW!! WOWOWOW I'M HERE!!")
-    }
     
     func resultNotificationObjects() {
         let realm = try! Realm()

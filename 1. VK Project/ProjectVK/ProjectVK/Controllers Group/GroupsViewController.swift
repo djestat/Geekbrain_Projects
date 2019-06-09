@@ -15,8 +15,8 @@ class GroupsViewController: UITableViewController {
     let request = VKAPIRequests()
     var resultNotificationToken: NotificationToken?
     
-    private var groupsList: Results<Group> = try! Realm().objects(Group.self)
-    private var filteredGroupList: Results<Group> = try! Realm().objects(Group.self)
+    private var groupsList: Results<Group> = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(Group.self)
+    private var filteredGroupList: Results<Group> = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(Group.self)
     
     @IBOutlet weak var searchBar: UISearchBar! {
         didSet {
@@ -27,11 +27,10 @@ class GroupsViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        request.userGroups { [weak self] result in
-            guard let self = self else { return }
+        request.userGroups { result in
             switch result {
             case .success(let groupList):
-                self.saveToRealm(groupList)
+                RealmProvider.save(data: groupList)
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -76,25 +75,6 @@ class GroupsViewController: UITableViewController {
     
     //MARK: - REALM Function
     
-    func saveToRealm(_ data: [Group]) {
-        let realmConfig = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
-        let realm = try! Realm(configuration: realmConfig)
-        try! realm.write {
-            realm.add(data, update: .modified)
-        }
-        print(realm.configuration.fileURL!)
-        print("WRITING GROUP TO REALM HERE RIGHT NOW!! WOWOWOW I'M HERE!!")
-    }
-    
-    func searchInRealmGroup(_ text: String) {
-        let realmConfig = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
-        let realm = try! Realm(configuration: realmConfig)
-        let searchingGroup = realm.objects(Group.self).filter("name CONTAINS[cd] '\(text)'")
-        filteredGroupList = searchingGroup
-        tableView.reloadData()
-        print("WAS HERE NOW!! SEARCHIN GROUPS BY NAME NOW HERE!!")
-    }
-    
     func resultNotificationObjects() {
         let realmConfig = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
         let realm = try! Realm(configuration: realmConfig)
@@ -129,7 +109,9 @@ extension GroupsViewController: UISearchBarDelegate {
             tableView.reloadData()
             return
         }
-        searchInRealmGroup(searchText)
+        let searchingGroup = RealmProvider.searchInGroup(Group.self, searchText)
+        filteredGroupList = searchingGroup
+        tableView.reloadData()
     }
     
 }
