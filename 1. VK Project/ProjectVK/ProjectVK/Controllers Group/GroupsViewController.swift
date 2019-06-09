@@ -15,8 +15,8 @@ class GroupsViewController: UITableViewController {
     let request = VKAPIRequests()
     var resultNotificationToken: NotificationToken?
     
-    private var groupsList = [Group]()
-    private var filteredGroupList = [Group]()
+    private var groupsList: Results<Group> = try! Realm().objects(Group.self)
+    private var filteredGroupList: Results<Group> = try! Realm().objects(Group.self)
     
     @IBOutlet weak var searchBar: UISearchBar! {
         didSet {
@@ -89,7 +89,7 @@ class GroupsViewController: UITableViewController {
     func searchInRealmGroup(_ text: String) {
         let realmConfig = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
         let realm = try! Realm(configuration: realmConfig)
-        let searchingGroup = Array(realm.objects(Group.self).filter("name CONTAINS[cd] '\(text)'"))
+        let searchingGroup = realm.objects(Group.self).filter("name CONTAINS[cd] '\(text)'")
         filteredGroupList = searchingGroup
         tableView.reloadData()
         print("WAS HERE NOW!! SEARCHIN GROUPS BY NAME NOW HERE!!")
@@ -99,18 +99,19 @@ class GroupsViewController: UITableViewController {
         let realmConfig = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
         let realm = try! Realm(configuration: realmConfig)
         let friendPhotos = realm.objects(Group.self)
-        resultNotificationToken = friendPhotos.observe { change in
+        resultNotificationToken = friendPhotos.observe { [weak self] change in
+            guard let self = self else { return }
             switch change {
             case .initial(let collection):
-                self.groupsList = Array(collection)
+                self.groupsList = collection
                 self.filteredGroupList = self.groupsList
                 self.tableView.reloadData()
                 print("INITIAAAAAAAAALLLLLLLLLLLLLL")
             case .update(let collection, deletions: let deletion, insertions: let insertions, modifications: let modification):
-                self.groupsList = Array(collection)
+                self.groupsList = collection
                 self.filteredGroupList = self.groupsList
                 self.tableView.reloadData()
-                print("UPDAAAAAAAAATEEEEEE")
+                print("UPDAAAAAAAAAATEEEEEE")
                 print("\(collection.count) , \(deletion.count), \(insertions.count), \(modification.count)")
             case .error(let error):
                 print(error.localizedDescription)

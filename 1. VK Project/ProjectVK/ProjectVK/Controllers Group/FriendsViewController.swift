@@ -241,7 +241,8 @@ class FriendsViewController: UITableViewController {
         let realmConfig = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
         let realm = try! Realm(configuration: realmConfig)
         let friendList = realm.objects(FriendProfile.self)
-        resultNotificationToken = friendList.observe { change in
+        resultNotificationToken = friendList.observe { [weak self] change in
+            guard let self = self else { return }
             switch change {
             case .initial(let collection):
                 self.friendsList = Array(collection)

@@ -106,7 +106,8 @@ class FriendsProfileController: UICollectionViewController {
     func resultNotificationObjects() {
         let realm = try! Realm()
         let friendPhotos = realm.objects(FriendPhoto.self).filter("ownerid = \(friendProfileUserId)")
-        resultNotificationToken = friendPhotos.observe { change in
+        resultNotificationToken = friendPhotos.observe { [weak self] change in
+            guard let self = self else { return }
             switch change {
             case .initial(let collection):
                 self.friendProfilePhoto = collection.sorted(byKeyPath: "id", ascending: false)

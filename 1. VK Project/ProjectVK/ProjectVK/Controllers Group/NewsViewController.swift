@@ -168,7 +168,8 @@ class NewsViewController: UITableViewController {
 /*    func resultNotificationObjects() {
         let realm = try! Realm()
         let newsList = realm.objects(Group.self)
-        resultNotificationToken = newsList.observe { change in
+        resultNotificationToken = newsList.observe { [weak self] change in
+            guard let self = self else { return }
             switch change {
             case .initial(let collection):
                 self.newsList = Array(collection)
