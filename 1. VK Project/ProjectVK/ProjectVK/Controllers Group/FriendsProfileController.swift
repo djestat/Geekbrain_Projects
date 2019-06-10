@@ -94,7 +94,8 @@ class FriendsProfileController: UICollectionViewController {
     //MARK: - REALM Function
     
     func resultNotificationObjects() {
-        let realm = try! Realm()
+        let realmConfig = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
+        let realm = try! Realm(configuration: realmConfig)
         let friendPhotos = realm.objects(FriendPhoto.self).filter("ownerid = \(friendProfileUserId)")
         resultNotificationToken = friendPhotos.observe { [weak self] change in
             guard let self = self else { return }

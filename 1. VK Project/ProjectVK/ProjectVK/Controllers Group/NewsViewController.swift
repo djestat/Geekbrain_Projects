@@ -67,6 +67,12 @@ class NewsViewController: UITableViewController {
             cell.viewsCountsLabel.alpha = 0
             cell.viewsIcon.alpha = 0
             cell.newsText.backgroundColor = .cyan
+            let imageHeight = newsList[indexPath.row].photos.items[0].sizes[countPhotos - 1].height
+            let imageWidth = newsList[indexPath.row].photos.items[0].sizes[countPhotos - 1].width
+            let aspectRatio = CGFloat(imageHeight / imageWidth)
+            let width = view.frame.width
+            cell.newsPhotosView.frame.size = CGSize(width: width, height: width * aspectRatio)
+            
         } else if newsList[indexPath.row].type == "post" {
             cell.newsTextLabel.text = String(newsList[indexPath.row].type + "\n" + newsList[indexPath.row].text)
             cell.newsText.backgroundColor = .green
@@ -76,6 +82,12 @@ class NewsViewController: UITableViewController {
                 if newsList[indexPath.row].attachments[0].type == "photo" {
                     let countPhotos = newsList[indexPath.row].attachments[0].photo.sizes.count
                     cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].attachments[0].photo.sizes[countPhotos - 1].url))
+                    let imageHeight: Float = Float(newsList[indexPath.row].attachments[0].photo.sizes[countPhotos - 1].height)
+                    let imageWidth: Float = Float(newsList[indexPath.row].attachments[0].photo.sizes[countPhotos - 1].width)
+                    let aspectRatio = CGFloat(imageHeight / imageWidth)
+                    let width = self.view.frame.width
+                    cell.newsPhotosView.frame.size = CGSize(width: width, height: width * aspectRatio)
+                    print("\(aspectRatio) \(imageHeight) \(imageWidth) \(width)")
                 } else if newsList[indexPath.row].attachments[0].type == "link" {
                     cell.newsTextLabel.text = String(newsList[indexPath.row].type + "\n" + newsList[indexPath.row].text + "\n" + "ЭТО LINK НАДО ОБРАБОТАТЬ" + "\n"  + newsList[indexPath.row].attachments[0].type)
                     cell.newsText.backgroundColor = .red
