@@ -414,8 +414,7 @@
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wjK-f1-TcQ">
                                             <rect key="frame" x="0.0" y="105.66666666666669" width="375" height="375"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" secondItem="wjK-f1-TcQ" secondAttribute="height" multiplier="1:1" id="D55-cc-E9w"/>
-                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="VWH-Lt-ab0"/>
+                                                <constraint firstAttribute="width" secondItem="wjK-f1-TcQ" secondAttribute="height" multiplier="1:1" id="Azr-as-nQ0"/>
                                             </constraints>
                                         </imageView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="r85-bQ-OKO">
@@ -533,7 +532,6 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="aspectRatioNewsPhoto" destination="D55-cc-E9w" id="tE7-px-Oy8"/>
                                     <outlet property="commentsCountsLabel" destination="7lR-Wp-s8e" id="MCW-uo-Tda"/>
                                     <outlet property="groupImageView" destination="r85-bQ-OKO" id="b8l-ja-Qww"/>
                                     <outlet property="groupNameLabel" destination="5cd-zI-BaR" id="uMz-JZ-JsX"/>

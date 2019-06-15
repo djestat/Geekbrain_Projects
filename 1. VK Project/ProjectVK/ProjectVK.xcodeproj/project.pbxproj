@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1D1919E5EA5548961D8DFEB4 /* Pods_ProjectVK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA46B2D910E83BB215F82517 /* Pods_ProjectVK.framework */; };
 		CE08E76422AC3C8E0087FD13 /* RealmProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE08E76322AC3C8E0087FD13 /* RealmProvider.swift */; };
+		CE2260A722B44360009D564A /* FirebaseModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2260A622B44360009D564A /* FirebaseModels.swift */; };
 		CE2914942291B9BD003A86B2 /* VKLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2914932291B9BD003A86B2 /* VKLoginViewController.swift */; };
 		CE2914952291CAAB003A86B2 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2914912291AC4F003A86B2 /* WebKit.framework */; };
 		CE2914982291DAEA003A86B2 /* VKAPIRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2914972291DAEA003A86B2 /* VKAPIRequests.swift */; };
@@ -44,6 +45,7 @@
 		6953169940E4749696549195 /* Pods-ProjectVK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectVK.debug.xcconfig"; path = "Target Support Files/Pods-ProjectVK/Pods-ProjectVK.debug.xcconfig"; sourceTree = "<group>"; };
 		81C8ADCFDCED6E798569FFB5 /* Pods-ProjectVK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectVK.release.xcconfig"; path = "Target Support Files/Pods-ProjectVK/Pods-ProjectVK.release.xcconfig"; sourceTree = "<group>"; };
 		CE08E76322AC3C8E0087FD13 /* RealmProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmProvider.swift; sourceTree = "<group>"; };
+		CE2260A622B44360009D564A /* FirebaseModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseModels.swift; sourceTree = "<group>"; };
 		CE2914912291AC4F003A86B2 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		CE2914932291B9BD003A86B2 /* VKLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKLoginViewController.swift; sourceTree = "<group>"; };
 		CE2914972291DAEA003A86B2 /* VKAPIRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKAPIRequests.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				CEA61485225BE7D20012F4F6 /* Group.swift */,
 				CEA87624229B28C7000CAC9A /* News.swift */,
 				CEE938362290483A005E3E08 /* Session.swift */,
+				CE2260A622B44360009D564A /* FirebaseModels.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				CEA18FAE22859C8C00A25FD6 /* FriendsBigPhotoCollectionViewController.swift in Sources */,
 				CE8EF5CC2258AB2C0015EC00 /* FriendsViewController.swift in Sources */,
 				CE08E76422AC3C8E0087FD13 /* RealmProvider.swift in Sources */,
+				CE2260A722B44360009D564A /* FirebaseModels.swift in Sources */,
 				CE2914942291B9BD003A86B2 /* VKLoginViewController.swift in Sources */,
 				CEA6147D225BD7C40012F4F6 /* FriendsPhotoCell.swift in Sources */,
 				CEE7AC2B2287126700C0668D /* CustomAnimator.swift in Sources */,

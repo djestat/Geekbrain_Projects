@@ -8,9 +8,11 @@
 
 import UIKit
 import Kingfisher
-
+import FirebaseDatabase
 
 class GroupsFinderController: UITableViewController {
+    
+    private let searchedGroupsRef = Database.database().reference(withPath: "search_groups")
     
     @IBOutlet weak var searchBar: UISearchBar! {
         didSet {
@@ -18,7 +20,7 @@ class GroupsFinderController: UITableViewController {
         }
     }
     
-    var searchingText = "Something"
+//    var searchingText = "Something"
     let request = VKAPIRequests()
     public var groupList = [Group]()
     
@@ -62,16 +64,29 @@ extension GroupsFinderController: UISearchBarDelegate {
             tableView.reloadData()
             return
         }
-        request.findGroups(searchText) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let groupList):
-                self.groupList.removeAll()
-                self.groupList = groupList
-                self.tableView.reloadData()
-            case .failure(let error):
-                print(error.localizedDescription)
+        
+        if searchBar.isSearchResultsButtonSelected {
+            request.findGroups(searchText) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let groupList):
+                    self.groupList.removeAll()
+                    self.groupList = groupList
+                    self.tableView.reloadData()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
             }
         }
+        
+        if searchText.count > 4 {
+            
+            let userId = Session.authData.userid
+            let authUser = FirebaseGroupsRequests(userId: userId, groupRequest: searchText)
+            let searchedGroupsRef = self.searchedGroupsRef.child("\(userId)").child(searchText)
+            searchedGroupsRef.setValue(authUser.toAnyObject())
+
+        }
+        
     }
 }

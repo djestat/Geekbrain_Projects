@@ -9,8 +9,11 @@
 import UIKit
 import Kingfisher
 import RealmSwift
+import FirebaseDatabase
 
 class FriendsViewController: UITableViewController {
+    
+    private let authUsersRef = Database.database().reference(withPath: "autorised_users")
     
     let vkRequest = VKAPIRequests()
     var resultNotificationToken: NotificationToken?
@@ -49,8 +52,15 @@ class FriendsViewController: UITableViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
      
+        // Firebase
+        
+        let userId = Session.authData.userid
+        let authUser = FirebaseUserAutorisation(userId: userId)
+        let authUserRef = self.authUsersRef.child("\(userId)")
+        authUserRef.setValue(authUser.toAnyObject())
  
     }
+    
     override func viewWillDisappear(_ animated: Bool) {
         resultNotificationToken?.invalidate()
     }

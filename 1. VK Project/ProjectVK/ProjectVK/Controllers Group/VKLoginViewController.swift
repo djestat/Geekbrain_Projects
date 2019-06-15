@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import FirebaseAuth
 
 class VKLoginViewController: UIViewController {
 
@@ -17,10 +18,9 @@ class VKLoginViewController: UIViewController {
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "oauth.vk.com"
@@ -59,7 +59,7 @@ extension VKLoginViewController: WKNavigationDelegate {
         }
         
         print(params)
-        
+       
         guard let token = params["access_token"],
             let userIdString = params["user_id"],
             let userId = Int(userIdString) else {
@@ -70,7 +70,20 @@ extension VKLoginViewController: WKNavigationDelegate {
         Session.authData.token = token
         Session.authData.userid = userId
         
+        // MARK: - Firebase AUTH and Save
         
+        Auth.auth().signInAnonymously { (authResult, error) in
+            if let error = error {
+                print("AUTH ERROR----------------\(error)")
+                return
+            } else {
+                let user = authResult!.user
+                let isAnonymous = user.isAnonymous
+                let uid = user.uid
+                print("AUTH----------------\(user) \(uid) \(isAnonymous)")
+            }
+        }
+       
         // performSegue(withIdentifier:)
         
         if Session.authData.token != "", Session.authData.userid != 0 {
