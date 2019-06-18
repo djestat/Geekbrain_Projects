@@ -9,35 +9,6 @@
 import Foundation
 import SwiftyJSON
 
-struct News3 {
-    
-//    let groupImage: String
-    let groupName: Int
-    var newsPhotos: String
-    let likeCounts: Int
-    let commentsCount: Int
-    let viewsCounts: Int
-    let textNews: String
-    var sizes: Int
-    
-    init(_ json: JSON) {
-//        self.image = json["type"].stringValue
-        self.groupName = json["source_id"].intValue
-        self.sizes = json["attachments"][0]["link"]["photo"]["sizes"].arrayValue.count
-        self.newsPhotos = json["attachments"][0]["link"]["photo"]["sizes"][sizes - 1]["url"].stringValue
-        self.sizes = json["attachments"][0]["photo"]["sizes"].arrayValue.count
-        self.newsPhotos = json["attachments"][0]["photo"]["sizes"][sizes - 1]["url"].stringValue
-        self.likeCounts = json["likes"]["count"].intValue
-        self.commentsCount = json["comments"]["count"].intValue
-        self.viewsCounts = json["views"]["count"].intValue
-        self.textNews = json["text"].stringValue
-        
-    }
-    
-}
-
-
-//MARK: News2 Extended
 class News {
     let items: [ResponseItem]
     let profiles: [FriendProfile]
@@ -68,6 +39,7 @@ class ResponseItem {
     let photos: Photos
     let postID: Int
     let text: String
+    let attachmetsCount: Int
     let attachments: [Attachments]
     let copyhistory: [ResponseItem]
     let likes: Likes
@@ -75,13 +47,14 @@ class ResponseItem {
     let comments: Comments
     let views: Views
     
-    init(type: String, sourceID: Int, date: Int, photos: Photos, postID: Int, text: String, attachments: [Attachments], copyhistory: [ResponseItem], likes: Likes, reposts: Reposts, comments: Comments, views: Views) {
+    init(type: String, sourceID: Int, date: Int, photos: Photos, postID: Int, text: String, attachmetsCount: Int, attachments: [Attachments], copyhistory: [ResponseItem], likes: Likes, reposts: Reposts, comments: Comments, views: Views) {
         self.type = type
         self.sourceID = sourceID
         self.date = date
         self.photos = photos
         self.postID = postID
         self.text = text
+        self.attachmetsCount = attachmetsCount
         self.attachments = attachments
         self.copyhistory = copyhistory
         self.likes = likes
@@ -98,6 +71,7 @@ class ResponseItem {
         self.photos = Photos(photos)
         self.postID = json["post_id"].intValue
         self.text = json["text"].stringValue
+        self.attachmetsCount = json["attachments"].count
         self.attachments = json["attachments"].arrayValue.map { Attachments($0) }
         self.copyhistory = json["copy_history"].arrayValue.map { ResponseItem($0) }
         let likes = json["likes"].self
@@ -111,65 +85,29 @@ class ResponseItem {
     }
 
 }
-/*
-class Attachments22 {
-    let id: Int
-    let ownerID: Int
-    let sizes: [Size]
-    let text: String
-    let date: Int
-    let likes: Likes
-    let reposts: Reposts
-    let comments: Comments
-    let views: Views
-    
-    init(id: Int, ownerID: Int, sizes: [Size], text: String, date: Int, likes: Likes, reposts: Reposts, comments: Comments, views: Views) {
-        self.id = id
-        self.ownerID = ownerID
-        self.sizes = sizes
-        self.text = text
-        self.date = date
-        self.likes = likes
-        self.reposts = reposts
-        self.comments = comments
-        self.views = views
-    }
-    
-    init(_ json: JSON) {
-        self.id =  json["id"].intValue
-        self.ownerID = json["ownerID"].intValue
-        self.sizes = json["sizes"].arrayValue.map { Size($0) }
-        self.text = json["text"].stringValue
-        self.date = json["date"].intValue
-        let likes = json["likes"].self
-        self.likes = Likes(likes)
-        let repost = json["reposts"].self
-        self.reposts = Reposts(repost)
-        let comments = json["comments"].self
-        self.comments = Comments(comments)
-        let views = json["views"].self
-        self.views = Views(views)
-    }
-} */
 
 class Attachments {
     let type: String
-    let photo: AttachmentsPhoto
+    let photo: AttachmentsPhotos
+    let doc: AttachmentsDoc
     
-    init(type: String, photo: AttachmentsPhoto) {
+    init(type: String, photo: AttachmentsPhotos, doc: AttachmentsDoc) {
         self.photo = photo
         self.type = type
+        self.doc = doc
     }
     
     init(_ json: JSON) {
         self.type = json["type"].stringValue
         let photo = json["photo"].self
-        self.photo = AttachmentsPhoto(photo)
+        self.photo = AttachmentsPhotos(photo)
+        let doc = json["doc"].self
+        self.doc = AttachmentsDoc(doc)
     }
     
 }
 
-class AttachmentsPhoto {
+class AttachmentsPhotos {
     let owner_id: Int
     let sizes: [Size]
     let text: String
@@ -182,6 +120,24 @@ class AttachmentsPhoto {
         self.date = json["date"].intValue
     }
     
+}
+
+class AttachmentsDoc {
+    let title: String
+    let ext: String
+    let url: String
+    
+    init(title: String, ext: String, url: String) {
+        self.title = title
+        self.ext = ext
+        self.url = url
+    }
+    
+    init(_ json: JSON) {
+        self.title = json["title"].stringValue
+        self.ext = json["ext"].stringValue
+        self.url = json["url"].stringValue
+    }
 }
 
 // MARK: - Photos
@@ -329,6 +285,55 @@ class Views {
     }
 }
 
+/*
+ "type": "doc",
+ "doc": {
+        "id": 445414136,
+        "owner_id": 18919286,
+        "title": "fitnesshouse1.gif",
+        "size": 2724172,
+        "ext": "gif",
+        "url": "https://vk.com/do...ed&no_preview=1",
+        "date": 1495010108,
+        "type": 3,
+        "preview": {
+                    "photo": {
+                    "sizes": [{
+                                "src": "https://cs540107....-3/m_13128e0512.jpg",
+                               "width": 130,
+                               "height": 90,
+                               "type": "m"
+                               }, {
+                               "src": "https://cs540107....-3/s_13128e0512.jpg",
+                               "width": 100,
+                               "height": 69,
+                               "type": "s"
+                               }, {
+                               "src": "https://cs540107....-3/x_13128e0512.jpg",
+                               "width": 604,
+                               "height": 415,
+                               "type": "x"
+                               }, {
+                               "src": "https://cs540107....-3/y_13128e0512.jpg",
+                               "width": 807,
+                               "height": 555,
+                               "type": "y"
+                               }, {
+                               "src": "https://cs540107....-3/o_13128e0512.jpg",
+                               "width": 852,
+                               "height": 585,
+                               "type": "o"
+                               }]
+                                },
+                    "video": {
+                    "src": "https://vk.com/do...4=1&module=feed",
+                    "width": 852,
+                    "height": 584,
+                    "file_size": 280916
+                    }
+        },
+ "access_key": "8d58368c3c99183047"
+ }
 
 
 
@@ -336,9 +341,7 @@ class Views {
 
 
 
-
-
-
+*/
 /*
 // MARK: - The1
 class The1: Codable {

@@ -61,7 +61,7 @@ class NewsViewController: UITableViewController {
         if newsList[indexPath.row].type == "photo" {
             let countPhotos = newsList[indexPath.row].photos.items[0].sizes.count
             cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].photos.items[0].sizes[countPhotos - 1].url))
-            cell.newsTextLabel.text = String(newsList[indexPath.row].type)
+            cell.newsTextLabel.text = String(newsList[indexPath.row].text)
             cell.likeCountsLabel.text = String(newsList[indexPath.row].photos.items[0].likes.count)
             cell.commentsCountsLabel.text = String(newsList[indexPath.row].photos.items[0].comments.count)
             cell.viewsCountsLabel.alpha = 0
@@ -74,11 +74,10 @@ class NewsViewController: UITableViewController {
             cell.newsPhotosView.frame.size = CGSize(width: width, height: width * aspectRatio)
             
         } else if newsList[indexPath.row].type == "post" {
-            cell.newsTextLabel.text = String(newsList[indexPath.row].type + "\n" + newsList[indexPath.row].text)
-            cell.newsText.backgroundColor = .green
+            cell.newsTextLabel.text = String(newsList[indexPath.row].text)
             cell.groupNameLabel.text = String(newsList[indexPath.row].sourceID)
             if newsList[indexPath.row].attachments.count != 0 {
-                cell.newsTextLabel.text = String(newsList[indexPath.row].type + "\n" + newsList[indexPath.row].text + "\n" + newsList[indexPath.row].attachments[0].type)
+                cell.newsTextLabel.text = String(newsList[indexPath.row].text)
                 if newsList[indexPath.row].attachments[0].type == "photo" {
                     let countPhotos = newsList[indexPath.row].attachments[0].photo.sizes.count
                     cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].attachments[0].photo.sizes[countPhotos - 1].url))
@@ -88,6 +87,9 @@ class NewsViewController: UITableViewController {
                     let width = self.view.frame.width
                     cell.newsPhotosView.frame.size = CGSize(width: width, height: width * aspectRatio)
                     print("\(aspectRatio) \(imageHeight) \(imageWidth) \(width)")
+                } else if newsList[indexPath.row].attachments[0].type == "doc" {
+                    cell.newsTextLabel.text = String(newsList[indexPath.row].text)
+                    cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].attachments[0].doc.url))
                 } else if newsList[indexPath.row].attachments[0].type == "link" {
                     cell.newsTextLabel.text = String(newsList[indexPath.row].type + "\n" + newsList[indexPath.row].text + "\n" + "ЭТО LINK НАДО ОБРАБОТАТЬ" + "\n"  + newsList[indexPath.row].attachments[0].type)
                     cell.newsText.backgroundColor = .red
@@ -126,7 +128,7 @@ class NewsViewController: UITableViewController {
         var currentIndex = 0
         
         if autorId > 0 {
-            for i in 0...friendList.count - 1 {
+            for i in 0..<friendList.count {
                 if autorId == friendList[i].id {
                 break
                 }
@@ -136,7 +138,7 @@ class NewsViewController: UITableViewController {
             cell.groupImageView.kf.setImage(with: URL(string: friendList[currentIndex].avatarImage))
             
         } else if autorId < 0 {
-            for i in 0...groupList.count - 1 {
+            for i in 0..<groupList.count {
                 if -autorId == groupList[i].id {
                 break
                 }

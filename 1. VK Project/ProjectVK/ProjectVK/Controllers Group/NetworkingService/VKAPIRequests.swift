@@ -119,35 +119,7 @@ class VKAPIRequests {
         }
     }
     
-    // MARK: - Load VKnews
-    public func loadNews3(_ nextList: String, completion: ((Swift.Result<[News3], Error>) -> Void)? = nil) {
-        
-        let baseURL = "https://api.vk.com"
-        let path = "/method/newsfeed.get"
-        
-        let params: Parameters = [
-            "access_token" : token,
-            "filters" : "post",
-//            "source_id" : sourceID,
-            "start_from" : nextList,
-            "count" : "100",
-            "v" : "5.95"
-        ]
-        
-        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON {
-            response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-                let newsList = json["response"]["items"].arrayValue.map { News3($0) }
-                completion?(.success(newsList))
-            case .failure(let error):
-                completion?(.failure(error))
-            }
-        }
-    }
-    
-
+   
     // MARK: - Load VKnews
     public func loadNews(_ nextList: String, completion: ((Swift.Result<News, Error>) -> Void)? = nil) {
         
