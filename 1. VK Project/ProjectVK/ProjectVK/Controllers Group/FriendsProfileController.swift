@@ -48,7 +48,10 @@ class FriendsProfileController: UICollectionViewController {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
         resultNotificationToken?.invalidate()
+        KingfisherManager.shared.cache.clearMemoryCache()
+//        KingfisherManager.shared.cache.clearDiskCache()
     }
 
     // MARK: UICollectionViewDataSource

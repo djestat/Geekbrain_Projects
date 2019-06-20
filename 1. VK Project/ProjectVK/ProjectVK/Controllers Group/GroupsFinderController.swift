@@ -9,7 +9,6 @@
 import UIKit
 import Kingfisher
 
-
 class GroupsFinderController: UITableViewController {
     
     @IBOutlet weak var searchBar: UISearchBar! {
@@ -28,6 +27,12 @@ class GroupsFinderController: UITableViewController {
         
         let tapGR = UITapGestureRecognizer(target: self, action: #selector(dissmissKeyboard))
         view.addGestureRecognizer(tapGR)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        KingfisherManager.shared.cache.clearMemoryCache()
+//        KingfisherManager.shared.cache.clearDiskCache()
     }
 
     // MARK: - Table view data source

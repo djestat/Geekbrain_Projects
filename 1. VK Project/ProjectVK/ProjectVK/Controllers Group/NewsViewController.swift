@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 import RealmSwift
 
 class NewsViewController: UITableViewController {
@@ -41,8 +42,12 @@ class NewsViewController: UITableViewController {
                 print(error.localizedDescription)
             }
         }
-
-        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        KingfisherManager.shared.cache.clearMemoryCache()
+//        KingfisherManager.shared.cache.clearDiskCache()
     }
 
     // MARK: - Table view data source

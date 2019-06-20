@@ -48,6 +48,7 @@ class GroupsViewController: UITableViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         resultNotificationToken?.invalidate()
+        KingfisherManager.shared.cache.clearMemoryCache()
     }
 
     // MARK: - Helpers
