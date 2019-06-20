@@ -30,7 +30,7 @@ class FriendsBigPhotoCollectionViewController: UICollectionViewController {
         setupScrollViev()
         
         let swipeGR = UISwipeGestureRecognizer(target: self, action: #selector(swipePhoto))
-        swipeGR.direction = [.left, .right]
+        swipeGR.direction = [.up, .down]
         view.addGestureRecognizer(swipeGR)
         
     }
@@ -45,6 +45,7 @@ class FriendsBigPhotoCollectionViewController: UICollectionViewController {
             print("change")
         case .ended:
             print("ended")
+            self.navigationController?.popViewController(animated: true)
         case .possible:
             print("possible")
         default:
@@ -119,33 +120,5 @@ class FriendsBigPhotoCollectionViewController: UICollectionViewController {
 
     }
     
-    /*
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
-        let cell = collectionView.cellForItem(at: indexPath)
-//        cell!.contentView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-
-        let recognaiser = UIPanGestureRecognizer(target: self, action: nil)
-
-        if recognaiser.delaysTouchesBegan == true {
-            cell!.contentView.transform = .identity
-        }
-        
-        if recognaiser.delaysTouchesEnded == true {
-            cell!.contentView.transform = .identity
-        }
-        
-//        if recognaiser.state == .possible {
-//            UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: .beginFromCurrentState, animations: {
-//                cell!.contentView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-//            }, completion: nil)
-//            
-//        }
-        
-//        UIView.animate(withDuration: 0.15, delay: 0, options: [.curveLinear, .curveEaseOut], animations: {
-//            cell!.contentView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-//        }, completion: nil)
-
-    } */
 
 }

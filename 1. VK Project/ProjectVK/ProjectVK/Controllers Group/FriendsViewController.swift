@@ -231,7 +231,7 @@ class FriendsViewController: UITableViewController {
     func resultNotificationObjects() {
         let realmConfig = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
         let realm = try! Realm(configuration: realmConfig)
-        let friendList = realm.objects(FriendProfile.self)
+        let friendList = realm.objects(FriendProfile.self).filter("name != 'DELETED'")
         resultNotificationToken = friendList.observe { [weak self] change in
             guard let self = self else { return }
             switch change {
