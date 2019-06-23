@@ -32,6 +32,7 @@
 		CEB7552B224F9B5000E5A718 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEB75529224F9B5000E5A718 /* Main.storyboard */; };
 		CEB7552D224F9B5200E5A718 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEB7552C224F9B5200E5A718 /* Assets.xcassets */; };
 		CEB75530224F9B5200E5A718 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEB7552E224F9B5200E5A718 /* LaunchScreen.storyboard */; };
+		CED6D46322BD6E7000479358 /* VKResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED6D46222BD6E7000479358 /* VKResponse.swift */; };
 		CEE7AC2B2287126700C0668D /* CustomAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE7AC2A2287126700C0668D /* CustomAnimator.swift */; };
 		CEE7AC2D2287232900C0668D /* CustomSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE7AC2C2287232900C0668D /* CustomSegue.swift */; };
 		CEE7AC2F228731B100C0668D /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE7AC2E228731B100C0668D /* CustomNavigationController.swift */; };
@@ -68,6 +69,7 @@
 		CEB7552C224F9B5200E5A718 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEB7552F224F9B5200E5A718 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CEB75531224F9B5200E5A718 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CED6D46222BD6E7000479358 /* VKResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKResponse.swift; sourceTree = "<group>"; };
 		CEE7AC2A2287126700C0668D /* CustomAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimator.swift; sourceTree = "<group>"; };
 		CEE7AC2C2287232900C0668D /* CustomSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegue.swift; sourceTree = "<group>"; };
 		CEE7AC2E228731B100C0668D /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				CEA61485225BE7D20012F4F6 /* Group.swift */,
 				CEA87624229B28C7000CAC9A /* News.swift */,
 				CEE938362290483A005E3E08 /* Session.swift */,
+				CED6D46222BD6E7000479358 /* VKResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 				CE8EF5CE2258AB410015EC00 /* GroupsViewController.swift in Sources */,
 				CE2914982291DAEA003A86B2 /* VKAPIRequests.swift in Sources */,
 				CEA61484225BE7BB0012F4F6 /* Profiles.swift in Sources */,
+				CED6D46322BD6E7000479358 /* VKResponse.swift in Sources */,
 				CEA6147F225BDA620012F4F6 /* GroupsCell.swift in Sources */,
 				CE65CF582265271700D5221A /* LikeControl.swift in Sources */,
 				CEACD2C8226B958F003400B4 /* NewsViewController.swift in Sources */,

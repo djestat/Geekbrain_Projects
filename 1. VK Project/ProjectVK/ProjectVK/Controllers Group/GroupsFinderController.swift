@@ -56,6 +56,17 @@ class GroupsFinderController: UITableViewController {
     @objc func dissmissKeyboard() {
         view.endEditing(true)
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView.cellForRow(at: indexPath)?.isSelected == true {
+            let groupId = groupList[indexPath.row].id
+            request.joinGroup(groupId)
+            self.navigationController?.popViewController(animated: true)
+            print("Join in Group with ID \(groupId).")
+
+        }
+        
+    }
 
 }
 

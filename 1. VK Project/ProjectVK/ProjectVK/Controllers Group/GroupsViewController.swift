@@ -16,7 +16,6 @@ class GroupsViewController: UITableViewController {
     var resultNotificationToken: NotificationToken?
     
     private var groupsList: Results<Group> = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(Group.self)
-    private var filteredGroupList: Results<Group> = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(Group.self)
     
     @IBOutlet weak var searchBar: UISearchBar! {
         didSet {
@@ -35,13 +34,12 @@ class GroupsViewController: UITableViewController {
                 print(error.localizedDescription)
             }
         }
+        resultNotificationObjects()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        resultNotificationObjects()
-
         let tapGR = UITapGestureRecognizer(target: self, action: #selector(dissmissKeyboard))
         view.addGestureRecognizer(tapGR)
     }
@@ -61,17 +59,33 @@ class GroupsViewController: UITableViewController {
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return filteredGroupList.count
+        return groupsList.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupsCell.reuseID, for: indexPath) as? GroupsCell else { fatalError("Cell cannot be dequeued") }
         
-        cell.groupName.text = filteredGroupList[indexPath.row].name
-        cell.groupPhoto.kf.setImage(with: URL(string: filteredGroupList[indexPath.row].image))
+        cell.groupName.text = groupsList[indexPath.row].name
+        cell.groupPhoto.kf.setImage(with: URL(string: groupsList[indexPath.row].image))
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let groupId = groupsList[indexPath.row].id
+            request.leaveGroup(groupId)
+            request.userGroups { result in
+                switch result {
+                case .success(let groupList):
+                    RealmProvider.save(data: groupList)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+            print("Leave Group with ID \(groupId).")
+        }
     }
     
     //MARK: - REALM Function
@@ -79,18 +93,16 @@ class GroupsViewController: UITableViewController {
     func resultNotificationObjects() {
         let realmConfig = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
         let realm = try! Realm(configuration: realmConfig)
-        let friendPhotos = realm.objects(Group.self)
-        resultNotificationToken = friendPhotos.observe { [weak self] change in
+        let groups = realm.objects(Group.self)
+        resultNotificationToken = groups.observe { [weak self] change in
             guard let self = self else { return }
             switch change {
             case .initial(let collection):
                 self.groupsList = collection
-                self.filteredGroupList = self.groupsList
                 self.tableView.reloadData()
                 print("INITIAAAAAAAAALLLLLLLLLLLLLL")
             case .update(let collection, deletions: let deletion, insertions: let insertions, modifications: let modification):
                 self.groupsList = collection
-                self.filteredGroupList = self.groupsList
                 self.tableView.reloadData()
                 print("UPDAAAAAAAAAATEEEEEE")
                 print("\(collection.count) , \(deletion.count), \(insertions.count), \(modification.count)")
@@ -105,13 +117,13 @@ class GroupsViewController: UITableViewController {
 extension GroupsViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
-            filteredGroupList = groupsList
+            groupsList = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(Group.self)
             view.endEditing(true)
             tableView.reloadData()
             return
         }
         let searchingGroup = RealmProvider.searchInGroup(Group.self, searchText)
-        filteredGroupList = searchingGroup
+        groupsList = searchingGroup
         tableView.reloadData()
     }
     

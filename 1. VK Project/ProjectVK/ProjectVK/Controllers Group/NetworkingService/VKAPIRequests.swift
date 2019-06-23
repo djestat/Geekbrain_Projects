@@ -16,6 +16,7 @@ class VKAPIRequests {
     let token = Session.authData.token
     let userId = Session.authData.userid
     
+    // MARK: - Group
     // MARK: - Load VKgroup
     public func userGroups(completion: ((Swift.Result<[Group], Error>) -> Void)? = nil) {
         
@@ -66,7 +67,59 @@ class VKAPIRequests {
             }
         }
     }
-
+    
+    // MARK: - Join VKgroup
+    public func joinGroup(_ groupId: Int) {
+        
+        let baseURL = "https://api.vk.com"
+        let path = "/method/groups.join"
+        
+        let params: Parameters = [
+            "access_token" : token,
+            "group_id" : groupId,
+            "v" : "5.95"
+        ]
+        
+        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON {
+            response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                let response = json["response"].intValue
+                print(response)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    // MARK: - Leave VKgroup
+    public func leaveGroup(_ groupId: Int) {
+        
+        let baseURL = "https://api.vk.com"
+        let path = "/method/groups.leave"
+        
+        let params: Parameters = [
+            "access_token" : token,
+            "group_id" : groupId,
+            "v" : "5.95"
+        ]
+        
+        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON {
+            response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                let response = json["response"].intValue
+                print(response)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    
+    // MARK: - Users
     // MARK: - Load VKfriends
     public func loadFriends(completion: ((Swift.Result<[FriendProfile], Error>) -> Void)? = nil) {
         
@@ -119,7 +172,7 @@ class VKAPIRequests {
         }
     }
     
-   
+    // MARK: - News
     // MARK: - Load VKnews
     public func loadNews(_ nextList: String, completion: ((Swift.Result<News, Error>) -> Void)? = nil) {
         

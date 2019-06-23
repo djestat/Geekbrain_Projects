@@ -42,6 +42,7 @@ class NewsViewController: UITableViewController {
                 print(error.localizedDescription)
             }
         }
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
