@@ -41,13 +41,24 @@ class RealmProvider {
         print("WRITING DATA INTO REALM NOW HERE!! TYPE------>\(T.self)<------")
     }
     
-    static func delet<T: Object>(data: [T]) {
+    static func delet<T: Object>(data: [T], objectID: Int) {
         let realm = try! Realm(configuration: deletIfMigration)
         try! realm.write {
-            realm.delete(data)
+            let deleteData = realm.objects(T.self).filter("id == %i", objectID).first
+            realm.delete(deleteData!)
         }
         print(realm.configuration.fileURL!)
         print("DELETE DATA INTO REALM NOW HERE!! TYPE------>\(T.self)<------")
+    }
+    
+    static func deletGroup(objectID: Int) {
+        let realm = try! Realm(configuration: deletIfMigration)
+        try! realm.write {
+            let deleteData = realm.objects(Group.self).filter("id == %i", objectID).first
+            realm.delete(deleteData!)
+        }
+        print(realm.configuration.fileURL!)
+        print("DELETE DATA INTO REALM NOW HERE!! TYPE------>\(Group.self)<------")
     }
     
 }

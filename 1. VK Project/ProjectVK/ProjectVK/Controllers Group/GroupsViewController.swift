@@ -15,7 +15,7 @@ class GroupsViewController: UITableViewController {
     let request = VKAPIRequests()
     var resultNotificationToken: NotificationToken?
     
-    private var groupsList: Results<Group> = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(Group.self)
+    private var groupsList: Results<Group> = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(Group.self).filter("isMember == %i", 1)
     
     @IBOutlet weak var searchBar: UISearchBar! {
         didSet {
@@ -76,14 +76,7 @@ class GroupsViewController: UITableViewController {
         if editingStyle == .delete {
             let groupId = groupsList[indexPath.row].id
             request.leaveGroup(groupId)
-            request.userGroups { result in
-                switch result {
-                case .success(let groupList):
-                    RealmProvider.save(data: groupList)
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
+            RealmProvider.deletGroup(objectID: groupId)
             print("Leave Group with ID \(groupId).")
         }
     }
@@ -93,7 +86,7 @@ class GroupsViewController: UITableViewController {
     func resultNotificationObjects() {
         let realmConfig = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
         let realm = try! Realm(configuration: realmConfig)
-        let groups = realm.objects(Group.self)
+        let groups = realm.objects(Group.self).filter("isMember == %i", 1)
         resultNotificationToken = groups.observe { [weak self] change in
             guard let self = self else { return }
             switch change {
@@ -117,12 +110,12 @@ class GroupsViewController: UITableViewController {
 extension GroupsViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
-            groupsList = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(Group.self)
+            groupsList = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(Group.self).filter("isMember == %i", 1)
             view.endEditing(true)
             tableView.reloadData()
             return
         }
-        let searchingGroup = RealmProvider.searchInGroup(Group.self, searchText)
+        let searchingGroup = RealmProvider.searchInGroup(Group.self, searchText).filter("isMember == %i", 1)
         groupsList = searchingGroup
         tableView.reloadData()
     }

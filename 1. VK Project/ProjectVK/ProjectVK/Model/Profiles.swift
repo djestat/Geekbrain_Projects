@@ -14,6 +14,7 @@ class FriendProfile: Object {
     @objc dynamic var id: Int = 0
     @objc dynamic var name: String = ""
     @objc dynamic var lastname: String = ""
+    @objc dynamic var avatarGroupImage: String = ""
     @objc dynamic var avatarImage: String = ""
     @objc dynamic var online: Int = 0
     let photos = List<FriendPhoto>()
@@ -34,6 +35,7 @@ class FriendProfile: Object {
         self.id = json["id"].intValue
         self.name = json["first_name"].stringValue
         self.lastname = json["last_name"].stringValue
+        self.avatarGroupImage = json["photo_100"].stringValue
         self.avatarImage = json["photo_200_orig"].stringValue
         self.online = json["online"].intValue
     }

@@ -61,5 +61,7 @@ class NewsCell: UITableViewCell {
                            completion: nil)
         }
     }
+    
+    
 
 }

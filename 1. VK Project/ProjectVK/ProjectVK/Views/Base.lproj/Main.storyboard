@@ -255,6 +255,7 @@
                         <segue destination="JOE-XA-kOJ" kind="relationship" relationship="viewControllers" id="l2s-3a-0Tc"/>
                         <segue destination="Y1z-Xw-mlz" kind="relationship" relationship="viewControllers" id="iAn-lD-Fdt"/>
                         <segue destination="UY3-Ca-15f" kind="relationship" relationship="viewControllers" id="ilI-om-fH0"/>
+                        <segue destination="9uQ-7q-Z7m" kind="relationship" relationship="viewControllers" id="ZdW-f5-AYz"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lyc-XD-F9B" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -490,14 +491,14 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" contentInsetAdjustmentBehavior="scrollableAxes" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mYs-bX-181">
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" contentInsetAdjustmentBehavior="scrollableAxes" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mYs-bX-181">
                                             <rect key="frame" x="10" y="62" width="355" height="33.666666666666657"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="4ZU-WP-XYF"/>
-                                                <constraint firstAttribute="height" relation="lessThanOrEqual" constant="250" id="4vb-Wn-mKz"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="4ZU-WP-XYF"/>
+                                                <constraint firstAttribute="height" relation="lessThanOrEqual" constant="150" id="4vb-Wn-mKz"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
                                     </subviews>
@@ -538,7 +539,6 @@
                                     <outlet property="groupNameLabel" destination="5cd-zI-BaR" id="uMz-JZ-JsX"/>
                                     <outlet property="likeCountsLabel" destination="i66-aC-eVJ" id="MGh-rj-842"/>
                                     <outlet property="newsPhotosView" destination="wjK-f1-TcQ" id="2GK-C1-0if"/>
-                                    <outlet property="newsText" destination="mYs-bX-181" id="Voo-OQ-h3W"/>
                                     <outlet property="newsTextLabel" destination="mYs-bX-181" id="fap-dJ-TU1"/>
                                     <outlet property="viewsCountsLabel" destination="EGW-iJ-W0a" id="1a0-Ep-uAO"/>
                                     <outlet property="viewsIcon" destination="2Fd-Lz-MLQ" id="rgY-jU-tHS"/>
@@ -555,6 +555,53 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xKp-AR-7Z5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1109.5999999999999" y="764.77832512315274"/>
+        </scene>
+        <!--Сообщения-->
+        <scene sceneID="S4F-g1-hGz">
+            <objects>
+                <tableViewController id="FyB-hc-C1G" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="LcC-G5-DUc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageCell" id="Bma-6u-Rew">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Bma-6u-Rew" id="NJ2-qT-Hjv">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="FyB-hc-C1G" id="AdR-s0-YcX"/>
+                            <outlet property="delegate" destination="FyB-hc-C1G" id="Bu1-fP-Puh"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Сообщения" id="KmF-V7-upg"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iuq-09-vdL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1156" y="1487.4384236453202"/>
+        </scene>
+        <!--Сообщения-->
+        <scene sceneID="CJN-9H-zvL">
+            <objects>
+                <navigationController id="9uQ-7q-Z7m" customClass="CustomNavigationController" customModule="ProjectVK" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Сообщения" image="Messages" landscapeImage="Messages" largeContentSizeImage="Messages" id="XEy-od-ReJ"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="HNs-s2-Tmn">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="FyB-hc-C1G" kind="relationship" relationship="rootViewController" id="z5d-jL-sUI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZYA-8R-DMh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="204" y="1488"/>
         </scene>
         <!--Friends Profile Controller-->
         <scene sceneID="K5q-Um-isw">
@@ -810,6 +857,7 @@
         <image name="Friends" width="25" height="25"/>
         <image name="Groups" width="25" height="25"/>
         <image name="Like_nonfill" width="25" height="25"/>
+        <image name="Messages" width="25" height="25"/>
         <image name="News" width="25" height="25"/>
         <image name="Repost" width="25" height="25"/>
         <image name="Views" width="25" height="25"/>

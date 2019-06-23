@@ -37,6 +37,8 @@
 		CEE7AC2D2287232900C0668D /* CustomSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE7AC2C2287232900C0668D /* CustomSegue.swift */; };
 		CEE7AC2F228731B100C0668D /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE7AC2E228731B100C0668D /* CustomNavigationController.swift */; };
 		CEE938372290483A005E3E08 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE938362290483A005E3E08 /* Session.swift */; };
+		CEED578622C0074400227C7A /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEED578522C0074400227C7A /* MessagesViewController.swift */; };
+		CEED578822C00C8B00227C7A /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEED578722C00C8B00227C7A /* Messages.swift */; };
 		CEFE5D582280CB690089E6B4 /* LoadingAnimatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFE5D572280CB690089E6B4 /* LoadingAnimatedView.swift */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +76,8 @@
 		CEE7AC2C2287232900C0668D /* CustomSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegue.swift; sourceTree = "<group>"; };
 		CEE7AC2E228731B100C0668D /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		CEE938362290483A005E3E08 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		CEED578522C0074400227C7A /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
+		CEED578722C00C8B00227C7A /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
 		CEFE5D572280CB690089E6B4 /* LoadingAnimatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAnimatedView.swift; sourceTree = "<group>"; };
 		FA46B2D910E83BB215F82517 /* Pods_ProjectVK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjectVK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -149,6 +153,7 @@
 				CEA61483225BE7BB0012F4F6 /* Profiles.swift */,
 				CEA61485225BE7D20012F4F6 /* Group.swift */,
 				CEA87624229B28C7000CAC9A /* News.swift */,
+				CEED578722C00C8B00227C7A /* Messages.swift */,
 				CEE938362290483A005E3E08 /* Session.swift */,
 				CED6D46222BD6E7000479358 /* VKResponse.swift */,
 			);
@@ -207,13 +212,14 @@
 				CE65CF56226526B000D5221A /* Controls */,
 				CEA61482225BE4D90012F4F6 /* Cells */,
 				CEB1E11C224FB04D00991D1D /* LoginViewController.swift */,
+				CE2914932291B9BD003A86B2 /* VKLoginViewController.swift */,
 				CE8EF5CB2258AB2C0015EC00 /* FriendsViewController.swift */,
 				CE7208AA225D34980069A952 /* FriendsProfileController.swift */,
 				CEA18FAD22859C8C00A25FD6 /* FriendsBigPhotoCollectionViewController.swift */,
 				CE8EF5CD2258AB410015EC00 /* GroupsViewController.swift */,
 				CE33DAB2225E95B600B2389B /* GroupsFinderController.swift */,
 				CEACD2C7226B958F003400B4 /* NewsViewController.swift */,
-				CE2914932291B9BD003A86B2 /* VKLoginViewController.swift */,
+				CEED578522C0074400227C7A /* MessagesViewController.swift */,
 			);
 			path = "Controllers Group";
 			sourceTree = "<group>";
@@ -363,10 +369,12 @@
 				CE08E76422AC3C8E0087FD13 /* RealmProvider.swift in Sources */,
 				CE2914942291B9BD003A86B2 /* VKLoginViewController.swift in Sources */,
 				CEA6147D225BD7C40012F4F6 /* FriendsPhotoCell.swift in Sources */,
+				CEED578622C0074400227C7A /* MessagesViewController.swift in Sources */,
 				CEE7AC2B2287126700C0668D /* CustomAnimator.swift in Sources */,
 				CE8EF5CE2258AB410015EC00 /* GroupsViewController.swift in Sources */,
 				CE2914982291DAEA003A86B2 /* VKAPIRequests.swift in Sources */,
 				CEA61484225BE7BB0012F4F6 /* Profiles.swift in Sources */,
+				CEED578822C00C8B00227C7A /* Messages.swift in Sources */,
 				CED6D46322BD6E7000479358 /* VKResponse.swift in Sources */,
 				CEA6147F225BDA620012F4F6 /* GroupsCell.swift in Sources */,
 				CE65CF582265271700D5221A /* LikeControl.swift in Sources */,
