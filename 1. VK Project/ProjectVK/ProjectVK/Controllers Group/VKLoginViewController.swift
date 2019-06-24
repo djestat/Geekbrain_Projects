@@ -27,7 +27,7 @@ class VKLoginViewController: UIViewController {
         urlComponents.path = "/authorize"
         urlComponents.queryItems = [
             URLQueryItem(name: "client_id", value: "6981695"),
-            URLQueryItem(name: "scope", value: "271383"),
+            URLQueryItem(name: "scope", value: "275479"),
             URLQueryItem(name: "display", value: "mobile"),
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
             URLQueryItem(name: "response_type", value: "token"),
