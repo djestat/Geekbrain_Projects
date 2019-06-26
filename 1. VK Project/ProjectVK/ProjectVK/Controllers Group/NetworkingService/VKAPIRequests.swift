@@ -216,6 +216,7 @@ class VKAPIRequests {
             "access_token" : token,
             "count" : "200",
             "filter" : "all",
+            "extended": "1",
             "v" : "5.95"
         ]
         

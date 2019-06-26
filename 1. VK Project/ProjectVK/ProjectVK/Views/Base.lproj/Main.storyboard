@@ -412,11 +412,11 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="529.66666666666663"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wjK-f1-TcQ">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="wjK-f1-TcQ">
                                             <rect key="frame" x="0.0" y="105.66666666666669" width="375" height="375"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" secondItem="wjK-f1-TcQ" secondAttribute="height" multiplier="1:1" id="Fxx-zJ-S8L"/>
-                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="250" constant="25" id="VWH-Lt-ab0"/>
+                                                <constraint firstAttribute="width" secondItem="wjK-f1-TcQ" secondAttribute="height" multiplier="1:1" priority="750" id="Fxx-zJ-S8L"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" id="VWH-Lt-ab0"/>
                                             </constraints>
                                         </imageView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="r85-bQ-OKO">
@@ -571,7 +571,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="65.666666666666671"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b9c-vZ-r9V">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b9c-vZ-r9V">
                                             <rect key="frame" x="8" y="8.3333333333333357" width="50" height="50"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="b9c-vZ-r9V" secondAttribute="height" multiplier="1:1" id="F9V-9C-Mzy"/>
@@ -611,7 +611,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="chatLastMessageLabel" destination="i6k-0K-OsK" id="YBE-6E-WYb"/>
-                                    <outlet property="chatOwnerImageView" destination="b9c-vZ-r9V" id="7BD-y9-R59"/>
+                                    <outlet property="chatOwnerImageView" destination="b9c-vZ-r9V" id="Ho8-h5-Q5i"/>
                                     <outlet property="chatOwnerNameLabel" destination="eVM-gx-f9d" id="1tJ-Jy-RJV"/>
                                 </connections>
                             </tableViewCell>

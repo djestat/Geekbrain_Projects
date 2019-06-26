@@ -13,6 +13,9 @@ class MessagesViewController: UITableViewController {
     
     let request = VKAPIRequests()
     
+//    var friendsList = RealmProvider.read(FriendProfile.self)
+    var friendsList = [FriendProfile]()
+    var groupsList = [Group]()
     var messages = [Item]()
 
     override func viewDidLoad() {
@@ -22,12 +25,14 @@ class MessagesViewController: UITableViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
         request.getMessages() { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let messages):
                 self.messages = messages.items
+                self.friendsList = messages.profiles
+                self.groupsList = messages.groups
                 print(messages.items.count)
                 self.tableView.reloadData()
             case .failure(let error):
@@ -35,6 +40,13 @@ class MessagesViewController: UITableViewController {
             }
         }
         
+        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        KingfisherManager.shared.cache.clearMemoryCache()
+        //        KingfisherManager.shared.cache.clearDiskCache()
     }
 
     // MARK: - Table view data source
@@ -50,18 +62,36 @@ class MessagesViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MessagesCell.reuseID, for: indexPath) as? MessagesCell else { fatalError("Cell cannot be dequeued") }
         // Configure the cell...
         
-//        cell.chatOwnerImageView
+        //Configure avatars
         
+        // Configure messages
         switch messages[indexPath.row].conversation.peer.type {
         case "user":
-            cell.chatOwnerNameLabel.text = String(messages[indexPath.row].conversation.peer.id)
+            let autorId = messages[indexPath.row].conversation.peer.id
+            var currentIndex = 0
+            for i in 0..<friendsList.count {
+                if autorId == Session.authData.userid {
+                    cell.chatOwnerImageView.image = UIImage(named: "avatar")
+                    break
+                } else if autorId == friendsList[i].id {
+                    break
+                } else if currentIndex == friendsList.count {
+                    cell.chatOwnerImageView.image = UIImage(named: "avatar")
+                    break
+                }
+                currentIndex += 1
+            }
+            
+            cell.chatOwnerNameLabel.text = String(friendsList[currentIndex].name + " " + friendsList[currentIndex].lastname)
+            cell.chatOwnerImageView.kf.setImage(with: URL(string: friendsList[currentIndex].avatarGroupImage ))
         case "chat":
             cell.chatOwnerNameLabel.text = String(messages[indexPath.row].conversation.peer.id)
+            cell.chatOwnerImageView.image = UIImage(named: "Groups")
         default:
-            print("Not User and Chat")
+            print("Not User or Chat")
         }
         
-        if messages[indexPath.row].lastMessage.text.isEmpty  {            cell.chatLastMessageLabel.text = "Документ."
+        if messages[indexPath.row].lastMessage.text.isEmpty  {            cell.chatLastMessageLabel.text = "Документ 📦"
         } else {
             cell.chatLastMessageLabel.text = messages[indexPath.row].lastMessage.text
         }
@@ -69,6 +99,8 @@ class MessagesViewController: UITableViewController {
         return cell
     }
  
-    // MARK: - Navigation
+    // MARK: - Realm
+    
+    
 
 }

@@ -63,7 +63,10 @@ class NewsViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseID, for: indexPath) as? NewsCell else { fatalError() }
     
          // Configure the cell VERSION2 EXTENDED...
-        cell.newsPhotosView.image = nil /*
+        cell.newsPhotosView.image = nil
+        cell.viewsCountsLabel.alpha = 1
+        cell.viewsIcon.alpha = 1
+        /*
         if newsList[indexPath.row].type == "photo" {
             let countPhotos = newsList[indexPath.row].photos.items[0].sizes.count
             cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].photos.items[0].sizes[countPhotos - 1].url))
@@ -161,6 +164,7 @@ class NewsViewController: UITableViewController {
         case "photo":
             print("photo")
             cell.newsTextLabel.backgroundColor = .clear
+//            cell.newsTextLabel.frame.size = CGSize(width: 0, height: 0)
             cell.viewsCountsLabel.alpha = 0
             cell.viewsIcon.alpha = 0
             let countPhotos = newsList[indexPath.row].photos.items[0].sizes.count
@@ -177,6 +181,7 @@ class NewsViewController: UITableViewController {
                 if newsList[indexPath.row].attachments[0].type == "photo" {
                     let countPhotos = newsList[indexPath.row].attachments[0].photo.sizes.count
                     cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].attachments[0].photo.sizes[countPhotos - 1].url))
+
                 } else if newsList[indexPath.row].attachments[0].type == "doc" {
                     cell.newsTextLabel.text = String(newsList[indexPath.row].text)
                     cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].attachments[0].doc.url))
@@ -187,6 +192,8 @@ class NewsViewController: UITableViewController {
                     cell.newsTextLabel.text = String(newsList[indexPath.row].type + "\n" + newsList[indexPath.row].text + "\n" + "ЭТО НАДО ОБРАБОТАТЬ" + "\n"  + newsList[indexPath.row].attachments[0].type)
                     cell.newsTextLabel.backgroundColor = .red
                 }
+            } else if newsList[indexPath.row].attachments.count == 0 {
+                cell.newsTextLabel.text = String(newsList[indexPath.row].text)
             } else if newsList[indexPath.row].copyhistory.count != 0 {
                 cell.newsTextLabel.text = String(newsList[indexPath.row].type + "\n" + "ЭТО РЕПОСТ НАДО ОБРАБОТАТЬ" + "\n" + newsList[indexPath.row].text)
                 cell.newsTextLabel.backgroundColor = .red
@@ -213,13 +220,6 @@ class NewsViewController: UITableViewController {
         default:
             print("ЧТО-ТО ЕЩЕ")
         }
-        
-//        if cell.newsTextLabel.frame.height == CGFloat(150) {
-//            cell.newsTextLabel.isScrollEnabled = true
-//            cell.newsTextLabel.backgroundColor = .orange
-//        } else {
-//            cell.newsTextLabel.isScrollEnabled = false
-//        }
         
         return cell
     }
@@ -248,6 +248,8 @@ class NewsViewController: UITableViewController {
         print(realm.configuration.fileURL!)
         print("WRITING GROUP TO REALM HERE RIGHT NOW!! WOWOWOW I'M HERE!!")
     }
+    
+    // MARK: - Realm Notification
     
 /*    func resultNotificationObjects() {
         let realm = try! Realm()

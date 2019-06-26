@@ -12,7 +12,7 @@ class MessagesCell: UITableViewCell {
     
     static let reuseID = "MessagesCell"
     
-    @IBOutlet weak var chatOwnerImageView: UIView!
+    @IBOutlet weak var chatOwnerImageView: UIImageView!
     @IBOutlet weak var chatOwnerNameLabel: UILabel!
     @IBOutlet weak var chatLastMessageLabel: UILabel!
     

@@ -13,15 +13,19 @@ import SwiftyJSON
 class Messages {
     let count: Int
     let items: [Item]
+    let profiles: [FriendProfile]
+    let groups: [Group]
     
-    init(count: Int, items: [Item]) {
-        self.count = count
-        self.items = items
-    }
+//    init(count: Int, items: [Item]) {
+//        self.count = count
+//        self.items = items
+//    }
     
     init(_ json: JSON) {
         self.count = json["count"].intValue
         self.items = json["items"].arrayValue.map { Item($0) }
+        self.profiles = json["profiles"].arrayValue.map { FriendProfile($0) }
+        self.groups = json["groups"].arrayValue.map { Group($0) }
     }
 }
 

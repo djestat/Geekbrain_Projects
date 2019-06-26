@@ -20,9 +20,9 @@ class FriendsCell: UITableViewCell {
     var avatarShadowSublayer = CAShapeLayer()
     
 //    @IBInspectable
-    var shadowRadius: CGFloat = 10
+    var shadowRadius: CGFloat = 8
 //    @IBInspectable
-    public var shadowColor: UIColor = .gray
+    public var shadowColor: UIColor = .darkGray
 //    @IBInspectable
     var shadowOpacity: Float = 0.95
     
@@ -72,8 +72,10 @@ class FriendsCell: UITableViewCell {
         avatarShadowSublayer.shadowOffset = .zero
         avatarShadowSublayer.shadowOpacity = shadowOpacity
         avatarShadowSublayer.shadowRadius = shadowRadius
+        avatarShadowSublayer.frame.size.applying(CGAffineTransform(scaleX: 0.95, y: 0.95))
+//            = CGAffineTransform(scaleX: 0.95, y: 0.95)
         
-        contentView.layer.insertSublayer(avatarShadowSublayer, at: 0)
+        contentView.layer.insertSublayer(avatarShadowSublayer, at: 1)
         
     }
     
