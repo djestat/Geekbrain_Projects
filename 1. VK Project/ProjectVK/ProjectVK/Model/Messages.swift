@@ -51,12 +51,14 @@ class Item {
 class Conversation {
     let peer: Peer
     let inRead, outRead, lastMessageID: Int
+    let chatSettings: ChatSettings
     
-    init(peer: Peer, inRead: Int, outRead: Int, lastMessageID: Int) {
+    init(peer: Peer, inRead: Int, outRead: Int, lastMessageID: Int, chatSettings: ChatSettings) {
         self.peer = peer
         self.inRead = inRead
         self.outRead = outRead
         self.lastMessageID = lastMessageID
+        self.chatSettings = chatSettings
     }
     
     init(_ json: JSON) {
@@ -65,6 +67,8 @@ class Conversation {
         self.inRead = json["in_read"].intValue
         self.outRead = json["out_read"].intValue
         self.lastMessageID = json["last_message_id"].intValue
+        let chatSettings = json["chat_settings"].self
+        self.chatSettings = ChatSettings(chatSettings)
     }
 }
 
@@ -84,6 +88,30 @@ class Peer {
         self.id = json["id"].intValue
         self.type = json["type"].stringValue
         self.localID = json["local_id"].intValue
+    }
+}
+
+// MARK: - ChatSettings
+class ChatSettings {
+    let ownerID: Int
+    let state, title: String
+    let activeIDS: [Int]
+    let membersCount: Int
+    
+    init(ownerID: Int, state: String, title: String, activeIDS: [Int], membersCount: Int) {
+        self.ownerID = ownerID
+        self.state = state
+        self.title = title
+        self.activeIDS = activeIDS
+        self.membersCount = membersCount
+    }
+    
+    init(_ json: JSON) {
+        self.ownerID = json["owner_id"].intValue
+        self.state = json["state"].stringValue
+        self.title = json["title"].stringValue
+        self.activeIDS = json["active_ids"].arrayValue.map { Int($0.intValue) }
+        self.membersCount = json["members_count"].intValue
     }
 }
 

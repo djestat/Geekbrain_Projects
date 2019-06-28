@@ -41,13 +41,13 @@ class ResponseItem {
     let text: String
     let attachmetsCount: Int
     let attachments: [Attachments]
-    let copyhistory: [ResponseItem]
+    let copyhistory: [CopyHistory]
     let likes: Likes
     let reposts: Reposts
     let comments: Comments
     let views: Views
     
-    init(type: String, sourceID: Int, date: Int, photos: Photos, postID: Int, text: String, attachmetsCount: Int, attachments: [Attachments], copyhistory: [ResponseItem], likes: Likes, reposts: Reposts, comments: Comments, views: Views) {
+    init(type: String, sourceID: Int, date: Int, photos: Photos, postID: Int, text: String, attachmetsCount: Int, attachments: [Attachments], copyhistory: [CopyHistory], likes: Likes, reposts: Reposts, comments: Comments, views: Views) {
         self.type = type
         self.sourceID = sourceID
         self.date = date
@@ -73,7 +73,7 @@ class ResponseItem {
         self.text = json["text"].stringValue
         self.attachmetsCount = json["attachments"].count
         self.attachments = json["attachments"].arrayValue.map { Attachments($0) }
-        self.copyhistory = json["copy_history"].arrayValue.map { ResponseItem($0) }
+        self.copyhistory = json["copy_history"].arrayValue.map { CopyHistory($0) }
         let likes = json["likes"].self
         self.likes = Likes(likes)
         let repost = json["reposts"].self
@@ -86,16 +86,30 @@ class ResponseItem {
 
 }
 
+class CopyHistory {
+    let id: Int
+    let ownerID: Int
+    let fromID: Int
+    let postType: String
+    let text: String
+    let attachments: [Attachments]
+    
+    init(_ json: JSON) {
+        self.id = json["id"].intValue
+        self.ownerID = json["owner_id"].intValue
+        self.fromID = json["from_id"].intValue
+        self.postType = json["post_type"].stringValue
+        self.text = json["text"].stringValue
+        self.attachments = json["attachments"].arrayValue.map { Attachments($0) }
+    }
+}
+
 class Attachments {
     let type: String
     let photo: AttachmentsPhotos
     let doc: AttachmentsDoc
-    
-    init(type: String, photo: AttachmentsPhotos, doc: AttachmentsDoc) {
-        self.photo = photo
-        self.type = type
-        self.doc = doc
-    }
+    let video: AttachmentsVideo
+    let link: AttachmentsLink
     
     init(_ json: JSON) {
         self.type = json["type"].stringValue
@@ -103,6 +117,10 @@ class Attachments {
         self.photo = AttachmentsPhotos(photo)
         let doc = json["doc"].self
         self.doc = AttachmentsDoc(doc)
+        let video = json["video"].self
+        self.video = AttachmentsVideo(video)
+        let link = json["link"].self
+        self.link = AttachmentsLink(link)
     }
     
 }
@@ -139,6 +157,104 @@ class AttachmentsDoc {
         self.url = json["url"].stringValue
     }
 }
+
+class AttachmentsVideo {
+    let id: Int
+    let ownerID: Int
+    let title: String
+    let duration: Int
+    let width: Int
+    let height: Int
+    let photo130: String
+    let photo320: String
+    let photo800: String
+    let photo1280: String
+    let accessKey: String
+    let trackCode: String
+    let type: String
+
+    init(_ json: JSON) {
+        self.id = json["id"].intValue
+        self.ownerID = json["owner_id"].intValue
+        self.title = json["title"].stringValue
+        self.duration = json["duration"].intValue
+        self.width = json["width"].intValue
+        self.height = json["height"].intValue
+        self.photo130 = json["photo_130"].stringValue
+        self.photo320 = json["photo_320"].stringValue
+        self.photo800 = json["photo_800"].stringValue
+        self.photo1280 = json["photo_1280"].stringValue
+        self.accessKey = json["access_key"].stringValue
+        self.trackCode = json["track_code"].stringValue
+        self.type = json["type"].stringValue
+    }
+}
+
+class AttachmentsLink {
+    let url: String
+    let title: String
+    let caption: String
+    let description: String
+    let photo: PhotosItem
+    
+    init(_ json: JSON) {
+        self.url = json["url"].stringValue
+        self.title = json["title"].stringValue
+        self.caption = json["caption"].stringValue
+        self.description = json["descriptio"].stringValue
+        let photo = json["photo"].self
+        self.photo = PhotosItem(photo)
+    }
+}
+
+/*
+ 
+ "type": "link",
+ "link": {
+ "url": "https://www.adme....sli-vo-sne-1665315/",
+ "title": "20 шедевральных фраз, которые люди нечаянно произнесли во сне",
+ "caption": "www.adme.ru",
+ "description": "Обычно к утру все",
+ "photo": {
+          "id": 456268728,
+          "album_id": -27,
+          "owner_id": 2000004417,
+          "sizes": [{
+                 "type": "temp",
+                 "url": "https://sun1-89.u...184/Ff7F6nGT07g.jpg",
+                 "width": 1074,
+                 "height": 564
+                 }, {
+                 "type": "s",
+                 "url": "https://sun1-21.u...185/5NCd7OiWltw.jpg",
+                 "width": 75,
+                 "height": 39
+                 }, {
+                 "type": "m",
+                 "url": "https://sun1-84.u...186/ZRGD9X1A7F8.jpg",
+                 "width": 130,
+                 "height": 70
+                 }, {
+                 "type": "x",
+                 "url": "https://sun1-27.u...187/e__cee4eXsU.jpg",
+                 "width": 150,
+                 "height": 80
+                 }, {
+                 "type": "p",
+                 "url": "https://sun1-27.u...188/uU4DBNdB8Ek.jpg",
+                 "width": 260,
+                 "height": 140
+                 }, {
+                 "type": "l",
+                 "url": "https://sun1-14.u...189/YWXAXz7Uz0w.jpg",
+                 "width": 537,
+                 "height": 240
+                 }, {
+                 "type": "k",
+                 "url": "https://sun1-19.u...18a/Y_Egik7i48Q.jpg",
+                 "width": 1074,
+                 "height": 480
+ */
 
 // MARK: - Photos
 class Photos {

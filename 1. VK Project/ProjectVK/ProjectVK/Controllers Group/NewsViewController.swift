@@ -186,17 +186,26 @@ class NewsViewController: UITableViewController {
                     cell.newsTextLabel.text = String(newsList[indexPath.row].text)
                     cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].attachments[0].doc.url))
                 } else if newsList[indexPath.row].attachments[0].type == "link" {
-                    cell.newsTextLabel.text = String(newsList[indexPath.row].type + "\n" + newsList[indexPath.row].text + "\n" + "ЭТО LINK НАДО ОБРАБОТАТЬ" + "\n"  + newsList[indexPath.row].attachments[0].type)
+                    cell.newsTextLabel.text = String(newsList[indexPath.row].type + "\n" + "ЭТО LINK НАДО ОБРАБОТАТЬ" + "\n" + newsList[indexPath.row].text + "\n"  + newsList[indexPath.row].attachments[0].link.caption + "\n"  + newsList[indexPath.row].attachments[0].link.description)
                     cell.newsTextLabel.backgroundColor = .red
+                    let indexSizes = newsList[indexPath.row].attachments[0].link.photo.sizes.count
+                    cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].attachments[0].link.photo.sizes[indexSizes - 1].url))
+                } else if newsList[indexPath.row].attachments[0].type == "video"{
+                    cell.newsTextLabel.text = String(newsList[indexPath.row].type + "\n" + "ЭТО VIDEO НАДО ОБРАБОТАТЬ" + "\n" + newsList[indexPath.row].text + "\n"  + newsList[indexPath.row].attachments[0].type)
+                    cell.newsTextLabel.backgroundColor = .red
+                    cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].attachments[0].video.photo320))
                 } else {
-                    cell.newsTextLabel.text = String(newsList[indexPath.row].type + "\n" + newsList[indexPath.row].text + "\n" + "ЭТО НАДО ОБРАБОТАТЬ" + "\n"  + newsList[indexPath.row].attachments[0].type)
+                    cell.newsTextLabel.text = String(newsList[indexPath.row].type + "\n" + "ЭТО НАДО ОБРАБОТАТЬ" + "\n" + newsList[indexPath.row].text + "\n"  + newsList[indexPath.row].attachments[0].type)
                     cell.newsTextLabel.backgroundColor = .red
                 }
+            } else if newsList[indexPath.row].copyhistory.count != 0 {
+                cell.newsTextLabel.text = String(newsList[indexPath.row].type + "\n" + "ЭТО РЕПОСТ НАДО ОБРАБОТАТЬ" + "\n" + newsList[indexPath.row].text + "\n" + newsList[indexPath.row].copyhistory[0].attachments[0].type)
+                cell.newsTextLabel.backgroundColor = .red
             } else if newsList[indexPath.row].attachments.count == 0 {
                 cell.newsTextLabel.text = String(newsList[indexPath.row].text)
-            } else if newsList[indexPath.row].copyhistory.count != 0 {
-                cell.newsTextLabel.text = String(newsList[indexPath.row].type + "\n" + "ЭТО РЕПОСТ НАДО ОБРАБОТАТЬ" + "\n" + newsList[indexPath.row].text)
-                cell.newsTextLabel.backgroundColor = .red
+            } else {
+                cell.newsTextLabel.text = String(newsList[indexPath.row].type + "\n" + "ЭТО ЕЩЕ ЧТО-ТО И НАДО ОБРАБОТАТЬ")
+                cell.newsTextLabel.backgroundColor = .magenta
             }
             
             cell.likeCountsLabel.text = String(newsList[indexPath.row].likes.count)
@@ -220,7 +229,7 @@ class NewsViewController: UITableViewController {
         default:
             print("ЧТО-ТО ЕЩЕ")
         }
-        
+        print(newsList[indexPath.row].postID)
         return cell
     }
     

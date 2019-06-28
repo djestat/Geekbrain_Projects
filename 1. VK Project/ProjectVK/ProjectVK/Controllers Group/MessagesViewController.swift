@@ -85,7 +85,7 @@ class MessagesViewController: UITableViewController {
             cell.chatOwnerNameLabel.text = String(friendsList[currentIndex].name + " " + friendsList[currentIndex].lastname)
             cell.chatOwnerImageView.kf.setImage(with: URL(string: friendsList[currentIndex].avatarGroupImage ))
         case "chat":
-            cell.chatOwnerNameLabel.text = String(messages[indexPath.row].conversation.peer.id)
+            cell.chatOwnerNameLabel.text = String(messages[indexPath.row].conversation.chatSettings.title)            
             cell.chatOwnerImageView.image = UIImage(named: "Groups")
         default:
             print("Not User or Chat")
