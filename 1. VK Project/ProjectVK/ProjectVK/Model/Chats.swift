@@ -10,7 +10,7 @@ import Foundation
 import SwiftyJSON
 
 // MARK: - Response
-class Messages {
+class Chats {
     let count: Int
     let items: [Item]
     let profiles: [FriendProfile]
@@ -121,14 +121,14 @@ class LastMessage {
     let peerID: Int
     let text: String
     let conversationMessageID: Int
-    let fwdMessages: [Messages]
+    let fwdMessages: [Chats]
     let ref, refSource: String
     let important: Bool
     let randomID: Int
     let attachments: [Attachment]
     let isHidden: Bool
     
-    init(date: Int, fromID: Int, id: Int, out: Int, peerID: Int, text: String, conversationMessageID: Int, fwdMessages: [Messages], ref: String, refSource: String, important: Bool, randomID: Int, attachments: [Attachment], isHidden: Bool) {
+    init(date: Int, fromID: Int, id: Int, out: Int, peerID: Int, text: String, conversationMessageID: Int, fwdMessages: [Chats], ref: String, refSource: String, important: Bool, randomID: Int, attachments: [Attachment], isHidden: Bool) {
         self.date = date
         self.fromID = fromID
         self.id = id
@@ -153,7 +153,7 @@ class LastMessage {
         self.peerID = json["peer_id"].intValue
         self.text = json["text"].stringValue
         self.conversationMessageID = json["conversation_message_id"].intValue
-        self.fwdMessages = json["fwd_messages"].arrayValue.map { Messages($0) }
+        self.fwdMessages = json["fwd_messages"].arrayValue.map { Chats($0) }
         self.ref = json["ref"].stringValue
         self.refSource = json["ref_source"].stringValue
         self.important = json["important"].boolValue

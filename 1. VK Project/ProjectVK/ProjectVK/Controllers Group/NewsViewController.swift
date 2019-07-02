@@ -32,12 +32,14 @@ class NewsViewController: UITableViewController {
         request.loadNews(nextList) { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success(let newsList2):
-                self.newsList = newsList2.items
-                self.friendList = newsList2.profiles
-                self.groupList = newsList2.groups
-                self.nextList = newsList2.nextFrom
-                self.tableView.reloadData()
+            case .success(let newsList):
+                self.newsList = newsList.items
+                self.friendList = newsList.profiles
+                self.groupList = newsList.groups
+                self.nextList = newsList.nextFrom
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -134,6 +136,8 @@ class NewsViewController: UITableViewController {
             
         }*/
         
+        
+        
         let autorId = newsList[indexPath.row].sourceID
         var currentIndex = 0
         
@@ -172,6 +176,12 @@ class NewsViewController: UITableViewController {
             cell.newsTextLabel.text = String(newsList[indexPath.row].text)
             cell.likeCountsLabel.text = String(newsList[indexPath.row].photos.items[0].likes.count)
             cell.commentsCountsLabel.text = String(newsList[indexPath.row].photos.items[0].comments.count)
+            /*
+            let imageHeight = newsList[indexPath.row].photos.items[0].sizes[countPhotos - 1].height
+            let imageWidth = newsList[indexPath.row].photos.items[0].sizes[countPhotos - 1].width
+            let aspectRatio = CGFloat(imageHeight / imageWidth)
+            cell.aspectRatio = aspectRatio */
+            
         case "post":
             print("post")
             cell.newsTextLabel.text = String(newsList[indexPath.row].text)
@@ -181,6 +191,12 @@ class NewsViewController: UITableViewController {
                 if newsList[indexPath.row].attachments[0].type == "photo" {
                     let countPhotos = newsList[indexPath.row].attachments[0].photo.sizes.count
                     cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].attachments[0].photo.sizes[countPhotos - 1].url))
+                    /*
+                    let imageHeight = newsList[indexPath.row].attachments[0].photo.sizes[countPhotos - 1].height
+                    let imageWidth = newsList[indexPath.row].attachments[0].photo.sizes[countPhotos - 1].width
+                    let aspectRatio = CGFloat(imageHeight / imageWidth)
+                    let width = view.frame.width
+                    cell.newsPhotosView.frame.size = CGSize(width: width, height: width * aspectRatio) */
 
                 } else if newsList[indexPath.row].attachments[0].type == "doc" {
                     cell.newsTextLabel.text = String(newsList[indexPath.row].text)
@@ -280,4 +296,5 @@ class NewsViewController: UITableViewController {
             }
         }
     }*/
+    
 }
