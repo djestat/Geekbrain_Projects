@@ -141,22 +141,50 @@ class AttachmentsPhotos {
 }
 
 class AttachmentsDoc {
+    let id: Int
+    let ownerID: Int
     let title: String
+    let size: Int
     let ext: String
     let url: String
-    
-    init(title: String, ext: String, url: String) {
-        self.title = title
-        self.ext = ext
-        self.url = url
-    }
+    let date: Int
+    let type: Int
+    let preview: DocPreview
     
     init(_ json: JSON) {
+        self.id = json["id"].intValue
+        self.ownerID = json["owner_id"].intValue
         self.title = json["title"].stringValue
+        self.size = json["size"].intValue
         self.ext = json["ext"].stringValue
         self.url = json["url"].stringValue
+        self.date = json["date"].intValue
+        self.type = json["type"].intValue
+        let preview = json["preview"].self
+        self.preview = DocPreview(preview)
     }
 }
+
+class DocPreview {
+    let photo: Sizes
+    let video: Video
+    
+    init(_ json: JSON) {
+        let photo = json["photo"].self
+        self.photo = Sizes(photo)
+        let video = json["video"].self
+        self.video = Video(video)
+    }
+}
+
+class Sizes {
+    let sizes: [Size]
+    
+    init(_ json: JSON) {
+        self.sizes = json["sizes"].arrayValue.map { Size($0) }
+    }
+}
+    
 
 class AttachmentsVideo {
     let id: Int
@@ -206,55 +234,6 @@ class AttachmentsLink {
         self.photo = PhotosItem(photo)
     }
 }
-
-/*
- 
- "type": "link",
- "link": {
- "url": "https://www.adme....sli-vo-sne-1665315/",
- "title": "20 шедевральных фраз, которые люди нечаянно произнесли во сне",
- "caption": "www.adme.ru",
- "description": "Обычно к утру все",
- "photo": {
-          "id": 456268728,
-          "album_id": -27,
-          "owner_id": 2000004417,
-          "sizes": [{
-                 "type": "temp",
-                 "url": "https://sun1-89.u...184/Ff7F6nGT07g.jpg",
-                 "width": 1074,
-                 "height": 564
-                 }, {
-                 "type": "s",
-                 "url": "https://sun1-21.u...185/5NCd7OiWltw.jpg",
-                 "width": 75,
-                 "height": 39
-                 }, {
-                 "type": "m",
-                 "url": "https://sun1-84.u...186/ZRGD9X1A7F8.jpg",
-                 "width": 130,
-                 "height": 70
-                 }, {
-                 "type": "x",
-                 "url": "https://sun1-27.u...187/e__cee4eXsU.jpg",
-                 "width": 150,
-                 "height": 80
-                 }, {
-                 "type": "p",
-                 "url": "https://sun1-27.u...188/uU4DBNdB8Ek.jpg",
-                 "width": 260,
-                 "height": 140
-                 }, {
-                 "type": "l",
-                 "url": "https://sun1-14.u...189/YWXAXz7Uz0w.jpg",
-                 "width": 537,
-                 "height": 240
-                 }, {
-                 "type": "k",
-                 "url": "https://sun1-19.u...18a/Y_Egik7i48Q.jpg",
-                 "width": 1074,
-                 "height": 480
- */
 
 // MARK: - Photos
 class Photos {
@@ -325,11 +304,13 @@ class PhotosItem {
 
 // MARK: - Size
 class Size {
+    let src: String
     let type: String
     let url: String
     let width, height: Int
     
-    init(type: String, url: String, width: Int, height: Int) {
+    init(src: String, type: String, url: String, width: Int, height: Int) {
+        self.src = src
         self.type = type
         self.url = url
         self.width = width
@@ -337,6 +318,7 @@ class Size {
     }
     
     init(_ json: JSON) {
+        self.src = json["src"].stringValue
         self.type = json["type"].stringValue
         self.url = json["url"].stringValue
         self.width = json["width"].intValue
