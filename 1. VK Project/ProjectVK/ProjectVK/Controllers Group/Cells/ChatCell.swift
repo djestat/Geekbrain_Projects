@@ -1,5 +1,5 @@
 //
-//  MessagesCell.swift
+//  ChatCell.swift
 //  ProjectVK
 //
 //  Created by Igor on 24/06/2019.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-class MessagesCell: UITableViewCell {
+class ChatCell: UITableViewCell {
     
-    static let reuseID = "MessagesCell"
+    static let reuseID = "ChatCell"
     
     @IBOutlet weak var chatOwnerImageView: UIImageView!
     @IBOutlet weak var chatOwnerNameLabel: UILabel!

@@ -11,17 +11,29 @@ import UIKit
 class NewsCell: UITableViewCell {
     
     static let reuseID = "NewsCell"
+    public var aspectRatio: CGFloat = 1
     
     @IBOutlet weak var groupImageView: UIImageView!
     @IBOutlet weak var groupNameLabel: UILabel!
     @IBOutlet weak var newsText: UITextView!
-    @IBOutlet weak var newsPhotosView: UIImageView!
+    @IBOutlet weak var newsPhotosView: UIImageView! {
+        didSet {
+            newsPhotosView.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
     @IBOutlet weak var newsTextLabel: UITextView!
     @IBOutlet weak var likeCountsLabel: UILabel!
     @IBOutlet weak var commentsCountsLabel: UILabel!
     @IBOutlet weak var viewsIcon: UIImageView!
     @IBOutlet weak var viewsCountsLabel: UILabel!
     
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        resizeImageView(aspectRatio)
+        
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -63,5 +75,13 @@ class NewsCell: UITableViewCell {
     }
     
     
+    func resizeImageView(_ aspectRatio: CGFloat) {
+        
+        let newWidth = superview!.frame.size.width
+        let newHeight = newWidth * aspectRatio
+        
+        newsPhotosView.frame.size = CGSize(width: newWidth, height: newHeight)
+    }
+
 
 }

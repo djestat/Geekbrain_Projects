@@ -41,13 +41,13 @@ class ResponseItem {
     let text: String
     let attachmetsCount: Int
     let attachments: [Attachments]
-    let copyhistory: [ResponseItem]
+    let copyhistory: [CopyHistory]
     let likes: Likes
     let reposts: Reposts
     let comments: Comments
     let views: Views
     
-    init(type: String, sourceID: Int, date: Int, photos: Photos, postID: Int, text: String, attachmetsCount: Int, attachments: [Attachments], copyhistory: [ResponseItem], likes: Likes, reposts: Reposts, comments: Comments, views: Views) {
+    init(type: String, sourceID: Int, date: Int, photos: Photos, postID: Int, text: String, attachmetsCount: Int, attachments: [Attachments], copyhistory: [CopyHistory], likes: Likes, reposts: Reposts, comments: Comments, views: Views) {
         self.type = type
         self.sourceID = sourceID
         self.date = date
@@ -73,7 +73,7 @@ class ResponseItem {
         self.text = json["text"].stringValue
         self.attachmetsCount = json["attachments"].count
         self.attachments = json["attachments"].arrayValue.map { Attachments($0) }
-        self.copyhistory = json["copy_history"].arrayValue.map { ResponseItem($0) }
+        self.copyhistory = json["copy_history"].arrayValue.map { CopyHistory($0) }
         let likes = json["likes"].self
         self.likes = Likes(likes)
         let repost = json["reposts"].self
@@ -86,16 +86,30 @@ class ResponseItem {
 
 }
 
+class CopyHistory {
+    let id: Int
+    let ownerID: Int
+    let fromID: Int
+    let postType: String
+    let text: String
+    let attachments: [Attachments]
+    
+    init(_ json: JSON) {
+        self.id = json["id"].intValue
+        self.ownerID = json["owner_id"].intValue
+        self.fromID = json["from_id"].intValue
+        self.postType = json["post_type"].stringValue
+        self.text = json["text"].stringValue
+        self.attachments = json["attachments"].arrayValue.map { Attachments($0) }
+    }
+}
+
 class Attachments {
     let type: String
     let photo: AttachmentsPhotos
     let doc: AttachmentsDoc
-    
-    init(type: String, photo: AttachmentsPhotos, doc: AttachmentsDoc) {
-        self.photo = photo
-        self.type = type
-        self.doc = doc
-    }
+    let video: AttachmentsVideo
+    let link: AttachmentsLink
     
     init(_ json: JSON) {
         self.type = json["type"].stringValue
@@ -103,6 +117,10 @@ class Attachments {
         self.photo = AttachmentsPhotos(photo)
         let doc = json["doc"].self
         self.doc = AttachmentsDoc(doc)
+        let video = json["video"].self
+        self.video = AttachmentsVideo(video)
+        let link = json["link"].self
+        self.link = AttachmentsLink(link)
     }
     
 }
@@ -123,20 +141,97 @@ class AttachmentsPhotos {
 }
 
 class AttachmentsDoc {
+    let id: Int
+    let ownerID: Int
     let title: String
+    let size: Int
     let ext: String
     let url: String
-    
-    init(title: String, ext: String, url: String) {
-        self.title = title
-        self.ext = ext
-        self.url = url
-    }
+    let date: Int
+    let type: Int
+    let preview: DocPreview
     
     init(_ json: JSON) {
+        self.id = json["id"].intValue
+        self.ownerID = json["owner_id"].intValue
         self.title = json["title"].stringValue
+        self.size = json["size"].intValue
         self.ext = json["ext"].stringValue
         self.url = json["url"].stringValue
+        self.date = json["date"].intValue
+        self.type = json["type"].intValue
+        let preview = json["preview"].self
+        self.preview = DocPreview(preview)
+    }
+}
+
+class DocPreview {
+    let photo: Sizes
+    let video: Video
+    
+    init(_ json: JSON) {
+        let photo = json["photo"].self
+        self.photo = Sizes(photo)
+        let video = json["video"].self
+        self.video = Video(video)
+    }
+}
+
+class Sizes {
+    let sizes: [Size]
+    
+    init(_ json: JSON) {
+        self.sizes = json["sizes"].arrayValue.map { Size($0) }
+    }
+}
+    
+
+class AttachmentsVideo {
+    let id: Int
+    let ownerID: Int
+    let title: String
+    let duration: Int
+    let width: Int
+    let height: Int
+    let photo130: String
+    let photo320: String
+    let photo800: String
+    let photo1280: String
+    let accessKey: String
+    let trackCode: String
+    let type: String
+
+    init(_ json: JSON) {
+        self.id = json["id"].intValue
+        self.ownerID = json["owner_id"].intValue
+        self.title = json["title"].stringValue
+        self.duration = json["duration"].intValue
+        self.width = json["width"].intValue
+        self.height = json["height"].intValue
+        self.photo130 = json["photo_130"].stringValue
+        self.photo320 = json["photo_320"].stringValue
+        self.photo800 = json["photo_800"].stringValue
+        self.photo1280 = json["photo_1280"].stringValue
+        self.accessKey = json["access_key"].stringValue
+        self.trackCode = json["track_code"].stringValue
+        self.type = json["type"].stringValue
+    }
+}
+
+class AttachmentsLink {
+    let url: String
+    let title: String
+    let caption: String
+    let description: String
+    let photo: PhotosItem
+    
+    init(_ json: JSON) {
+        self.url = json["url"].stringValue
+        self.title = json["title"].stringValue
+        self.caption = json["caption"].stringValue
+        self.description = json["descriptio"].stringValue
+        let photo = json["photo"].self
+        self.photo = PhotosItem(photo)
     }
 }
 
@@ -209,11 +304,13 @@ class PhotosItem {
 
 // MARK: - Size
 class Size {
+    let src: String
     let type: String
     let url: String
     let width, height: Int
     
-    init(type: String, url: String, width: Int, height: Int) {
+    init(src: String, type: String, url: String, width: Int, height: Int) {
+        self.src = src
         self.type = type
         self.url = url
         self.width = width
@@ -221,6 +318,7 @@ class Size {
     }
     
     init(_ json: JSON) {
+        self.src = json["src"].stringValue
         self.type = json["type"].stringValue
         self.url = json["url"].stringValue
         self.width = json["width"].intValue

@@ -1,5 +1,5 @@
 //
-//  MessagesViewController.swift
+//  ChatViewController.swift
 //  ProjectVK
 //
 //  Created by Igor on 23/06/2019.
@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-class MessagesViewController: UITableViewController {
+class ChatViewController: UITableViewController {
     
     let request = VKAPIRequests()
     
@@ -59,7 +59,7 @@ class MessagesViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MessagesCell.reuseID, for: indexPath) as? MessagesCell else { fatalError("Cell cannot be dequeued") }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ChatCell.reuseID, for: indexPath) as? ChatCell else { fatalError("Cell cannot be dequeued") }
         // Configure the cell...
         
         //Configure avatars
@@ -85,7 +85,7 @@ class MessagesViewController: UITableViewController {
             cell.chatOwnerNameLabel.text = String(friendsList[currentIndex].name + " " + friendsList[currentIndex].lastname)
             cell.chatOwnerImageView.kf.setImage(with: URL(string: friendsList[currentIndex].avatarGroupImage ))
         case "chat":
-            cell.chatOwnerNameLabel.text = String(messages[indexPath.row].conversation.peer.id)
+            cell.chatOwnerNameLabel.text = String(messages[indexPath.row].conversation.chatSettings.title)            
             cell.chatOwnerImageView.image = UIImage(named: "Groups")
         default:
             print("Not User or Chat")

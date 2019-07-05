@@ -29,7 +29,7 @@ class VKAPIRequests {
             "v" : "5.95"
         ]
         
-        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON {
+        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON(queue: .global()) {
             response in
             switch response.result {
             case .success(let value):
@@ -55,7 +55,7 @@ class VKAPIRequests {
             "v" : "5.95"
         ]
         
-        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON {
+        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON(queue: .global()) {
             response in
             switch response.result {
             case .success(let value):
@@ -80,7 +80,7 @@ class VKAPIRequests {
             "v" : "5.95"
         ]
         
-        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON {
+        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON(queue: .global()) {
             response in
             switch response.result {
             case .success(let value):
@@ -105,7 +105,7 @@ class VKAPIRequests {
             "v" : "5.95"
         ]
         
-        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON {
+        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON(queue: .global()) {
             response in
             switch response.result {
             case .success(let value):
@@ -132,7 +132,7 @@ class VKAPIRequests {
             "v" : "5.95"
         ]
         
-        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON {
+        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON(queue: .global()) {
             response in
             switch response.result {
             case .success(let value):
@@ -159,7 +159,7 @@ class VKAPIRequests {
             "v" : "5.95"
         ]
         
-        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON {
+        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON(queue: .global()) {
             response in
             switch response.result {
             case .success(let value):
@@ -189,7 +189,7 @@ class VKAPIRequests {
             "v" : "5.95"
         ]
         
-        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON {
+        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON(queue: .global()) {
             response in
             switch response.result {
             case .success(let value):
@@ -207,7 +207,7 @@ class VKAPIRequests {
     // MARK: - Messages Requests
     
     
-    public func getMessages(completion: ((Swift.Result<Messages, Error>) -> Void)? = nil) {
+    public func getMessages(completion: ((Swift.Result<Chats, Error>) -> Void)? = nil) {
         
         let baseURL = "https://api.vk.com"
         let path = "/method/messages.getConversations"
@@ -220,14 +220,17 @@ class VKAPIRequests {
             "v" : "5.95"
         ]
         
-        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON {
+        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON(queue: .global()) {
             response in
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
                 let response = json["response"].self
-                let messages = Messages(response)
-                completion?(.success(messages))
+                let messages = Chats(response)
+                DispatchQueue.main.async {
+                    completion?(.success(messages))
+                }
+                
             case .failure(let error):
                 completion?(.failure(error))
             }

@@ -10,7 +10,7 @@ import Foundation
 import SwiftyJSON
 
 // MARK: - Response
-class Messages {
+class Chats {
     let count: Int
     let items: [Item]
     let profiles: [FriendProfile]
@@ -51,12 +51,14 @@ class Item {
 class Conversation {
     let peer: Peer
     let inRead, outRead, lastMessageID: Int
+    let chatSettings: ChatSettings
     
-    init(peer: Peer, inRead: Int, outRead: Int, lastMessageID: Int) {
+    init(peer: Peer, inRead: Int, outRead: Int, lastMessageID: Int, chatSettings: ChatSettings) {
         self.peer = peer
         self.inRead = inRead
         self.outRead = outRead
         self.lastMessageID = lastMessageID
+        self.chatSettings = chatSettings
     }
     
     init(_ json: JSON) {
@@ -65,6 +67,8 @@ class Conversation {
         self.inRead = json["in_read"].intValue
         self.outRead = json["out_read"].intValue
         self.lastMessageID = json["last_message_id"].intValue
+        let chatSettings = json["chat_settings"].self
+        self.chatSettings = ChatSettings(chatSettings)
     }
 }
 
@@ -87,20 +91,44 @@ class Peer {
     }
 }
 
+// MARK: - ChatSettings
+class ChatSettings {
+    let ownerID: Int
+    let state, title: String
+    let activeIDS: [Int]
+    let membersCount: Int
+    
+    init(ownerID: Int, state: String, title: String, activeIDS: [Int], membersCount: Int) {
+        self.ownerID = ownerID
+        self.state = state
+        self.title = title
+        self.activeIDS = activeIDS
+        self.membersCount = membersCount
+    }
+    
+    init(_ json: JSON) {
+        self.ownerID = json["owner_id"].intValue
+        self.state = json["state"].stringValue
+        self.title = json["title"].stringValue
+        self.activeIDS = json["active_ids"].arrayValue.map { Int($0.intValue) }
+        self.membersCount = json["members_count"].intValue
+    }
+}
+
 // MARK: - LastMessage
 class LastMessage {
     let date, fromID, id, out: Int
     let peerID: Int
     let text: String
     let conversationMessageID: Int
-    let fwdMessages: [Messages]
+    let fwdMessages: [Chats]
     let ref, refSource: String
     let important: Bool
     let randomID: Int
     let attachments: [Attachment]
     let isHidden: Bool
     
-    init(date: Int, fromID: Int, id: Int, out: Int, peerID: Int, text: String, conversationMessageID: Int, fwdMessages: [Messages], ref: String, refSource: String, important: Bool, randomID: Int, attachments: [Attachment], isHidden: Bool) {
+    init(date: Int, fromID: Int, id: Int, out: Int, peerID: Int, text: String, conversationMessageID: Int, fwdMessages: [Chats], ref: String, refSource: String, important: Bool, randomID: Int, attachments: [Attachment], isHidden: Bool) {
         self.date = date
         self.fromID = fromID
         self.id = id
@@ -125,7 +153,7 @@ class LastMessage {
         self.peerID = json["peer_id"].intValue
         self.text = json["text"].stringValue
         self.conversationMessageID = json["conversation_message_id"].intValue
-        self.fwdMessages = json["fwd_messages"].arrayValue.map { Messages($0) }
+        self.fwdMessages = json["fwd_messages"].arrayValue.map { Chats($0) }
         self.ref = json["ref"].stringValue
         self.refSource = json["ref_source"].stringValue
         self.important = json["important"].boolValue
