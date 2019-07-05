@@ -56,7 +56,7 @@ class FriendsCell: UITableViewCell {
     // MARK: - Layers configure
     
     func configureMask() {
-        friendPhoto.layer.cornerRadius = friendPhoto.frame.height / 2
+        friendPhoto.layer.cornerRadius = friendPhoto.frame.height / 2.1
         friendPhoto.layer.maskedCorners = CACornerMask(rawValue: CACornerMask.RawValue.init(bitPattern: 7))
         friendPhoto.layer.masksToBounds = true
         
@@ -65,6 +65,8 @@ class FriendsCell: UITableViewCell {
     func configureShadow() {
         
         avatarShadowSublayer.backgroundColor = UIColor.white.cgColor
+        avatarShadowSublayer.fillColor = UIColor.lightGray.cgColor
+//        avatarShadowSublayer.strokeColor = UIColor.lightGray.cgColor
         avatarShadowSublayer.path = UIBezierPath(roundedRect: friendPhoto.layer.frame, byRoundingCorners: [.bottomLeft, .topLeft, .topRight], cornerRadii: CGSize(width: friendPhoto.frame.height / 2, height: friendPhoto.frame.height / 2)).cgPath
         
         avatarShadowSublayer.shadowColor = shadowColor.cgColor
@@ -72,8 +74,6 @@ class FriendsCell: UITableViewCell {
         avatarShadowSublayer.shadowOffset = .zero
         avatarShadowSublayer.shadowOpacity = shadowOpacity
         avatarShadowSublayer.shadowRadius = shadowRadius
-        avatarShadowSublayer.frame.size.applying(CGAffineTransform(scaleX: 0.95, y: 0.95))
-//            = CGAffineTransform(scaleX: 0.95, y: 0.95)
         
         contentView.layer.insertSublayer(avatarShadowSublayer, at: 1)
         
