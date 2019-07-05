@@ -111,7 +111,7 @@ class FriendsViewController: UITableViewController {
             cell.friendName.text = lastnameValues[indexPath.row].name + " " + lastnameValues[indexPath.row].lastname
             cell.friendPhoto.kf.setImage(with: URL(string: lastnameValues[indexPath.row].avatarImage))
             if lastnameValues[indexPath.row].online == 1 {
-                cell.shadowColor = .blue
+                cell.shadowColor = .green
             } else if lastnameValues[indexPath.row].online == 0 {
                 cell.shadowColor = .gray
             }

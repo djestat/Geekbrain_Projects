@@ -61,7 +61,9 @@ class VKAPIRequests {
             case .success(let value):
                 let json = JSON(value)
                 let groupList = json["response"]["items"].arrayValue.map { Group($0) }
-                completion?(.success(groupList))
+                DispatchQueue.main.async {
+                    completion?(.success(groupList))
+                }
             case .failure(let error):
                 completion?(.failure(error))
             }
