@@ -194,6 +194,11 @@ class VKAPIRequests {
         Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON(queue: .global()) {
             response in
             switch response.result {
+//            case .success(let value):
+//                let json = JSON(value)
+//                let response = json["response"].self
+//                let newsList = News(response)
+//                completion?(.success(newsList))
             case .success(let value):
                 let json = JSON(value)
                 let response = json["response"].self
@@ -207,8 +212,7 @@ class VKAPIRequests {
     
     
     // MARK: - Messages Requests
-    
-    
+
     public func getMessages(completion: ((Swift.Result<Chats, Error>) -> Void)? = nil) {
         
         let baseURL = "https://api.vk.com"
