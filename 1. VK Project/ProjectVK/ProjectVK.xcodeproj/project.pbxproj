@@ -13,6 +13,7 @@
 		CE2914952291CAAB003A86B2 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2914912291AC4F003A86B2 /* WebKit.framework */; };
 		CE2914982291DAEA003A86B2 /* VKAPIRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2914972291DAEA003A86B2 /* VKAPIRequests.swift */; };
 		CE33DAB3225E95B600B2389B /* GroupsFinderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE33DAB2225E95B600B2389B /* GroupsFinderController.swift */; };
+		CE64E21422DBB33F0056B843 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE64E21322DBB33F0056B843 /* MessageViewController.swift */; };
 		CE65CF582265271700D5221A /* LikeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE65CF572265271700D5221A /* LikeControl.swift */; };
 		CE7208AB225D34980069A952 /* FriendsProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7208AA225D34980069A952 /* FriendsProfileController.swift */; };
 		CE8EF5CC2258AB2C0015EC00 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8EF5CB2258AB2C0015EC00 /* FriendsViewController.swift */; };
@@ -25,6 +26,7 @@
 		CEA6147F225BDA620012F4F6 /* GroupsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA6147E225BDA620012F4F6 /* GroupsCell.swift */; };
 		CEA61484225BE7BB0012F4F6 /* Profiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA61483225BE7BB0012F4F6 /* Profiles.swift */; };
 		CEA61486225BE7D20012F4F6 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA61485225BE7D20012F4F6 /* Group.swift */; };
+		CEA62BA922DB216F00B2E66D /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA62BA822DB216F00B2E66D /* Operation.swift */; };
 		CEA87625229B28C7000CAC9A /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA87624229B28C7000CAC9A /* News.swift */; };
 		CEACD2C6226B9549003400B4 /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEACD2C5226B9549003400B4 /* NewsCell.swift */; };
 		CEACD2C8226B958F003400B4 /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEACD2C7226B958F003400B4 /* NewsViewController.swift */; };
@@ -52,6 +54,7 @@
 		CE2914932291B9BD003A86B2 /* VKLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKLoginViewController.swift; sourceTree = "<group>"; };
 		CE2914972291DAEA003A86B2 /* VKAPIRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKAPIRequests.swift; sourceTree = "<group>"; };
 		CE33DAB2225E95B600B2389B /* GroupsFinderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsFinderController.swift; sourceTree = "<group>"; };
+		CE64E21322DBB33F0056B843 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		CE65CF572265271700D5221A /* LikeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeControl.swift; sourceTree = "<group>"; };
 		CE7208AA225D34980069A952 /* FriendsProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsProfileController.swift; sourceTree = "<group>"; };
 		CE8EF5CB2258AB2C0015EC00 /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
@@ -64,6 +67,7 @@
 		CEA6147E225BDA620012F4F6 /* GroupsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsCell.swift; sourceTree = "<group>"; };
 		CEA61483225BE7BB0012F4F6 /* Profiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profiles.swift; sourceTree = "<group>"; };
 		CEA61485225BE7D20012F4F6 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		CEA62BA822DB216F00B2E66D /* Operation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
 		CEA87624229B28C7000CAC9A /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
 		CEACD2C5226B9549003400B4 /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
 		CEACD2C7226B958F003400B4 /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
@@ -178,6 +182,14 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		CEA62BA722DB214800B2E66D /* Operation */ = {
+			isa = PBXGroup;
+			children = (
+				CEA62BA822DB216F00B2E66D /* Operation.swift */,
+			);
+			path = Operation;
+			sourceTree = "<group>";
+		};
 		CEB75519224F9B5000E5A718 = {
 			isa = PBXGroup;
 			children = (
@@ -212,6 +224,7 @@
 		CEB75537224F9E0400E5A718 /* Controllers Group */ = {
 			isa = PBXGroup;
 			children = (
+				CEA62BA722DB214800B2E66D /* Operation */,
 				CE08E76222AC3BCC0087FD13 /* Realm */,
 				CE2914962291D964003A86B2 /* NetworkingService */,
 				CEE7AC29228711B500C0668D /* Transitions */,
@@ -226,6 +239,7 @@
 				CE33DAB2225E95B600B2389B /* GroupsFinderController.swift */,
 				CEACD2C7226B958F003400B4 /* NewsViewController.swift */,
 				CEED578522C0074400227C7A /* ChatViewController.swift */,
+				CE64E21322DBB33F0056B843 /* MessageViewController.swift */,
 			);
 			path = "Controllers Group";
 			sourceTree = "<group>";
@@ -377,6 +391,7 @@
 				CE08E76422AC3C8E0087FD13 /* RealmProvider.swift in Sources */,
 				CE2914942291B9BD003A86B2 /* VKLoginViewController.swift in Sources */,
 				CEA6147D225BD7C40012F4F6 /* FriendsPhotoCell.swift in Sources */,
+				CEA62BA922DB216F00B2E66D /* Operation.swift in Sources */,
 				CEED578622C0074400227C7A /* ChatViewController.swift in Sources */,
 				CEE7AC2B2287126700C0668D /* CustomAnimator.swift in Sources */,
 				CE8EF5CE2258AB410015EC00 /* GroupsViewController.swift in Sources */,
@@ -388,6 +403,7 @@
 				CE65CF582265271700D5221A /* LikeControl.swift in Sources */,
 				CEACD2C8226B958F003400B4 /* NewsViewController.swift in Sources */,
 				CEA87625229B28C7000CAC9A /* News.swift in Sources */,
+				CE64E21422DBB33F0056B843 /* MessageViewController.swift in Sources */,
 				CEE7AC2F228731B100C0668D /* CustomNavigationController.swift in Sources */,
 				CEE938372290483A005E3E08 /* Session.swift in Sources */,
 				CEACD2C6226B9549003400B4 /* NewsCell.swift in Sources */,

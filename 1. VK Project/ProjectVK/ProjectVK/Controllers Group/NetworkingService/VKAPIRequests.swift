@@ -147,6 +147,41 @@ class VKAPIRequests {
         }
     }
     
+    // MARK: - Load VKfriends DATA for Operation
+    public func loadFriendsData(completion: ((Data) -> Void)? = nil) {
+        
+        let baseURL = "https://api.vk.com"
+        let path = "/method/friends.get"
+        
+        let params: Parameters = [
+            "access_token" : token,
+            "fields" : "nickname,domain,sex,bdate,city,country,photo_50,photo_100,photo_200_orig,online,relation",
+            "v" : "5.95"
+        ]
+        
+        Alamofire.request(baseURL + path, method: .get, parameters: params).responseData(queue: .global(), completionHandler: { responseData in
+            switch responseData.result {
+            case .success(let data):
+                completion?(data)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
+            /*
+            .responseJSON(queue: .global()) {
+            response in
+            let data = response
+            completion?()
+            switch response.result {
+            case .success(let data):
+                let data = data
+                completion?(.success())
+            case .failure(let error):
+                completion?(.failure(error))
+            }
+        }*/
+    }
+    
     // MARK: - Load Friend photo
     public func loadPhotos(_ userID: Int, completion: ((Swift.Result<[FriendPhoto], Error>) -> Void)? = nil) {
 
