@@ -42,6 +42,41 @@ class VKAPIRequests {
         }
     }
     
+    // MARK: - Load GROUPS DATA for Operation
+    public func loadGroupsData(completion: ((Swift.Result<Data, Error>) -> Void)? = nil) {
+        
+        //    public func loadGroupsData(completion: ((Swift.Result<Data, Error>) -> Void)? = nil) {
+        
+        let baseURL = "https://api.vk.com"
+        let path = "/method/groups.get"
+        
+        let params: Parameters = [
+            "access_token" : token,
+            "extended" : "1",
+            "v" : "5.95"
+        ]
+        
+        Alamofire.request(baseURL + path, method: .get, parameters: params).responseData { responce in
+            switch responce.result {
+            case .success(let value):
+                completion?(.success(value))
+                print("⚡️ DATA DOWNLOAD \(value)")
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        /*.responseJSON(queue: .global()) { response in
+         switch response.result {
+         case .success(let value):
+         completion?(.success(value))
+         print("⚡️ DATA DOWNLOAD \(value)")
+         case .failure(let error):
+         print(error.localizedDescription)
+         }
+         }*/
+    }
+    
     // MARK: - Search VKgroup
     public func findGroups(_ searchingGroup: String, completion: ((Swift.Result<[Group], Error>) -> Void)? = nil) {
         
@@ -134,8 +169,7 @@ class VKAPIRequests {
             "v" : "5.95"
         ]
         
-        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON(queue: .global()) {
-            response in
+        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON(queue: .global()) { response in
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
@@ -145,41 +179,6 @@ class VKAPIRequests {
                 completion?(.failure(error))
             }
         }
-    }
-    
-    // MARK: - Load VKfriends DATA for Operation
-    public func loadFriendsData(completion: ((Data) -> Void)? = nil) {
-        
-        let baseURL = "https://api.vk.com"
-        let path = "/method/friends.get"
-        
-        let params: Parameters = [
-            "access_token" : token,
-            "fields" : "nickname,domain,sex,bdate,city,country,photo_50,photo_100,photo_200_orig,online,relation",
-            "v" : "5.95"
-        ]
-        
-        Alamofire.request(baseURL + path, method: .get, parameters: params).responseData(queue: .global(), completionHandler: { responseData in
-            switch responseData.result {
-            case .success(let data):
-                completion?(data)
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        })
-            /*
-            .responseJSON(queue: .global()) {
-            response in
-            let data = response
-            completion?()
-            switch response.result {
-            case .success(let data):
-                let data = data
-                completion?(.success())
-            case .failure(let error):
-                completion?(.failure(error))
-            }
-        }*/
     }
     
     // MARK: - Load Friend photo

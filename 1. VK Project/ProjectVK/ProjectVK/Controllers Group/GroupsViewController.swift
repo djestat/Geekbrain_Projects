@@ -42,6 +42,16 @@ class GroupsViewController: UITableViewController {
         
         let tapGR = UITapGestureRecognizer(target: self, action: #selector(dissmissKeyboard))
         view.addGestureRecognizer(tapGR)
+        
+        
+        let fdo = FetchDataOperation()
+        let pdo = ParseDataOperation()
+        pdo.addDependency(fdo)
+        let sdo = SaveToRealmOperation()
+        sdo.addDependency(pdo)
+        
+        OperationQueue.main.addOperations([fdo, pdo, sdo], waitUntilFinished: false)
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {

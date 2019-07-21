@@ -49,8 +49,8 @@ class FriendsViewController: UITableViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
      
- 
     }
+    
     override func viewWillDisappear(_ animated: Bool) {
         resultNotificationToken?.invalidate()
     }
