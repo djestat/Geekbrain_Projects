@@ -41,6 +41,7 @@
 		CEE7AC2D2287232900C0668D /* CustomSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE7AC2C2287232900C0668D /* CustomSegue.swift */; };
 		CEE7AC2F228731B100C0668D /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE7AC2E228731B100C0668D /* CustomNavigationController.swift */; };
 		CEE938372290483A005E3E08 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE938362290483A005E3E08 /* Session.swift */; };
+		CEEB4B9622EB9A3500D3DEB4 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEB4B9522EB9A3500D3DEB4 /* AsyncOperation.swift */; };
 		CEED578622C0074400227C7A /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEED578522C0074400227C7A /* ChatViewController.swift */; };
 		CEED578822C00C8B00227C7A /* Chats.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEED578722C00C8B00227C7A /* Chats.swift */; };
 		CEFE5D582280CB690089E6B4 /* LoadingAnimatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFE5D572280CB690089E6B4 /* LoadingAnimatedView.swift */; };
@@ -84,6 +85,7 @@
 		CEE7AC2C2287232900C0668D /* CustomSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegue.swift; sourceTree = "<group>"; };
 		CEE7AC2E228731B100C0668D /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		CEE938362290483A005E3E08 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		CEEB4B9522EB9A3500D3DEB4 /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
 		CEED578522C0074400227C7A /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		CEED578722C00C8B00227C7A /* Chats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chats.swift; sourceTree = "<group>"; };
 		CEFE5D572280CB690089E6B4 /* LoadingAnimatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAnimatedView.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 		CEA62BA722DB214800B2E66D /* Operation */ = {
 			isa = PBXGroup;
 			children = (
+				CEEB4B9522EB9A3500D3DEB4 /* AsyncOperation.swift */,
 				CEA62BA822DB216F00B2E66D /* Operation.swift */,
 			);
 			path = Operation;
@@ -378,6 +381,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEB1E11D224FB04D00991D1D /* LoginViewController.swift in Sources */,
+				CEEB4B9622EB9A3500D3DEB4 /* AsyncOperation.swift in Sources */,
 				CEFE5D582280CB690089E6B4 /* LoadingAnimatedView.swift in Sources */,
 				CE7208AB225D34980069A952 /* FriendsProfileController.swift in Sources */,
 				CE33DAB3225E95B600B2389B /* GroupsFinderController.swift in Sources */,

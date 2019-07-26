@@ -9,19 +9,23 @@
 import Foundation
 import SwiftyJSON
 
-class FetchDataOperation: Operation {
+class FetchDataOperation: AsyncOperation {
     let vkRequest = VKAPIRequests()
     var data: Data?
     
     override func main() {
         vkRequest.loadGroupsData { (result) in
-            self.data = result.value
-            print("🔥 OPERATIONS FDO \(result.error?.localizedDescription) AND \(result.value)")
+            let value = try? result.get()
+            self.data = value
+            print("🔥 OPERATIONS FDO \(String(describing: value))")
+//            self.data = result.value
+//            print("🔥 OPERATIONS FDO \(result.error?.localizedDescription) AND \(result.value)")
+            self.state = .finished
         }
     }
 }
 
-class ParseDataOperation: Operation {
+class ParseDataOperation: AsyncOperation {
     var groupList = [Group]()
     
     override func main() {
@@ -33,12 +37,13 @@ class ParseDataOperation: Operation {
         let json = JSON(data)
         self.groupList = json["response"]["items"].arrayValue.map { Group($0) }
         print("🔥 OPERATIONS PDO \(groupList.count)")
+        self.state = .finished
     }
     
  
 }
 
-class SaveToRealmOperation: Operation {
+class SaveToRealmOperation: AsyncOperation {
 
     override func main() {
         guard let parseDataOps = dependencies.filter({ $0 is ParseDataOperation }).first as? ParseDataOperation else { return }
@@ -46,11 +51,12 @@ class SaveToRealmOperation: Operation {
         let groupList = parseDataOps.groupList
         RealmProvider.save(data: groupList)
         print("🔥 OPERATIONS STRO \(groupList.count)")
+        self.state = .finished
     }
     
 }
 
-class DisplayDataOperation: Operation {
+class DisplayDataOperation: AsyncOperation {
     let controller: GroupsViewController
     
     init(controller: GroupsViewController) {
@@ -58,7 +64,7 @@ class DisplayDataOperation: Operation {
     }
     
     override func main() {
-        
+        self.state = .finished
     }
     
 }
