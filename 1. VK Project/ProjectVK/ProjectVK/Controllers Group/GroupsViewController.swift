@@ -13,9 +13,9 @@ import RealmSwift
 class GroupsViewController: UITableViewController {
     
     let request = VKAPIRequests()
-    var resultNotificationToken: NotificationToken?
+//    var resultNotificationToken: NotificationToken?
     
-    private var groupsList: Results<Group> = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(Group.self).filter("isMember == %i", 1)
+    var groupsList: Results<Group> = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(Group.self).filter("isMember == %i", 1)
     
     @IBOutlet weak var searchBar: UISearchBar! {
         didSet {
@@ -23,39 +23,27 @@ class GroupsViewController: UITableViewController {
         }
     }
     
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        request.userGroups { result in
-            switch result {
-            case .success(let groupList):
-                RealmProvider.save(data: groupList)
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-        resultNotificationObjects()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Gesture
         let tapGR = UITapGestureRecognizer(target: self, action: #selector(dissmissKeyboard))
         view.addGestureRecognizer(tapGR)
         
-        
+        //Operations
         let fdo = FetchDataOperation()
         let pdo = ParseDataOperation()
         pdo.addDependency(fdo)
         let sdo = SaveToRealmOperation()
         sdo.addDependency(pdo)
-        
-        OperationQueue.main.addOperations([fdo, pdo, sdo], waitUntilFinished: false)
-        
+        let ddo = DisplayDataOperation(controller: self)
+        ddo.addDependency(sdo)
+        OperationQueue.main.addOperations([fdo, pdo, sdo, ddo], waitUntilFinished: false)
+
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        resultNotificationToken?.invalidate()
+//        resultNotificationToken?.invalidate()
         KingfisherManager.shared.cache.clearMemoryCache()
     }
 
@@ -92,7 +80,7 @@ class GroupsViewController: UITableViewController {
     }
     
     //MARK: - REALM Function
-    
+    /*
     func resultNotificationObjects() {
         let realmConfig = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
         let realm = try! Realm(configuration: realmConfig)
@@ -114,7 +102,7 @@ class GroupsViewController: UITableViewController {
             }
         }
     }
-    
+    */
 }
 
 extension GroupsViewController: UISearchBarDelegate {

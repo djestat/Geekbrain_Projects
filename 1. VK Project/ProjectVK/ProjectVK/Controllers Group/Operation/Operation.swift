@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyJSON
+import RealmSwift
 
 class FetchDataOperation: AsyncOperation {
     let vkRequest = VKAPIRequests()
@@ -18,8 +19,6 @@ class FetchDataOperation: AsyncOperation {
             let value = try? result.get()
             self.data = value
             print("🔥 OPERATIONS FDO \(String(describing: value))")
-//            self.data = result.value
-//            print("🔥 OPERATIONS FDO \(result.error?.localizedDescription) AND \(result.value)")
             self.state = .finished
         }
     }
@@ -64,8 +63,38 @@ class DisplayDataOperation: AsyncOperation {
     }
     
     override func main() {
+        guard (dependencies.first(where: { $0 is SaveToRealmOperation }) as? SaveToRealmOperation) != nil
+            else { return }
+        /*
+        let realmConfig = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
+        let realm = try! Realm(configuration: realmConfig)
+        let groups = realm.objects(Group.self).filter("isMember == %i", 1)
+        self.controller.resultNotificationToken = groups.observe { [weak self] change in
+            guard let self = self else { return }
+            switch change {
+            case .initial(let collection):
+                self.controller.groupsList = collection
+                self.controller.tableView.reloadData()
+                print("INITIAAAAAAAAALLLLLLLLLLLLLL")
+            case .update(let collection, deletions: let deletion, insertions: let insertions, modifications: let modification):
+                self.controller.groupsList = collection
+                self.controller.tableView.reloadData()
+                print("UPDAAAAAAAAAATEEEEEE")
+                print("\(collection.count) , \(deletion.count), \(insertions.count), \(modification.count)")
+            case .error(let error):
+                print(error.localizedDescription)
+            }
+        }*/
+        
+
+        
+        let groups2 = RealmProvider.read(Group.self).filter("isMember == %i", 1)
+        controller.groupsList = groups2
+        controller.tableView.reloadData()
+        
+        
+        print("🔥 OPERATIONS DDO \(controller.description) AND \(groups2.count) AND \(groups2.count)")
         self.state = .finished
     }
-    
 }
 
