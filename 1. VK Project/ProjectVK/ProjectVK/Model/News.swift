@@ -11,25 +11,49 @@ import SwiftyJSON
 import RealmSwift
 
 class NewsRealm: Object {
-    @objc dynamic var id: Int = 0
-    @objc dynamic var name: String = ""
-    @objc dynamic var image: String = ""
-    @objc dynamic var isMember: Int = 0
+    @objc dynamic var postID: Int = 0
+    @objc dynamic var postType: String = ""
+    @objc dynamic var sourceID: Int = 0
+    @objc dynamic var sourceName: String = ""
+    @objc dynamic var sourcePhoto: String = ""
+    @objc dynamic var sourceText: String = ""
+    @objc dynamic var attachmentPhoto: String = ""
+    @objc dynamic var likes: Int = 0
+    @objc dynamic var reposts: Int = 0
+    @objc dynamic var comments: Int = 0
+    @objc dynamic var views: Int = 0
+    @objc dynamic var nextList: String = ""
     
-    convenience init(id: Int, groupName: String, groupImage: String, isMember: Int) {
+    convenience init(postID: Int, postType: String, sourceID: Int, sourceName: String, sourcePhoto: String, sourceText: String, attachmentPhoto: String, likes: Int, reposts: Int, comments: Int, views: Int, nextList: String) {
         self.init()
-        self.id = id
-        self.name = groupName
-        self.image = groupImage
-        self.isMember = isMember
+        self.postID = postID
+        self.postType = postType
+        self.sourceID = sourceID
+        self.sourceName = sourceName
+        self.sourcePhoto = sourcePhoto
+        self.sourceText = sourceText
+        self.attachmentPhoto = attachmentPhoto
+        self.likes = likes
+        self.reposts = reposts
+        self.comments = comments
+        self.views = views
+        self.nextList = nextList
     }
     
     convenience init(_ json: JSON) {
         self.init()
-        self.id = json["id"].intValue
-        self.name = json["name"].stringValue
-        self.image = json["photo_200"].stringValue
-        self.isMember = json["is_member"].intValue
+        self.postID = json[""].intValue
+        self.postType = json[""].stringValue
+        self.sourceID = json[""].intValue
+        self.sourceName = json[""].stringValue
+        self.sourcePhoto = json[""].stringValue
+        self.sourceText = json[""].stringValue
+        self.attachmentPhoto = json[""].stringValue
+        self.likes = json[""].intValue
+        self.reposts = json[""].intValue
+        self.comments = json[""].intValue
+        self.views = json[""].intValue
+        self.nextList = json[""].stringValue
     }
     
     override static func primaryKey() -> String? {

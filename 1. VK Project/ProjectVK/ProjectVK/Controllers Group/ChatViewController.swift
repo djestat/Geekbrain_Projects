@@ -26,7 +26,7 @@ class ChatViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem
-        request.getMessages() { [weak self] result in
+        request.getChats() { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let messages):

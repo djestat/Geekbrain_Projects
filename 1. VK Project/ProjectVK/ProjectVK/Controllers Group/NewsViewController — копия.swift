@@ -14,7 +14,9 @@ class NewsViewController: UITableViewController {
     let request = VKAPIRequests()
     var resultNotificationToken: NotificationToken?
     
-    var newsList = [NewsRealm]()
+    var newsList = [ResponseItem]()
+    var friendList = [FriendProfile]()
+    var groupList = [Group]()
     var nextList = ""
 
     override func viewWillAppear(_ animated: Bool) {
@@ -24,10 +26,17 @@ class NewsViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        request.loadNews2(nextList) { result in
+        request.loadNews(nextList) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let newsList):
-                RealmProvider.save(data: newsList)
+                self.newsList = newsList.items
+                self.friendList = newsList.profiles
+                self.groupList = newsList.groups
+                self.nextList = newsList.nextFrom
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -57,7 +66,6 @@ class NewsViewController: UITableViewController {
         cell.viewsCountsLabel.alpha = 1
         cell.viewsIcon.alpha = 1
         
-        /*
         let autorId = newsList[indexPath.row].sourceID
         var currentIndex = 0
         
@@ -166,7 +174,7 @@ class NewsViewController: UITableViewController {
             cell.viewsIcon.alpha = 0
         default:
             print("ЧТО-ТО ЕЩЕ")
-        }*/
+        }
         print(newsList[indexPath.row].postID)
         return cell
     }

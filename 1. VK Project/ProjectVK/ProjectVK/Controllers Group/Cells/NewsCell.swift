@@ -31,7 +31,7 @@ class NewsCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        resizeImageView(aspectRatio)
+//        resizeImageView(aspectRatio)
         
     }
     

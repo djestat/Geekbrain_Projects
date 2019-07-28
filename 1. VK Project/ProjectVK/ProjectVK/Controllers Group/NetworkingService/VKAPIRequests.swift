@@ -65,16 +65,6 @@ class VKAPIRequests {
                 print(error.localizedDescription)
             }
         }
-        
-        /*.responseJSON(queue: .global()) { response in
-         switch response.result {
-         case .success(let value):
-         completion?(.success(value))
-         print("⚡️ DATA DOWNLOAD \(value)")
-         case .failure(let error):
-         print(error.localizedDescription)
-         }
-         }*/
     }
     
     // MARK: - Search VKgroup
@@ -228,11 +218,6 @@ class VKAPIRequests {
         Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON(queue: .global()) {
             response in
             switch response.result {
-//            case .success(let value):
-//                let json = JSON(value)
-//                let response = json["response"].self
-//                let newsList = News(response)
-//                completion?(.success(newsList))
             case .success(let value):
                 let json = JSON(value)
                 let response = json["response"].self
@@ -244,9 +229,73 @@ class VKAPIRequests {
         }
     }
     
+    public func loadNews2(_ nextList: String, completion: ((Swift.Result<[NewsRealm], Error>) -> Void)? = nil) {
+        
+        let baseURL = "https://api.vk.com"
+        let path = "/method/newsfeed.get"
+        
+        let params: Parameters = [
+            "access_token" : token,
+            "filters" : "post,photo",
+            //            "filters" : "post,photo,wall_photo",
+            //            "source_id" : sourceID,
+            "start_from" : nextList,
+            "count" : "100",
+            "v" : "5.95"
+        ]
+        
+        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON(queue: .global()) {
+            response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+//                let newsListForParsing = json["response"].arrayValue.map { News($0) }
+                let newsList = json["response"].arrayValue.map { NewsRealm($0) }
+                
+//                let newsList2 = [NewsRealm]()
+                completion?(.success(newsList))
+            case .failure(let error):
+                completion?(.failure(error))
+            }
+        }
+    }
+    
     
     // MARK: - Messages Requests
+    // MARK: - Get Chats Requests
 
+    public func getChats(completion: ((Swift.Result<Chats, Error>) -> Void)? = nil) {
+        
+        let baseURL = "https://api.vk.com"
+        let path = "/method/messages.getConversations"
+        
+        let params: Parameters = [
+            "access_token" : token,
+            "count" : "200",
+            "filter" : "all",
+            "extended": "1",
+            "v" : "5.95"
+        ]
+        
+        Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON(queue: .global()) {
+            response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                let response = json["response"].self
+                let messages = Chats(response)
+                DispatchQueue.main.async {
+                    completion?(.success(messages))
+                }
+                
+            case .failure(let error):
+                completion?(.failure(error))
+            }
+        }
+    }
+    
+    // MARK: - Get Messages Requests
+    
     public func getMessages(completion: ((Swift.Result<Chats, Error>) -> Void)? = nil) {
         
         let baseURL = "https://api.vk.com"
@@ -276,4 +325,5 @@ class VKAPIRequests {
             }
         }
     }
+
 }
