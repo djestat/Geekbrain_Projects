@@ -12,52 +12,44 @@ import RealmSwift
 
 class NewsRealm: Object {
     @objc dynamic var postID: Int = 0
-    @objc dynamic var postType: String = ""
+    @objc dynamic var date: Int = 0
+    @objc dynamic var newsType: String = ""
     @objc dynamic var sourceID: Int = 0
     @objc dynamic var sourceName: String = ""
     @objc dynamic var sourcePhoto: String = ""
-    @objc dynamic var sourceText: String = ""
-    @objc dynamic var attachmentPhoto: String = ""
+    @objc dynamic var postText: String = ""
+    @objc dynamic var photo: String = ""
+    @objc dynamic var attachmentsType: String = ""
+    @objc dynamic var attachmentsUrl: String = ""
+    @objc dynamic var photoAspectRatio: Double = 1.0
     @objc dynamic var likes: Int = 0
     @objc dynamic var reposts: Int = 0
     @objc dynamic var comments: Int = 0
     @objc dynamic var views: Int = 0
     @objc dynamic var nextList: String = ""
     
-    convenience init(postID: Int, postType: String, sourceID: Int, sourceName: String, sourcePhoto: String, sourceText: String, attachmentPhoto: String, likes: Int, reposts: Int, comments: Int, views: Int, nextList: String) {
+    convenience init(postID: Int, date: Int, newsType: String, sourceID: Int, sourceName: String, sourcePhoto: String, postText: String, photo: String, attachmentsType: String, attachmentsUrl: String, photoAspectRatio: Double, likes: Int, reposts: Int, comments: Int, views: Int, nextList: String) {
         self.init()
         self.postID = postID
-        self.postType = postType
+        self.date = date
+        self.newsType = newsType
         self.sourceID = sourceID
         self.sourceName = sourceName
         self.sourcePhoto = sourcePhoto
-        self.sourceText = sourceText
-        self.attachmentPhoto = attachmentPhoto
+        self.postText = postText
+        self.photo = photo
+        self.attachmentsType = attachmentsType
+        self.attachmentsUrl = attachmentsUrl
+        self.photoAspectRatio = photoAspectRatio
         self.likes = likes
         self.reposts = reposts
         self.comments = comments
         self.views = views
         self.nextList = nextList
     }
-    
-    convenience init(_ json: JSON) {
-        self.init()
-        self.postID = json[""].intValue
-        self.postType = json[""].stringValue
-        self.sourceID = json[""].intValue
-        self.sourceName = json[""].stringValue
-        self.sourcePhoto = json[""].stringValue
-        self.sourceText = json[""].stringValue
-        self.attachmentPhoto = json[""].stringValue
-        self.likes = json[""].intValue
-        self.reposts = json[""].intValue
-        self.comments = json[""].intValue
-        self.views = json[""].intValue
-        self.nextList = json[""].stringValue
-    }
-    
+        
     override static func primaryKey() -> String? {
-        return "id"
+        return "postID"
     }
 }
 
