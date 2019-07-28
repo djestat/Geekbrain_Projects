@@ -8,6 +8,34 @@
 
 import Foundation
 import SwiftyJSON
+import RealmSwift
+
+class NewsRealm: Object {
+    @objc dynamic var id: Int = 0
+    @objc dynamic var name: String = ""
+    @objc dynamic var image: String = ""
+    @objc dynamic var isMember: Int = 0
+    
+    convenience init(id: Int, groupName: String, groupImage: String, isMember: Int) {
+        self.init()
+        self.id = id
+        self.name = groupName
+        self.image = groupImage
+        self.isMember = isMember
+    }
+    
+    convenience init(_ json: JSON) {
+        self.init()
+        self.id = json["id"].intValue
+        self.name = json["name"].stringValue
+        self.image = json["photo_200"].stringValue
+        self.isMember = json["is_member"].intValue
+    }
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+}
 
 class News {
     let items: [ResponseItem]
