@@ -123,7 +123,6 @@ class FetchNewsDataOperation: AsyncOperation {
                 news.postID = items[i].postID
                 news.date = items[i].date
                 news.newsType = items[i].type
-                news.sourceID = items[i].sourceID
                 news.nextList = nextList
                 
                 let autorId = items[i].sourceID
@@ -136,6 +135,7 @@ class FetchNewsDataOperation: AsyncOperation {
                         }
                         currentIndex += 1
                     }
+                    news.sourceID = items[i].sourceID
                     news.sourceName = String(friendList[currentIndex].name + " " + friendList[currentIndex].lastname)
                     news.sourcePhoto = friendList[currentIndex].avatarGroupImage
                     
@@ -146,6 +146,7 @@ class FetchNewsDataOperation: AsyncOperation {
                         }
                         currentIndex += 1
                     }
+                    news.sourceID = -items[i].sourceID
                     news.sourceName = String(groupList[currentIndex].name)
                     news.sourcePhoto = groupList[currentIndex].image
                     
@@ -161,7 +162,7 @@ class FetchNewsDataOperation: AsyncOperation {
                     
                     let imageHeight = items[i].photos.items[0].sizes[countPhotos - 1].height
                     let imageWidth = items[i].photos.items[0].sizes[countPhotos - 1].width
-                    let aspectRatio = Double(imageHeight / imageWidth)
+                    let aspectRatio = Double(imageHeight) / Double(imageWidth)
                     news.photoAspectRatio = aspectRatio
                     
                 case "post":
@@ -174,23 +175,36 @@ class FetchNewsDataOperation: AsyncOperation {
                             
                             let imageHeight = items[i].attachments[0].photo.sizes[countPhotos - 1].height
                             let imageWidth = items[i].attachments[0].photo.sizes[countPhotos - 1].width
-                            let aspectRatio = Double(imageHeight / imageWidth)
+                            let aspectRatio = Double(imageHeight) / Double(imageWidth)
                             news.photoAspectRatio = aspectRatio
                             
                         } else if items[i].attachments[0].type == "doc" {
                             news.postText = String(items[i].text)
                             let indexSizes = items[i].attachments[0].doc.preview.photo.sizes.count
                             news.photo = items[i].attachments[0].doc.preview.photo.sizes[indexSizes - 1].src
+                            let imageHeight = items[i].attachments[0].doc.preview.photo.sizes[indexSizes - 1].height
+                            let imageWidth = items[i].attachments[0].doc.preview.photo.sizes[indexSizes - 1].width
+                            let aspectRatio = Double(imageHeight) / Double(imageWidth)
+                            news.photoAspectRatio = aspectRatio
+                            
                             news.attachmentsType = items[i].attachments[0].doc.title
                             news.attachmentsUrl = items[i].attachments[0].doc.url
                         } else if items[i].attachments[0].type == "link" {
                             news.postText = String(items[i].type + "\n" + "ЭТО LINK НАДО ОБРАБОТАТЬ" + "\n" + items[i].text + "\n"  + items[i].attachments[0].link.caption + "\n" + items[i].attachments[0].link.description)
                             let indexSizes = items[i].attachments[0].link.photo.sizes.count
                             news.photo = items[i].attachments[0].link.photo.sizes[indexSizes - 1].url
+                            let imageHeight = items[i].attachments[0].link.photo.sizes[indexSizes - 1].height
+                            let imageWidth = items[i].attachments[0].link.photo.sizes[indexSizes - 1].width
+                            let aspectRatio = Double(imageHeight) / Double(imageWidth)
+                            news.photoAspectRatio = aspectRatio
                         } else if items[i].attachments[0].type == "video"{
                             news.postText = String(items[i].type + "\n" + "ЭТО VIDEO НАДО ОБРАБОТАТЬ" + "\n" + items[i].text + "\n"  + items[i].attachments[0].type)
                             news.photo =  items[i].attachments[0].video.photo320
                             news.attachmentsType = items[i].attachments[0].type
+                            let imageHeight = items[i].attachments[0].video.height
+                            let imageWidth = items[i].attachments[0].video.width
+                            let aspectRatio = Double(imageHeight) / Double(imageWidth)
+                            news.photoAspectRatio = aspectRatio
                         } else {
                             news.postText = String(items[i].type + "\n" + "ЭТО НАДО ОБРАБОТАТЬ" + "\n" + items[i].text + "\n"  + items[i].attachments[0].type)
                         }
@@ -211,8 +225,16 @@ class FetchNewsDataOperation: AsyncOperation {
                     if items[i].photos.items[0].sizes.count > 0 {
                         countPhotos = items[i].photos.items[0].sizes.count
                         news.photo = items[i].photos.items[0].sizes[countPhotos - 1].url
+                        let imageHeight = items[i].photos.items[0].sizes[countPhotos - 1].height
+                        let imageWidth = items[i].photos.items[0].sizes[countPhotos - 1].width
+                        let aspectRatio = Double(imageHeight) / Double(imageWidth)
+                        news.photoAspectRatio = aspectRatio
                     } else {
                         news.photo = items[i].photos.items[0].sizes[countPhotos].url
+                        let imageHeight = items[i].photos.items[0].sizes[countPhotos].height
+                        let imageWidth = items[i].photos.items[0].sizes[countPhotos].width
+                        let aspectRatio = Double(imageHeight) / Double(imageWidth)
+                        news.photoAspectRatio = aspectRatio
                     }
                     news.likes = items[i].photos.items[0].likes.count
                     news.comments = items[i].photos.items[0].comments.count
@@ -253,7 +275,7 @@ class FetchNewsDataOperation: AsyncOperation {
             guard (dependencies.first(where: { $0 is SaveNewsToRealmOperation }) as? SaveNewsToRealmOperation) != nil
                 else { return }
             
-            let news = RealmProvider.read(NewsRealm.self)
+            let news = RealmProvider.read(NewsRealm.self).sorted(byKeyPath: "date", ascending: false)
             controller.newsList = Array(news)
             controller.nextList = news[0].nextList
             controller.tableView.reloadData()

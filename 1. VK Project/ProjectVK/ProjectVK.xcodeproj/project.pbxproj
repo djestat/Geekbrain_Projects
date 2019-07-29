@@ -12,6 +12,7 @@
 		CE2914942291B9BD003A86B2 /* VKLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2914932291B9BD003A86B2 /* VKLoginViewController.swift */; };
 		CE2914952291CAAB003A86B2 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2914912291AC4F003A86B2 /* WebKit.framework */; };
 		CE2914982291DAEA003A86B2 /* VKAPIRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2914972291DAEA003A86B2 /* VKAPIRequests.swift */; };
+		CE2A489322EF7F2A00208130 /* CachePhotoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2A489222EF7F2A00208130 /* CachePhotoService.swift */; };
 		CE33DAB3225E95B600B2389B /* GroupsFinderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE33DAB2225E95B600B2389B /* GroupsFinderController.swift */; };
 		CE64E21422DBB33F0056B843 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE64E21322DBB33F0056B843 /* MessageViewController.swift */; };
 		CE65CF582265271700D5221A /* LikeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE65CF572265271700D5221A /* LikeControl.swift */; };
@@ -54,6 +55,7 @@
 		CE2914912291AC4F003A86B2 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		CE2914932291B9BD003A86B2 /* VKLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKLoginViewController.swift; sourceTree = "<group>"; };
 		CE2914972291DAEA003A86B2 /* VKAPIRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKAPIRequests.swift; sourceTree = "<group>"; };
+		CE2A489222EF7F2A00208130 /* CachePhotoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachePhotoService.swift; sourceTree = "<group>"; };
 		CE33DAB2225E95B600B2389B /* GroupsFinderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsFinderController.swift; sourceTree = "<group>"; };
 		CE64E21322DBB33F0056B843 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		CE65CF572265271700D5221A /* LikeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeControl.swift; sourceTree = "<group>"; };
@@ -137,6 +139,14 @@
 				CE2914972291DAEA003A86B2 /* VKAPIRequests.swift */,
 			);
 			path = NetworkingService;
+			sourceTree = "<group>";
+		};
+		CE2A489122EF7E9700208130 /* Cache Photo Service */ = {
+			isa = PBXGroup;
+			children = (
+				CE2A489222EF7F2A00208130 /* CachePhotoService.swift */,
+			);
+			path = "Cache Photo Service";
 			sourceTree = "<group>";
 		};
 		CE65CF56226526B000D5221A /* Controls */ = {
@@ -227,6 +237,7 @@
 		CEB75537224F9E0400E5A718 /* Controllers Group */ = {
 			isa = PBXGroup;
 			children = (
+				CE2A489122EF7E9700208130 /* Cache Photo Service */,
 				CEA62BA722DB214800B2E66D /* Operation */,
 				CE08E76222AC3BCC0087FD13 /* Realm */,
 				CE2914962291D964003A86B2 /* NetworkingService */,
@@ -389,6 +400,7 @@
 				CEA61486225BE7D20012F4F6 /* Group.swift in Sources */,
 				CE947B9922CBF138005F4C4D /* Attachments.swift in Sources */,
 				CEE7AC2D2287232900C0668D /* CustomSegue.swift in Sources */,
+				CE2A489322EF7F2A00208130 /* CachePhotoService.swift in Sources */,
 				CEA18FAE22859C8C00A25FD6 /* FriendsBigPhotoCollectionViewController.swift in Sources */,
 				CED0A49C22C1663300C8724E /* ChatCell.swift in Sources */,
 				CE8EF5CC2258AB2C0015EC00 /* FriendsViewController.swift in Sources */,
