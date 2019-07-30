@@ -187,7 +187,7 @@ class FetchNewsDataOperation: AsyncOperation {
                             let aspectRatio = Double(imageHeight) / Double(imageWidth)
                             news.photoAspectRatio = aspectRatio
                             
-                            news.attachmentsType = items[i].attachments[0].doc.title
+                            news.attachmentsType = items[i].attachments[0].type
                             news.attachmentsUrl = items[i].attachments[0].doc.url
                         } else if items[i].attachments[0].type == "link" {
                             news.postText = String(items[i].type + "\n" + "ЭТО LINK НАДО ОБРАБОТАТЬ" + "\n" + items[i].text + "\n"  + items[i].attachments[0].link.caption + "\n" + items[i].attachments[0].link.description)

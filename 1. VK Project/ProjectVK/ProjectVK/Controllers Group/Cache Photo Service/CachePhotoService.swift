@@ -55,25 +55,15 @@ class CachePhotoService {
         }
         return image
     }
-    /*
-    private func loadPhoto(with urlString: String) -> Promise<UIImage> {
-        guard let request = URL(string: urlString) else { return Promise(error: PMKError.badInput) }
-        return URLSession.shared.dataTask(.promise, with: request)
-            .map { [weak self] data, response in
-                guard let self = self,
-                    let newImage = UIImage(data: data) else { throw PMKError.badInput }
-                
-                DispatchQueue.main.async {
-                    self.images[urlString] = newImage
-                }
-                self.saveImageToCache(urlString: urlString, image: newImage)
-                return newImage
-        }
-    }*/
     
-    private func loadPhoto2(with urlString: String) -> UIImage? {
-        guard let request = URL(string: urlString) else { return nil }
-        var image: UIImage? = nil
+    private func loadPhoto(with urlString: String) -> UIImage {
+        let noimage: UIImage = UIImage(named: "noimage")!
+        var image: UIImage?
+        guard let request = URL(string: urlString) else { return noimage }
+        
+        let dispGroup = DispatchGroup()
+        
+        dispGroup.enter()
         URLSession.shared.dataTask(with: request) { [weak self] data, response , error in
             guard let self = self,
                 let httpURLResponse = response as? HTTPURLResponse,
@@ -84,51 +74,35 @@ class CachePhotoService {
             
             DispatchQueue.main.async {
                 self.images[urlString] = newImage
+                self.saveImageToCache(urlString: urlString, image: newImage)
+                
             }
-            self.saveImageToCache(urlString: urlString, image: newImage)
             image = newImage
-        }.resume()
+            }.resume()
+        
+        repeat {
+//            print("image downloading...")
+        } while image == nil
+        dispGroup.leave()
         
         return image!
     }
 
     //MARK: - Public API
-    /*
-    public func photo(with urlString: String) -> Promise<UIImage> {
-        
-        //TODO: - Refactor
-        return Promise<UIImage> { resolver in
-            if let image = images[urlString] {
-                resolver.fulfill(image)
-            } else if let image = getImageFromCache(urlString: urlString) {
-                resolver.fulfill(image)
-            } else {
-                loadPhoto(with: urlString).done { image in
-                    resolver.fulfill(image)
-                    }.catch{ error in
-                        resolver.reject(error)
-                }
-            }
-        }
-    }*/
     
-    public func photo2(with urlString: String) -> UIImage {
+    public func getPhoto(with urlString: String) -> UIImage {
         
         //TODO: - Refactor
-        var image: UIImage? = nil
-        /*
         if let image = images[urlString] {
-            resolver.fulfill(image)
+            print("💾 FIND IN DICTIONARY")
+            return image
         } else if let image = getImageFromCache(urlString: urlString) {
-            resolver.fulfill(image)
+            print("💾 FIND IN CACHE")
+            return image
         } else {
-            loadPhoto2(with: urlString).done { image in
-                resolver.fulfill(image)
-                }.catch{ error in
-                    resolver.reject(error)
-            }
-        }*/
-        
-        return image!
+            let image = loadPhoto(with: urlString)
+            print("💾 MAYBE LOADED")  
+            return image
+        }
     }
 }

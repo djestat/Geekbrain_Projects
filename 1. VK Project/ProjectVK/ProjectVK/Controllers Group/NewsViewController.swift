@@ -13,6 +13,7 @@ import RealmSwift
 class NewsViewController: UITableViewController {
     let request = VKAPIRequests()
     var resultNotificationToken: NotificationToken?
+    let cps = CachePhotoService()
     
     var newsList = [NewsRealm]()
     var nextList = ""
@@ -58,18 +59,18 @@ class NewsViewController: UITableViewController {
         cell.newsPhotosView.image = nil
         cell.viewsCountsLabel.alpha = 1
         cell.viewsIcon.alpha = 1
+        cell.newsTextLabel.backgroundColor = .clear
         
         cell.groupNameLabel.text = String(newsList[indexPath.row].sourceName)
-        cell.groupImageView.kf.setImage(with: URL(string: newsList[indexPath.row].sourcePhoto))
-        cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].photo))
-        
+        cell.groupImageView.image = cps.getPhoto(with: newsList[indexPath.row].sourcePhoto)
+//        cell.newsPhotosView.image = cps.getPhoto(with: "")
+
         switch newsList[indexPath.row].newsType {
         case "photo":
             print("photo")
-            cell.newsTextLabel.backgroundColor = .clear
             cell.viewsCountsLabel.alpha = 0
             cell.viewsIcon.alpha = 0
-            cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].photo))
+            cell.newsPhotosView.image = cps.getPhoto(with: newsList[indexPath.row].photo)
             cell.newsTextLabel.text = String(newsList[indexPath.row].postText)
             cell.likeCountsLabel.text = String(newsList[indexPath.row].likes)
             cell.commentsCountsLabel.text = String(newsList[indexPath.row].comments)
@@ -77,34 +78,40 @@ class NewsViewController: UITableViewController {
         case "post":
             print("post")
             cell.newsTextLabel.text = String(newsList[indexPath.row].postText)
-            cell.newsTextLabel.backgroundColor = .clear
+            cell.newsPhotosView.image = cps.getPhoto(with: newsList[indexPath.row].photo)
             
             if newsList[indexPath.row].attachmentsType == "photo" {
             } else if newsList[indexPath.row].attachmentsType == "doc" {
                 cell.newsTextLabel.text = String(newsList[indexPath.row].postText)
+                cell.newsTextLabel.backgroundColor = .cyan
             } else if newsList[indexPath.row].attachmentsType == "link" {
                 cell.newsTextLabel.text = String(newsList[indexPath.row].postText)
-                cell.newsTextLabel.backgroundColor = .red
+                cell.newsTextLabel.backgroundColor = .blue
+                cell.newsPhotosView.image = UIImage(named: "noimage")
+
             } else if newsList[indexPath.row].attachmentsType == "video"{
                 cell.newsTextLabel.text = String(newsList[indexPath.row].postText)
                 cell.newsTextLabel.backgroundColor = .red
             } else {
                 cell.newsTextLabel.text = String(newsList[indexPath.row].postText)
-                cell.newsTextLabel.backgroundColor = .red
+//                cell.newsTextLabel.backgroundColor = .purple
             }
             cell.likeCountsLabel.text = String(newsList[indexPath.row].likes)
             cell.commentsCountsLabel.text = String(newsList[indexPath.row].comments)
             cell.viewsCountsLabel.text = String(newsList[indexPath.row].views)
         case "wall_photo":
             print("wall_photo")
+            cell.newsPhotosView.image = cps.getPhoto(with: newsList[indexPath.row].photo)
             cell.newsTextLabel.text = String(newsList[indexPath.row].postText)
-            cell.newsTextLabel.backgroundColor = .clear
             cell.likeCountsLabel.text = String(newsList[indexPath.row].likes)
             cell.commentsCountsLabel.text = String(newsList[indexPath.row].comments)
             cell.viewsCountsLabel.alpha = 0
             cell.viewsIcon.alpha = 0
+            cell.newsTextLabel.backgroundColor = .orange
         default:
             print("ЧТО-ТО ЕЩЕ")
+            cell.newsPhotosView.image = cps.getPhoto(with: newsList[indexPath.row].photo)
+            cell.newsTextLabel.backgroundColor = .magenta
         }
         print(newsList[indexPath.row].postID)
         return cell
