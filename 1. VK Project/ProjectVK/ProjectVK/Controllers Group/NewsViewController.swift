@@ -26,7 +26,7 @@ class NewsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Operations
+        // Operations
         let fndo = FetchNewsDataOperation()
         let pndo = ParseNewsDataOperation()
         pndo.addDependency(fndo)
@@ -35,6 +35,7 @@ class NewsViewController: UITableViewController {
         let dndo = DisplayNewsDataOperation(controller: self)
         dndo.addDependency(sntrdo)
         OperationQueue.main.addOperations([fndo, pndo, sntrdo, dndo], waitUntilFinished: false)
+        
         
     }
     
@@ -61,6 +62,10 @@ class NewsViewController: UITableViewController {
         cell.viewsIcon.alpha = 1
         cell.newsTextLabel.backgroundColor = .clear
         
+        // For GIF & Video Property
+        cell.documentSubview.backgroundColor = .clear
+        cell.documentLabel.textColor = .clear
+        
         cell.groupNameLabel.text = String(newsList[indexPath.row].sourceName)
         cell.groupImageView.image = cps.getPhoto(with: newsList[indexPath.row].sourcePhoto)
 //        cell.newsPhotosView.image = cps.getPhoto(with: "")
@@ -83,15 +88,21 @@ class NewsViewController: UITableViewController {
             if newsList[indexPath.row].attachmentsType == "photo" {
             } else if newsList[indexPath.row].attachmentsType == "doc" {
                 cell.newsTextLabel.text = String(newsList[indexPath.row].postText)
-                cell.newsTextLabel.backgroundColor = .cyan
+//                cell.newsTextLabel.backgroundColor = .cyan
+                cell.documentSubview.backgroundColor = .lightGray
+                cell.documentLabel.textColor = .red
+//                cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].attachmentsUrl))
             } else if newsList[indexPath.row].attachmentsType == "link" {
                 cell.newsTextLabel.text = String(newsList[indexPath.row].postText)
-                cell.newsTextLabel.backgroundColor = .blue
+//                cell.newsTextLabel.backgroundColor = .blue
                 cell.newsPhotosView.image = UIImage(named: "noimage")
 
             } else if newsList[indexPath.row].attachmentsType == "video"{
                 cell.newsTextLabel.text = String(newsList[indexPath.row].postText)
-                cell.newsTextLabel.backgroundColor = .red
+//                cell.newsTextLabel.backgroundColor = .red
+                cell.documentSubview.backgroundColor = .lightGray
+                cell.documentLabel.text = String("VIDEO")
+                cell.documentLabel.textColor = .red
             } else {
                 cell.newsTextLabel.text = String(newsList[indexPath.row].postText)
 //                cell.newsTextLabel.backgroundColor = .purple
@@ -114,7 +125,33 @@ class NewsViewController: UITableViewController {
             cell.newsTextLabel.backgroundColor = .magenta
         }
         print(newsList[indexPath.row].postID)
+        
+        
+        let width = tableView.frame.width
+        let defaultScale = CGFloat(16 / 9)
+        var scale = CGFloat(newsList[indexPath.row].photoAspectRatio)
+        if scale.isNaN {
+            scale = defaultScale
+        }
+        let height = width * scale
+        cell.newsPhotosView.frame.size = CGSize(width: width, height: height)
+        
+        // Height Cell config
+        let heightRowWithoutContent = CGFloat(121) //Рассчитал из сториборда 121 без картинки
+        tableView.estimatedRowHeight = heightRowWithoutContent
+        let heightText = cell.newsTextLabel.frame.height
+        tableView.rowHeight = heightRowWithoutContent + height + heightText
+
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseID, for: indexPath) as? NewsCell else { fatalError() }
+        
+        if newsList[indexPath.row].attachmentsType == "doc" {
+            cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].attachmentsUrl))
+        }
+        
     }
     
     // MARK: - Table view animation initialising
@@ -125,7 +162,6 @@ class NewsViewController: UITableViewController {
         let propertyAnimator = UIViewPropertyAnimator(duration: 0.6, curve: .easeOut) {
             cell.contentView.transform = .identity
         }
-        
         propertyAnimator.startAnimation()
         
     }

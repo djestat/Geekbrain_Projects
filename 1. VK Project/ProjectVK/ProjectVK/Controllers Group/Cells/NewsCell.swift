@@ -26,13 +26,12 @@ class NewsCell: UITableViewCell {
     @IBOutlet weak var commentsCountsLabel: UILabel!
     @IBOutlet weak var viewsIcon: UIImageView!
     @IBOutlet weak var viewsCountsLabel: UILabel!
-    
+    @IBOutlet weak var documentSubview: UIView!
+    @IBOutlet weak var documentLabel: UILabel!
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-//        resizeImageView(aspectRatio)
-        
+
     }
     
     override func awakeFromNib() {
@@ -73,15 +72,5 @@ class NewsCell: UITableViewCell {
                            completion: nil)
         }
     }
-    
-    
-    func resizeImageView(_ aspectRatio: CGFloat) {
-        
-        let newWidth = superview!.frame.size.width
-        let newHeight = newWidth * aspectRatio
-        
-        newsPhotosView.frame.size = CGSize(width: newWidth, height: newHeight)
-    }
-
 
 }
