@@ -12,6 +12,11 @@ class CachePhotoService {
     
     private var images = [String: UIImage]()
     private let cacheLifeTime: TimeInterval = 60*60*24*7
+    private let tableView: UITableView
+    
+    init(tableView: UITableView) {
+        self.tableView = tableView
+    }
     
     private static let pathName: String = {
         let pathName = "images"
@@ -28,11 +33,10 @@ class CachePhotoService {
     }()
     
     private func getFilePath(urlString: String) -> String? {
-        guard let cacheDir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else { return nil }
+        guard let cacheDir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first,
+            let fileName = urlString.split(separator: "/").last else { return nil }
         
-        let hashName = String(describing: urlString.hashValue)
-        
-        return cacheDir.appendingPathComponent(CachePhotoService.pathName + "/" + hashName).path
+        return cacheDir.appendingPathComponent(CachePhotoService.pathName + "/" + fileName).path
     }
     
     private func saveImageToCache(urlString: String, image: UIImage) {
@@ -56,7 +60,7 @@ class CachePhotoService {
         return image
     }
     
-    private func loadPhoto(with urlString: String) -> UIImage {
+    private func loadPhoto(with urlString: String, for indexPath: IndexPath) -> UIImage {
         let noimage: UIImage = UIImage(named: "noimage")!
         var image: UIImage?
         guard let request = URL(string: urlString) else { return noimage }
@@ -75,7 +79,7 @@ class CachePhotoService {
             DispatchQueue.main.async {
                 self.images[urlString] = newImage
                 self.saveImageToCache(urlString: urlString, image: newImage)
-                
+                self.tableView.reloadRows(at: [indexPath], with: .automatic)
             }
             image = newImage
             }.resume()
@@ -90,7 +94,7 @@ class CachePhotoService {
 
     //MARK: - Public API
     
-    public func getPhoto(with urlString: String) -> UIImage {
+    public func getPhoto(with urlString: String, for indexPath: IndexPath) -> UIImage {
         
         //TODO: - Refactor
         if let image = images[urlString] {
@@ -100,7 +104,7 @@ class CachePhotoService {
             print("💾 FIND IN CACHE")
             return image
         } else {
-            let image = loadPhoto(with: urlString)
+            let image = loadPhoto(with: urlString, for: indexPath)
             print("💾 MAYBE LOADED")  
             return image
         }

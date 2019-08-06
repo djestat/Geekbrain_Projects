@@ -13,7 +13,7 @@ import RealmSwift
 class NewsViewController: UITableViewController {
     let request = VKAPIRequests()
     var resultNotificationToken: NotificationToken?
-    let cps = CachePhotoService()
+    lazy var cachePhotoService = CachePhotoService(tableView: self.tableView)
     
     var newsList = [NewsRealm]()
     var nextList = ""
@@ -67,7 +67,7 @@ class NewsViewController: UITableViewController {
         cell.documentLabel.textColor = .clear
         
         cell.groupNameLabel.text = String(newsList[indexPath.row].sourceName)
-        cell.groupImageView.image = cps.getPhoto(with: newsList[indexPath.row].sourcePhoto)
+        cell.groupImageView.image = cachePhotoService.getPhoto(with: newsList[indexPath.row].sourcePhoto, for: indexPath)
 //        cell.newsPhotosView.image = cps.getPhoto(with: "")
 
         switch newsList[indexPath.row].newsType {
@@ -75,7 +75,7 @@ class NewsViewController: UITableViewController {
             print("photo")
             cell.viewsCountsLabel.alpha = 0
             cell.viewsIcon.alpha = 0
-            cell.newsPhotosView.image = cps.getPhoto(with: newsList[indexPath.row].photo)
+            cell.newsPhotosView.image = cachePhotoService.getPhoto(with: newsList[indexPath.row].photo, for: indexPath)
             cell.newsTextLabel.text = String(newsList[indexPath.row].postText)
             cell.likeCountsLabel.text = String(newsList[indexPath.row].likes)
             cell.commentsCountsLabel.text = String(newsList[indexPath.row].comments)
@@ -83,7 +83,7 @@ class NewsViewController: UITableViewController {
         case "post":
             print("post")
             cell.newsTextLabel.text = String(newsList[indexPath.row].postText)
-            cell.newsPhotosView.image = cps.getPhoto(with: newsList[indexPath.row].photo)
+            cell.newsPhotosView.image = cachePhotoService.getPhoto(with: newsList[indexPath.row].photo, for: indexPath)
             
             if newsList[indexPath.row].attachmentsType == "photo" {
             } else if newsList[indexPath.row].attachmentsType == "doc" {
@@ -112,7 +112,7 @@ class NewsViewController: UITableViewController {
             cell.viewsCountsLabel.text = String(newsList[indexPath.row].views)
         case "wall_photo":
             print("wall_photo")
-            cell.newsPhotosView.image = cps.getPhoto(with: newsList[indexPath.row].photo)
+            cell.newsPhotosView.image = cachePhotoService.getPhoto(with: newsList[indexPath.row].photo, for: indexPath)
             cell.newsTextLabel.text = String(newsList[indexPath.row].postText)
             cell.likeCountsLabel.text = String(newsList[indexPath.row].likes)
             cell.commentsCountsLabel.text = String(newsList[indexPath.row].comments)
@@ -121,7 +121,7 @@ class NewsViewController: UITableViewController {
             cell.newsTextLabel.backgroundColor = .orange
         default:
             print("ЧТО-ТО ЕЩЕ")
-            cell.newsPhotosView.image = cps.getPhoto(with: newsList[indexPath.row].photo)
+            cell.newsPhotosView.image = cachePhotoService.getPhoto(with: newsList[indexPath.row].photo, for: indexPath)
             cell.newsTextLabel.backgroundColor = .magenta
         }
         print(newsList[indexPath.row].postID)
