@@ -84,9 +84,9 @@ class CachePhotoService {
             image = newImage
             }.resume()
         
-        repeat {
+//        repeat {
 //            print("image downloading...")
-        } while image == nil
+//        } while image == nil
         dispGroup.leave()
         
         return image!
