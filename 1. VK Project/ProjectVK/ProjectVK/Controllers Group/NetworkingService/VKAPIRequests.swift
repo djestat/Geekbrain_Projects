@@ -264,17 +264,19 @@ class VKAPIRequests {
     
     // MARK: - Get Messages Requests
     
-    public func getMessages(completion: ((Swift.Result<Chats, Error>) -> Void)? = nil) {
+    public func getMessages(_ userID: Int,_ peerID: Int, completion: ((Swift.Result<MessagesRespons, Error>) -> Void)? = nil) {
         
         let baseURL = "https://api.vk.com"
-        let path = "/method/messages.getConversations"
+        let path = "/method/messages.getHistory"
         
         let params: Parameters = [
             "access_token" : token,
             "count" : "200",
-            "filter" : "all",
+            "user_id" : userID,
+            "peer_id" : peerID,
+            "rev" : "",
             "extended": "1",
-            "v" : "5.95"
+            "v" : "5.101"
         ]
         
         Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON(queue: .global()) {
@@ -283,7 +285,7 @@ class VKAPIRequests {
             case .success(let value):
                 let json = JSON(value)
                 let response = json["response"].self
-                let messages = Chats(response)
+                let messages = MessagesRespons(response)
                 DispatchQueue.main.async {
                     completion?(.success(messages))
                 }

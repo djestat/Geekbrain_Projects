@@ -62,7 +62,7 @@ class CachePhotoService {
     
     private func loadPhoto(with urlString: String, for indexPath: IndexPath) -> UIImage {
         let noimage: UIImage = UIImage(named: "noimage")!
-        var image: UIImage?
+        var image = UIImage(named: "downloading")!
         guard let request = URL(string: urlString) else { return noimage }
         
         let dispGroup = DispatchGroup()
@@ -79,7 +79,11 @@ class CachePhotoService {
             DispatchQueue.main.async {
                 self.images[urlString] = newImage
                 self.saveImageToCache(urlString: urlString, image: newImage)
-                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                self.tableView.reloadRows(at: [indexPath], with: .none)
+//                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+//                guard let cell = self.tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseID, for: indexPath) as? NewsCell else { fatalError() }
+//                cell.newsPhotosView.image = newImage
+                
             }
             image = newImage
             }.resume()
@@ -89,7 +93,7 @@ class CachePhotoService {
 //        } while image == nil
         dispGroup.leave()
         
-        return image!
+        return image
     }
 
     //MARK: - Public API
