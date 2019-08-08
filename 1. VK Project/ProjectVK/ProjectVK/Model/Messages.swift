@@ -72,3 +72,19 @@ class Message {
         self.isHidden = json["is_hidden"].boolValue
     }
 }
+
+
+/*
+15 Access denied
+900 Нельзя отправлять сообщение пользователю из черного списка
+901 Пользователь запретил отправку сообщений от имени сообщества
+902 Нельзя отправлять сообщения этому пользователю в связи с настройками приватности
+911 Keyboard format is invalid
+912 This is a chat bot feature, change this status in settings
+913 Слишком много пересланных сообщений
+914 Сообщение слишком длинное
+917 You don't have access to this chat
+921 Невозможно переслать выбранные сообщения
+936 Contact not found
+940 Too many posts in messages
+*/

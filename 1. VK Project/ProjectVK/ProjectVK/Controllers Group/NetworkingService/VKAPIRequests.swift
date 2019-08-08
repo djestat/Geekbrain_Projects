@@ -295,5 +295,36 @@ class VKAPIRequests {
             }
         }
     }
+    
+    public func sendMessages(_ userID: String,_ randomID: Int64, _ peerID: String,_ message: String, completion: ((Swift.Result<MessagesRespons, Error>) -> Void)? = nil) {
+        
+        let baseURL = "https://api.vk.com"
+        let path = "/method/messages.send"
+        
+        let params: Parameters = [
+            "access_token" : token,
+            "user_id" : "\(userID)",
+            "random_id": randomID,
+            "peer_id" : "\(peerID)",
+            "message" : message,
+            "extended": "1",
+            "v" : "5.101"
+        ]
+        
+        Alamofire.request(baseURL + path, method: .post, parameters: params).responseJSON(queue: .global()) { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                let response = json["response"].self
+                let messages = MessagesRespons(response)
+                DispatchQueue.main.async {
+                    completion?(.success(messages))
+                }
+                
+            case .failure(let error):
+                completion?(.failure(error))
+            }
+        }
+    }
 
 }
