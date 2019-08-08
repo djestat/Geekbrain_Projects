@@ -83,15 +83,32 @@ class ChatViewController: UITableViewController {
             }
             
             cell.chatOwnerNameLabel.text = String(friendsList[currentIndex].name + " " + friendsList[currentIndex].lastname)
-            cell.chatOwnerImageView.kf.setImage(with: URL(string: friendsList[currentIndex].avatarGroupImage ))
+            cell.chatOwnerImageView.kf.setImage(with: URL(string: friendsList[currentIndex].avatarGroupImage))
         case "chat":
             cell.chatOwnerNameLabel.text = String(messages[indexPath.row].conversation.chatSettings.title)            
             cell.chatOwnerImageView.image = UIImage(named: "Groups")
+        case "group":
+            let autorId = -messages[indexPath.row].conversation.peer.id
+            var currentIndex = 0
+            for i in 0..<groupsList.count {
+                if autorId == Session.authData.userid {
+                    cell.chatOwnerImageView.image = UIImage(named: "avatar")
+                    break
+                } else if autorId == groupsList[i].id {
+                    break
+                } else if currentIndex == groupsList.count {
+                    cell.chatOwnerImageView.image = UIImage(named: "avatar")
+                    break
+                }
+                currentIndex += 1
+            }
+            cell.chatOwnerNameLabel.text = String(groupsList[currentIndex].name)
+            cell.chatOwnerImageView.kf.setImage(with: URL(string: groupsList[currentIndex].image))
         default:
             print("Not User or Chat")
         }
         
-        if messages[indexPath.row].lastMessage.text.isEmpty  {            cell.chatLastMessageLabel.text = "Документ 📦"
+        if messages[indexPath.row].lastMessage.text.isEmpty  {            cell.chatLastMessageLabel.text = "Документ 📎"
         } else {
             cell.chatLastMessageLabel.text = messages[indexPath.row].lastMessage.text
         }

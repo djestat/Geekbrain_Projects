@@ -15,7 +15,8 @@
 		CE2914982291DAEA003A86B2 /* VKAPIRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2914972291DAEA003A86B2 /* VKAPIRequests.swift */; };
 		CE2A489322EF7F2A00208130 /* CachePhotoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2A489222EF7F2A00208130 /* CachePhotoService.swift */; };
 		CE33DAB3225E95B600B2389B /* GroupsFinderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE33DAB2225E95B600B2389B /* GroupsFinderController.swift */; };
-		CE64E21422DBB33F0056B843 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE64E21322DBB33F0056B843 /* MessageViewController.swift */; };
+		CE598CDB22FC30E800602F38 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE598CDA22FC30E800602F38 /* MessageViewController.swift */; };
+		CE598CDD22FC411800602F38 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE598CDC22FC411800602F38 /* MessageCell.swift */; };
 		CE65CF582265271700D5221A /* LikeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE65CF572265271700D5221A /* LikeControl.swift */; };
 		CE7208AB225D34980069A952 /* FriendsProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7208AA225D34980069A952 /* FriendsProfileController.swift */; };
 		CE8EF5CC2258AB2C0015EC00 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8EF5CB2258AB2C0015EC00 /* FriendsViewController.swift */; };
@@ -59,7 +60,8 @@
 		CE2914972291DAEA003A86B2 /* VKAPIRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKAPIRequests.swift; sourceTree = "<group>"; };
 		CE2A489222EF7F2A00208130 /* CachePhotoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachePhotoService.swift; sourceTree = "<group>"; };
 		CE33DAB2225E95B600B2389B /* GroupsFinderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsFinderController.swift; sourceTree = "<group>"; };
-		CE64E21322DBB33F0056B843 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
+		CE598CDA22FC30E800602F38 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
+		CE598CDC22FC411800602F38 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		CE65CF572265271700D5221A /* LikeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeControl.swift; sourceTree = "<group>"; };
 		CE7208AA225D34980069A952 /* FriendsProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsProfileController.swift; sourceTree = "<group>"; };
 		CE8EF5CB2258AB2C0015EC00 /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				CEA6147E225BDA620012F4F6 /* GroupsCell.swift */,
 				CEACD2C5226B9549003400B4 /* NewsCell.swift */,
 				CED0A49B22C1663300C8724E /* ChatCell.swift */,
+				CE598CDC22FC411800602F38 /* MessageCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -256,7 +259,7 @@
 				CE33DAB2225E95B600B2389B /* GroupsFinderController.swift */,
 				CEACD2C7226B958F003400B4 /* NewsViewController.swift */,
 				CEED578522C0074400227C7A /* ChatViewController.swift */,
-				CE64E21322DBB33F0056B843 /* MessageViewController.swift */,
+				CE598CDA22FC30E800602F38 /* MessageViewController.swift */,
 			);
 			path = "Controllers Group";
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 				CE2914942291B9BD003A86B2 /* VKLoginViewController.swift in Sources */,
 				CEA6147D225BD7C40012F4F6 /* FriendsPhotoCell.swift in Sources */,
 				CEA62BA922DB216F00B2E66D /* Operation.swift in Sources */,
+				CE598CDD22FC411800602F38 /* MessageCell.swift in Sources */,
 				CE20760E22FB731C00CC0B7E /* Messages.swift in Sources */,
 				CEED578622C0074400227C7A /* ChatViewController.swift in Sources */,
 				CEE7AC2B2287126700C0668D /* CustomAnimator.swift in Sources */,
@@ -423,12 +427,12 @@
 				CE65CF582265271700D5221A /* LikeControl.swift in Sources */,
 				CEACD2C8226B958F003400B4 /* NewsViewController.swift in Sources */,
 				CEA87625229B28C7000CAC9A /* News.swift in Sources */,
-				CE64E21422DBB33F0056B843 /* MessageViewController.swift in Sources */,
 				CEE7AC2F228731B100C0668D /* CustomNavigationController.swift in Sources */,
 				CEE938372290483A005E3E08 /* Session.swift in Sources */,
 				CEACD2C6226B9549003400B4 /* NewsCell.swift in Sources */,
 				CEB75526224F9B5000E5A718 /* AppDelegate.swift in Sources */,
 				CEA18FB022859D2100A25FD6 /* FriendsBigPhotoCell.swift in Sources */,
+				CE598CDB22FC30E800602F38 /* MessageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
