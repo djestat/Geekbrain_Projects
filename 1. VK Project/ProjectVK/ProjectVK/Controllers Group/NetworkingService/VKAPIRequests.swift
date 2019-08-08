@@ -264,7 +264,7 @@ class VKAPIRequests {
     
     // MARK: - Get Messages Requests
     
-    public func getMessages(_ userID: Int,_ peerID: Int, completion: ((Swift.Result<MessagesRespons, Error>) -> Void)? = nil) {
+    public func getMessages(_ userID: String,_ peerID: String, completion: ((Swift.Result<MessagesRespons, Error>) -> Void)? = nil) {
         
         let baseURL = "https://api.vk.com"
         let path = "/method/messages.getHistory"
@@ -272,8 +272,8 @@ class VKAPIRequests {
         let params: Parameters = [
             "access_token" : token,
             "count" : "200",
-            "user_id" : userID,
-            "peer_id" : peerID,
+            "user_id" : "\(userID)",
+            "peer_id" : "\(peerID)",
             "rev" : "",
             "extended": "1",
             "v" : "5.101"

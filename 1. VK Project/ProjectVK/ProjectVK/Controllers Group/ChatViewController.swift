@@ -120,4 +120,19 @@ class ChatViewController: UITableViewController {
     
     
 
+    //MARK: - Segue
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "OpenMessage" {
+            let controller  = segue.destination as! MessageViewController
+            guard let indexPath = tableView.indexPathForSelectedRow else { return }
+            
+            let senderID = messages[indexPath.row].conversation.peer.id
+            let senderType = messages[indexPath.row].conversation.peer.type
+            
+            controller.senderID = senderID
+            controller.senderType = senderType
+        }
+    }
+    
 }

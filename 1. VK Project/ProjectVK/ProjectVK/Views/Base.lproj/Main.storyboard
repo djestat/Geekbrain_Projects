@@ -637,7 +637,7 @@
                                     <outlet property="chatLastMessageLabel" destination="i6k-0K-OsK" id="YBE-6E-WYb"/>
                                     <outlet property="chatOwnerImageView" destination="b9c-vZ-r9V" id="Ho8-h5-Q5i"/>
                                     <outlet property="chatOwnerNameLabel" destination="eVM-gx-f9d" id="1tJ-Jy-RJV"/>
-                                    <segue destination="u3N-qW-ZDF" kind="show" id="Hin-l0-EWG"/>
+                                    <segue destination="u3N-qW-ZDF" kind="show" identifier="OpenMessage" id="Hin-l0-EWG"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
