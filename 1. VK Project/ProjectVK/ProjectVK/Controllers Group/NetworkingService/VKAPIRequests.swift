@@ -289,7 +289,7 @@ class VKAPIRequests {
                 DispatchQueue.main.async {
                     completion?(.success(messages))
                 }
-                
+                print("📬 Messages \n", messages.items.count)
             case .failure(let error):
                 completion?(.failure(error))
             }
@@ -320,7 +320,7 @@ class VKAPIRequests {
                 DispatchQueue.main.async {
                     completion?(.success(messages))
                 }
-                
+                print("✉️ Message send \n", messages)
             case .failure(let error):
                 completion?(.failure(error))
             }

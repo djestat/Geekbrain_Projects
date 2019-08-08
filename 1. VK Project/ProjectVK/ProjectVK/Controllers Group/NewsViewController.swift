@@ -11,6 +11,8 @@ import Kingfisher
 import RealmSwift
 
 class NewsViewController: UITableViewController {
+    
+    let refreshControler = UIRefreshControl()
     let request = VKAPIRequests()
     var resultNotificationToken: NotificationToken?
     lazy var cachePhotoService = CachePhotoService(tableView: self.tableView)
@@ -27,16 +29,17 @@ class NewsViewController: UITableViewController {
         super.viewDidLoad()
         
         // Operations
-        let fndo = FetchNewsDataOperation()
-        let pndo = ParseNewsDataOperation()
-        pndo.addDependency(fndo)
-        let sntrdo = SaveNewsToRealmOperation()
-        sntrdo.addDependency(pndo)
-        let dndo = DisplayNewsDataOperation(controller: self)
-        dndo.addDependency(sntrdo)
-        OperationQueue.main.addOperations([fndo, pndo, sntrdo, dndo], waitUntilFinished: false)
+        getNewsOperation()
         
-        
+        //Refresh Control
+        refreshControler.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
+        tableView.addSubview(refreshControler)
+    }
+    
+    @objc func didPullToRefresh() {
+        getNewsOperation()
+        // For End refrshing
+        refreshControler.endRefreshing()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -44,7 +47,9 @@ class NewsViewController: UITableViewController {
         KingfisherManager.shared.cache.clearMemoryCache()
 //        KingfisherManager.shared.cache.clearDiskCache()
     }
-
+    
+    
+    
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -166,6 +171,22 @@ class NewsViewController: UITableViewController {
         
     }
     
+    //MARK: - Operation
+    //MARK: - Get News Operation
+    
+    func getNewsOperation() {
+        
+        let fndo = FetchNewsDataOperation()
+        let pndo = ParseNewsDataOperation()
+        pndo.addDependency(fndo)
+        let sntrdo = SaveNewsToRealmOperation()
+        sntrdo.addDependency(pndo)
+        let dndo = DisplayNewsDataOperation(controller: self)
+        dndo.addDependency(sntrdo)
+        OperationQueue.main.addOperations([fndo, pndo, sntrdo, dndo], waitUntilFinished: false)
+        
+    }
+    
     //MARK: - REALM Function
     //MARK: - Realm Notification
     
@@ -189,6 +210,13 @@ class NewsViewController: UITableViewController {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+}
+
+extension NewsViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        
     }
     
 }

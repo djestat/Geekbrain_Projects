@@ -9,6 +9,16 @@
 import Foundation
 import SwiftyJSON
 
+class Messages {
+    let senderID: Int
+    let messageText: String
+    
+    init(senderID: Int, messageText: String) {
+        self.senderID = senderID
+        self.messageText = messageText
+    }
+}
+
 class MessagesRespons {
     let count: Int
     let items: [Message]

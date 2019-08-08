@@ -14,7 +14,11 @@ class MessageViewController: UIViewController {
     
     public var senderID: Int?
     public var senderType: String?
+    var messages = [Messages]()
     
+    var backgroundColorForCell: UIColor = .blue
+    
+    //MARK: - IBOutlet
     
     @IBOutlet weak var tableView: UITableView! {
         didSet {
@@ -22,18 +26,10 @@ class MessageViewController: UIViewController {
             tableView.delegate = self
         }
     }
+    
     @IBOutlet weak var messageTextField: UITextField!
+    @IBOutlet weak var sendButtonOutlet: UIButton!
     
-    
-    @IBOutlet weak var sendButtonOutlet: UIButton! {
-        didSet {
-            if messageTextField.text == nil {
-                sendButtonOutlet.isEnabled = false
-                sendButtonOutlet.backgroundColor = .green
-            }
-        }
-            
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +39,7 @@ class MessageViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         sendRequest()
+        print("👤 \(senderID!) and \(senderType!)")
     }
     
 
@@ -79,7 +76,8 @@ class MessageViewController: UIViewController {
     
     }
 
-    
+    //MARK: - IBAction
+
     @IBAction func attachFileButtonAction(_ sender: Any) {
         
         
@@ -96,14 +94,25 @@ class MessageViewController: UIViewController {
 
 extension MessageViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MessageCell.reuseID, for: indexPath) as? MessageCell else { fatalError("Cell cannot be dequeued") }
         
+        if backgroundColorForCell == UIColor.blue {
+            backgroundColorForCell = .green
+            cell.backgroundColor = backgroundColorForCell
+        } else if backgroundColorForCell == UIColor.green {
+            backgroundColorForCell = .red
+            cell.backgroundColor = backgroundColorForCell
+        } else if backgroundColorForCell == UIColor.red {
+            backgroundColorForCell = .blue
+            cell.backgroundColor = backgroundColorForCell
+        }
         
+        tableView.rowHeight = CGFloat(121)
         
         return cell
     }
@@ -113,18 +122,10 @@ extension MessageViewController: UITableViewDataSource {
 extension MessageViewController: UITableViewDelegate {
     
 }
-/*
+
 extension MessageViewController: UITextFieldDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.isEmpty {
-            groupsList = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(Group.self).filter("isMember == %i", 1)
-            view.endEditing(true)
-            tableView.reloadData()
-            return
-        }
-        let searchingGroup = RealmProvider.searchInGroup(Group.self, searchText).filter("isMember == %i", 1)
-        groupsList = searchingGroup
-        tableView.reloadData()
-    }
     
-}*/
+    
+//    textFie
+    
+}
