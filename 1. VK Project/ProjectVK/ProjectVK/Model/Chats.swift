@@ -8,6 +8,31 @@
 
 import Foundation
 import SwiftyJSON
+import RealmSwift
+
+class ChatsRealm: Object {
+    @objc dynamic var userID: Int = 0
+    @objc dynamic var userName: String = ""
+    @objc dynamic var peerType: String = ""
+    @objc dynamic var date: Int = 0
+    @objc dynamic var userAvatar: String = ""
+    @objc dynamic var userLastMessage: String = ""
+    
+    convenience init(userID: Int,userName: String,peerType: String, date: Int, userAvatar: String, userLastMessage: String) {
+        self.init()
+        self.userID = userID
+        self.userName = userName
+        self.peerType = peerType
+        self.date = date
+        self.userAvatar = userAvatar
+        self.userLastMessage = userLastMessage
+    }
+    
+    override static func primaryKey() -> String? {
+        return "userID"
+    }
+    
+}
 
 // MARK: - Response
 class Chats {
@@ -15,11 +40,6 @@ class Chats {
     let items: [Item]
     let profiles: [FriendProfile]
     let groups: [Group]
-    
-//    init(count: Int, items: [Item]) {
-//        self.count = count
-//        self.items = items
-//    }
     
     init(_ json: JSON) {
         self.count = json["count"].intValue

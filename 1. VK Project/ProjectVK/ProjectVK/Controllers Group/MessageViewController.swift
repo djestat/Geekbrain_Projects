@@ -11,12 +11,10 @@ import UIKit
 class MessageViewController: UIViewController {
     
     let request = VKAPIRequests()
-    
     public var senderID: Int?
     public var senderType: String?
-    var messages = [Messages]()
-    
-    var backgroundColorForCell: UIColor = .blue
+    public var senderName: String?
+    var messages = [MessageItems]()
     
     //MARK: - IBOutlet
     
@@ -30,16 +28,21 @@ class MessageViewController: UIViewController {
     @IBOutlet weak var messageTextField: UITextField!
     @IBOutlet weak var sendButtonOutlet: UIButton!
     
+    override func viewWillAppear(_ animated: Bool) {
+        // Do any additional setup after loading the view.
+        sendRequest()
+        print("👤 \(senderID!) and \(senderType!)")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //register tableview
-        tableView.register(MessageCell.self, forCellReuseIdentifier: MessageCell.reuseID)
+        //Controller Title
+        title = senderName
         
-        // Do any additional setup after loading the view.
-        sendRequest()
-        print("👤 \(senderID!) and \(senderType!)")
+        //Revert Table
+        tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
+
     }
     
 
@@ -61,7 +64,16 @@ class MessageViewController: UIViewController {
         case "user":
             let userID = String(self.senderID!)
             let peerID = ""
-            request.getMessages(userID, peerID)
+            request.getMessages(userID, peerID) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let messages):
+                    self.messages = messages.items
+                    self.tableView.reloadData()
+                case .failure(let error):
+                    print("\(error.localizedDescription)")
+                }
+            }
         case "chat":
             let userID = ""
             let peerID = String(self.senderID!)
@@ -101,31 +113,29 @@ extension MessageViewController: UITableViewDataSource {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MessageCell.reuseID, for: indexPath) as? MessageCell else { fatalError("Cell cannot be dequeued") }
         
-        if backgroundColorForCell == UIColor.blue {
-            backgroundColorForCell = .green
-            cell.backgroundColor = backgroundColorForCell
-        } else if backgroundColorForCell == UIColor.green {
-            backgroundColorForCell = .red
-            cell.backgroundColor = backgroundColorForCell
-        } else if backgroundColorForCell == UIColor.red {
-            backgroundColorForCell = .blue
-            cell.backgroundColor = backgroundColorForCell
+        if messages[indexPath.row].text.count != 0 {
+            cell.messageTextLabel.text = messages[indexPath.row].text
+        } else {
+            cell.messageTextLabel.text = "NOT TEXT \nAttachment OR nil \n \(messages[indexPath.row].id)"
         }
         
-        tableView.rowHeight = CGFloat(121)
+        if messages[indexPath.row].fromID == Session.authData.userid {
+            cell.messageTextLabel.backgroundColor = .green
+            cell.messageTextLabel.textAlignment = .right
+        } else {
+            cell.messageTextLabel.backgroundColor = .orange
+            cell.messageTextLabel.textAlignment = .left
+
+        }
         
+//        tableView.rowHeight = CGFloat(150)
+        //Revert Content
+        cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
         return cell
     }
 
 }
 
 extension MessageViewController: UITableViewDelegate {
-    
-}
-
-extension MessageViewController: UITextFieldDelegate {
-    
-    
-//    textFie
     
 }

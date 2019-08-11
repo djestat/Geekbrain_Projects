@@ -160,7 +160,7 @@ class NewsViewController: UITableViewController {
     }
     
     // MARK: - Table view animation initialising
-    
+    /*
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
         cell.contentView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
@@ -169,7 +169,7 @@ class NewsViewController: UITableViewController {
         }
         propertyAnimator.startAnimation()
         
-    }
+    }*/
     
     //MARK: - Operation
     //MARK: - Get News Operation

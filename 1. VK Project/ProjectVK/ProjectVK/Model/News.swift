@@ -371,6 +371,19 @@ class Size {
     
 }
 
+enum SizeType: String {
+    case m = "m"
+    case o = "o"
+    case p = "p"
+    case q = "q"
+    case r = "r"
+    case s = "s"
+    case w = "w"
+    case x = "x"
+    case y = "y"
+    case z = "z"
+}
+
 // MARK: - Comments
 class Comments {
     let count: Int

@@ -33,7 +33,6 @@ class FriendsViewController: UITableViewController {
             case .failure(let error):
                 print(error.localizedDescription)
             }
-            
         }
         
     }

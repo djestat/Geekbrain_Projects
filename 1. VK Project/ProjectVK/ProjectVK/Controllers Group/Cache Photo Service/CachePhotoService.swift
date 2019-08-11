@@ -80,6 +80,7 @@ class CachePhotoService {
                 self.images[urlString] = newImage
                 self.saveImageToCache(urlString: urlString, image: newImage)
                 self.tableView.reloadRows(at: [indexPath], with: .none)
+//                self.tableView.cellForRow(at: indexPath)?.contentView.reloadInputViews()
 //                self.tableView.reloadRows(at: [indexPath], with: .automatic)
 //                guard let cell = self.tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseID, for: indexPath) as? NewsCell else { fatalError() }
 //                cell.newsPhotosView.image = newImage
@@ -88,9 +89,6 @@ class CachePhotoService {
             image = newImage
             }.resume()
         
-//        repeat {
-//            print("image downloading...")
-//        } while image == nil
         dispGroup.leave()
         
         return image

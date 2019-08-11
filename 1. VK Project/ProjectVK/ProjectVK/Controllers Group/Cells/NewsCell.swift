@@ -16,11 +16,7 @@ class NewsCell: UITableViewCell {
     @IBOutlet weak var groupImageView: UIImageView!
     @IBOutlet weak var groupNameLabel: UILabel!
     @IBOutlet weak var newsText: UITextView!
-    @IBOutlet weak var newsPhotosView: UIImageView! {
-        didSet {
-            newsPhotosView.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
+    @IBOutlet weak var newsPhotosView: UIImageView!
     @IBOutlet weak var newsTextLabel: UITextView!
     @IBOutlet weak var likeCountsLabel: UILabel!
     @IBOutlet weak var commentsCountsLabel: UILabel!
@@ -40,12 +36,6 @@ class NewsCell: UITableViewCell {
 
         animationTappedPhoto()
 
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     func animationTappedPhoto() {

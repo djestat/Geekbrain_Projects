@@ -232,7 +232,7 @@ class VKAPIRequests {
     // MARK: - Messages Requests
     // MARK: - Get Chats Requests
 
-    public func getChats(completion: ((Swift.Result<Chats, Error>) -> Void)? = nil) {
+    public func getChats(completion: ((Swift.Result<[ChatsRealm], Error>) -> Void)? = nil) {
         
         let baseURL = "https://api.vk.com"
         let path = "/method/messages.getConversations"
@@ -251,11 +251,62 @@ class VKAPIRequests {
             case .success(let value):
                 let json = JSON(value)
                 let response = json["response"].self
-                let messages = Chats(response)
-                DispatchQueue.main.async {
-                    completion?(.success(messages))
+                let chats = Chats(response)
+                var chatsRealm = [ChatsRealm]()
+                for i in 0..<chats.items.count {
+                    let userID = chats.items[i].conversation.peer.id
+                    var userName = ""
+                    let peerType = chats.items[i].conversation.peer.type
+                    let date = chats.items[i].lastMessage.date
+                    var userAvatar = ""
+                    var userLastMessage = ""
+                    
+                    switch chats.items[i].conversation.peer.type {
+                    case "user":
+                        for i in 0..<chats.profiles.count {
+                            if userID == chats.profiles[i].id {
+                                userName = chats.profiles[i].name + " " + chats.profiles[i].lastname
+                                userAvatar = chats.profiles[i].avatarGroupImage
+                                break
+                            } else if i == chats.profiles.count - 1 {
+                                userName = "Unknowk"
+                                userAvatar = "avatar"
+                                break
+                            }
+                        }
+                    case "chat":
+                        userName = chats.items[i].conversation.chatSettings.title
+                        userAvatar = "Groups"
+                    case "group":
+                        for i in 0..<chats.groups.count {
+                            if -userID == chats.groups[i].id {
+                                userName = chats.groups[i].name
+                                userAvatar = chats.groups[i].image
+                                break
+                            } else if i == chats.groups.count - 1 {
+                                userName = "Unknowk"
+                                userAvatar = "avatar"
+                                break
+                            }
+                        }
+                    default:
+                        print("Not User or Chat")
+                    }
+                    
+                    if chats.items[i].lastMessage.text.isEmpty  {
+                        userLastMessage = "Документ 📎"
+                    } else {
+                        userLastMessage = chats.items[i].lastMessage.text
+                    }
+      
+                    let newChat = ChatsRealm(userID: userID, userName: userName,peerType: peerType, date: date, userAvatar: userAvatar, userLastMessage: userLastMessage)
+                    
+                    chatsRealm.append(newChat)
+                    
                 }
-                
+                DispatchQueue.main.async {
+                    completion?(.success(chatsRealm))
+                }
             case .failure(let error):
                 completion?(.failure(error))
             }
@@ -264,14 +315,15 @@ class VKAPIRequests {
     
     // MARK: - Get Messages Requests
     
-    public func getMessages(_ userID: String,_ peerID: String, completion: ((Swift.Result<MessagesRespons, Error>) -> Void)? = nil) {
+    public func getMessages(_ userID: String,_ peerID: String, completion: ((Swift.Result<MessagesResponse, Error>) -> Void)? = nil) {
         
         let baseURL = "https://api.vk.com"
         let path = "/method/messages.getHistory"
         
         let params: Parameters = [
             "access_token" : token,
-            "count" : "200",
+//            "count" : "200",
+            "count" : "50",
             "user_id" : "\(userID)",
             "peer_id" : "\(peerID)",
             "rev" : "",
@@ -285,18 +337,21 @@ class VKAPIRequests {
             case .success(let value):
                 let json = JSON(value)
                 let response = json["response"].self
-                let messages = MessagesRespons(response)
+                let messages = MessagesResponse(response)
                 DispatchQueue.main.async {
                     completion?(.success(messages))
                 }
                 print("📬 Messages \n", messages.items.count)
+                for i in 0..<messages.items.count {
+                    print("📃 Message text is here -->\(messages.items[i].text)<--")
+                }
             case .failure(let error):
                 completion?(.failure(error))
             }
         }
     }
     
-    public func sendMessages(_ userID: String,_ randomID: Int64, _ peerID: String,_ message: String, completion: ((Swift.Result<MessagesRespons, Error>) -> Void)? = nil) {
+    public func sendMessages(_ userID: String,_ randomID: Int64, _ peerID: String,_ message: String, completion: ((Swift.Result<MessagesResponse, Error>) -> Void)? = nil) {
         
         let baseURL = "https://api.vk.com"
         let path = "/method/messages.send"
@@ -316,7 +371,7 @@ class VKAPIRequests {
             case .success(let value):
                 let json = JSON(value)
                 let response = json["response"].self
-                let messages = MessagesRespons(response)
+                let messages = MessagesResponse(response)
                 DispatchQueue.main.async {
                     completion?(.success(messages))
                 }
