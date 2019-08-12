@@ -59,13 +59,6 @@ class News {
     let groups: [Group]
     let nextFrom: String
     
-    init(items: [ResponseItem], profiles: [FriendProfile], groups: [Group], nextFrom: String) {
-        self.items = items
-        self.profiles = profiles
-        self.groups = groups
-        self.nextFrom = nextFrom
-    }
-    
     init(_ json: JSON) {
         self.items = json["items"].arrayValue.map { ResponseItem($0) }
         self.profiles = json["profiles"].arrayValue.map { FriendProfile($0) }
@@ -90,22 +83,6 @@ class ResponseItem {
     let reposts: Reposts
     let comments: Comments
     let views: Views
-    
-    init(type: String, sourceID: Int, date: Int, photos: Photos, postID: Int, text: String, attachmetsCount: Int, attachments: [Attachments], copyhistory: [CopyHistory], likes: Likes, reposts: Reposts, comments: Comments, views: Views) {
-        self.type = type
-        self.sourceID = sourceID
-        self.date = date
-        self.photos = photos
-        self.postID = postID
-        self.text = text
-        self.attachmetsCount = attachmetsCount
-        self.attachments = attachments
-        self.copyhistory = copyhistory
-        self.likes = likes
-        self.reposts = reposts
-        self.comments = comments
-        self.views = views
-    }
     
     init(_ json: JSON) {
         self.type = json["type"].stringValue
@@ -229,19 +206,25 @@ class Sizes {
     }
 }
     
+// MARK: - Video
 
 class AttachmentsVideo {
     let id: Int
     let ownerID: Int
     let title: String
     let duration: Int
+    let description: String
+    let date: Int
+    let comments: Int
+    let views: Int
     let width: Int
     let height: Int
-    let photo130: String
-    let photo320: String
-    let photo800: String
-    let photo1280: String
+    let image: [VideoImage]
+    let isFavorite: Bool
+    let firstFrame: [VideoFistFrame]
     let accessKey: String
+    let repeatCount: Int
+    let canAdd: Int
     let trackCode: String
     let type: String
 
@@ -249,18 +232,52 @@ class AttachmentsVideo {
         self.id = json["id"].intValue
         self.ownerID = json["owner_id"].intValue
         self.title = json["title"].stringValue
+        self.description = json["description"].stringValue
+        self.date = json["date"].intValue
+        self.comments = json["comments"].intValue
+        self.views = json["views"].intValue
         self.duration = json["duration"].intValue
         self.width = json["width"].intValue
         self.height = json["height"].intValue
-        self.photo130 = json["photo_130"].stringValue
-        self.photo320 = json["photo_320"].stringValue
-        self.photo800 = json["photo_800"].stringValue
-        self.photo1280 = json["photo_1280"].stringValue
+        self.image = json["image"].arrayValue.map { VideoImage($0) }
+        self.isFavorite = json["is_favorite"].boolValue
+        self.firstFrame = json["image"].arrayValue.map { VideoFistFrame($0) }
         self.accessKey = json["access_key"].stringValue
+        self.repeatCount = json["repeat"].intValue
+        self.canAdd = json["can_add"].intValue
         self.trackCode = json["track_code"].stringValue
         self.type = json["type"].stringValue
     }
 }
+
+class VideoImage {
+    let url: String
+    let width: Int
+    let height: Int
+    let withPadding: Int
+    
+    init (_ json: JSON) {
+        self.url = json["url"].stringValue
+        self.width = json["width"].intValue
+        self.height = json["height"].intValue
+        self.withPadding = json["with_padding"].intValue
+
+    }
+}
+
+class VideoFistFrame {
+    let url: String
+    let width: Int
+    let height: Int
+    
+    init (_ json: JSON) {
+        self.url = json["url"].stringValue
+        self.width = json["width"].intValue
+        self.height = json["height"].intValue
+    }
+}
+
+// MARK: - Link
 
 class AttachmentsLink {
     let url: String
@@ -268,6 +285,8 @@ class AttachmentsLink {
     let caption: String
     let description: String
     let photo: PhotosItem
+    let previewArticle: LinkPreviewArticle
+    let isFavorite: Bool
     
     init(_ json: JSON) {
         self.url = json["url"].stringValue
@@ -276,18 +295,56 @@ class AttachmentsLink {
         self.description = json["descriptio"].stringValue
         let photo = json["photo"].self
         self.photo = PhotosItem(photo)
+        let previewArticle = json["preview_article"].self
+        self.previewArticle = LinkPreviewArticle(previewArticle)
+        self.isFavorite = json["photo"].boolValue
     }
+}
+
+class LinkPreviewArticle {
+    let id: Int
+    let ownerID: Int
+    let ownerName: String
+    let ownerPhoto: String
+    let state: String
+    let canReport: Bool
+    let title: String
+    let subtitle: String
+    let views: Int
+    let shares: Int
+    let isFavorite: Bool
+    let url: String
+    let viewUrl: String
+    let accessKey: String
+    let publishedDate: Int
+    let photo: PhotosItem
+
+    init (_ json: JSON) {
+        self.id = json["id"].intValue
+        self.ownerID = json["owner_id"].intValue
+        self.ownerName = json["owner_name"].stringValue
+        self.ownerPhoto = json["owner_photo"].stringValue
+        self.state = json["state"].stringValue
+        self.canReport = json["can_report"].boolValue
+        self.title = json["title"].stringValue
+        self.subtitle = json["subtitle"].stringValue
+        self.views = json["views"].intValue
+        self.shares = json["shares"].intValue
+        self.isFavorite = json["is_favorite"].boolValue
+        self.url = json["url"].stringValue
+        self.viewUrl = json["view_url"].stringValue
+        self.accessKey = json["access_key"].stringValue
+        self.publishedDate = json["published_date"].intValue
+        let photo = json["photo"].self
+        self.photo = PhotosItem(photo)
+    }
+    
 }
 
 // MARK: - Photos
 class Photos {
     let count: Int
     let items: [PhotosItem]
-    
-    init(count: Int, items: [PhotosItem]) {
-        self.count = count
-        self.items = items
-    }
     
     init(_ json: JSON) {
         self.count = json["count"].intValue
@@ -306,24 +363,7 @@ class PhotosItem {
     let reposts: Reposts
     let comments: Comments
     let canComment, canRepost: Int
-    let postID: Int?
-    
-    init(id: Int, albumID: Int, ownerID: Int, userID: Int, sizes: [Size], text: String, date: Int, accessKey: String, likes: Likes, reposts: Reposts, comments: Comments, canComment: Int, canRepost: Int, postID: Int?) {
-        self.id = id
-        self.albumID = albumID
-        self.ownerID = ownerID
-        self.userID = userID
-        self.sizes = sizes
-        self.text = text
-        self.date = date
-        self.accessKey = accessKey
-        self.likes = likes
-        self.reposts = reposts
-        self.comments = comments
-        self.canComment = canComment
-        self.canRepost = canRepost
-        self.postID = postID
-    }
+    let postID: Int
     
     init(_ json: JSON) {
         self.id = json["id"].intValue
@@ -351,15 +391,8 @@ class Size {
     let src: String
     let type: String
     let url: String
-    let width, height: Int
-    
-    init(src: String, type: String, url: String, width: Int, height: Int) {
-        self.src = src
-        self.type = type
-        self.url = url
-        self.width = width
-        self.height = height
-    }
+    let width: Int
+    let height: Int
     
     init(_ json: JSON) {
         self.src = json["src"].stringValue
@@ -383,6 +416,111 @@ enum SizeType: String {
     case y = "y"
     case z = "z"
 }
+
+/*
+ "sizes": [{
+ "type": "s",
+ "url": "https://sun1-24.u...f91/NpCw5dK58PQ.jpg",
+ "width": 63,
+ "height": 75
+ }, {
+ "type": "m",
+ "url": "https://sun1-88.u...f92/ek2StkZ70qY.jpg",
+ "width": 110,
+ "height": 130
+ }, {
+ "type": "x",
+ "url": "https://sun1-25.u...f93/LeK4PLGj8O4.jpg",
+ "width": 511,
+ "height": 604
+ }, {
+ "type": "y",
+ "url": "https://sun1-29.u...f94/Kpw2KW5VXcQ.jpg",
+ "width": 683,
+ "height": 807
+ }, {
+ "type": "z",
+ "url": "https://sun1-84.u...f95/aWjhs0OplaQ.jpg",
+ "width": 812,
+ "height": 960
+ }, {
+ "type": "o",
+ "url": "https://sun1-27.u...f96/hP8TaJxnsKM.jpg",
+ "width": 130,
+ "height": 154
+ }, {
+ "type": "p",
+ "url": "https://sun1-25.u...f97/xUt-SkgkbeA.jpg",
+ "width": 200,
+ "height": 236
+ }, {
+ "type": "q",
+ "url": "https://sun1-84.u...f98/t5RCZXN3zzw.jpg",
+ "width": 320,
+ "height": 378
+ }, {
+ "type": "r",
+ "url": "https://sun1-30.u...f99/iBcYgEFmVis.jpg",
+ "width": 510,
+ "height": 603
+ }],
+ 
+ 
+ "type": "photo",
+ "photo": {
+ "id": 457281803,
+ "album_id": -7,
+ "owner_id": -45608667,
+ "user_id": 100,
+ "sizes": [{
+ "type": "m",
+ "url": "https://sun1-23.u...aed/wLQtK-rGz0Y.jpg",
+ "width": 117,
+ "height": 130
+ }, {
+ "type": "o",
+ "url": "https://sun1-17.u...af1/G1p05A09kto.jpg",
+ "width": 130,
+ "height": 145
+ }, {
+ "type": "p",
+ "url": "https://sun1-30.u...af2/eH9r0JRJR-c.jpg",
+ "width": 200,
+ "height": 223
+ }, {
+ "type": "q",
+ "url": "https://sun1-25.u...af3/FPLEiOMmnpQ.jpg",
+ "width": 320,
+ "height": 357
+ }, {
+ "type": "r",
+ "url": "https://sun1-20.u...af4/iEL56bGQqVo.jpg",
+ "width": 510,
+ "height": 568
+ }, {
+ "type": "s",
+ "url": "https://sun1-17.u...aec/0kBHvSk0QGc.jpg",
+ "width": 67,
+ "height": 75
+ }, {
+ "type": "x",
+ "url": "https://sun1-89.u...aee/qztqo860ME8.jpg",
+ "width": 542,
+ "height": 604
+ }, {
+ "type": "y",
+ "url": "https://sun1-87.u...aef/Y7HOwS3fEpQ.jpg",
+ "width": 724,
+ "height": 807
+ }, {
+ "type": "z",
+ "url": "https://sun1-17.u...af0/Mso57zMjIBk.jpg",
+ "width": 829,
+ "height": 924
+ }],
+ 
+ */
+
 
 // MARK: - Comments
 class Comments {
@@ -719,3 +857,141 @@ enum ItemType: String, Codable {
 
 
 */
+
+/*
+ 
+ , {
+ "type": "wall_photo",
+ "source_id": -15755094,
+ "date": 1495094448,
+ "photos": {
+ "count": 29,
+ "items": [{
+ "id": 456512246,
+ "album_id": -7,
+ "owner_id": -15755094,
+ "user_id": 100,
+ "photo_75": "https://pp.userap...cc9/7UaJOFYQ4t8.jpg",
+ "photo_130": "https://pp.userap...cca/EAjkANRXxa8.jpg",
+ "photo_604": "https://pp.userap...ccb/KwNeUd4zZj8.jpg",
+ "photo_807": "https://pp.userap...ccc/G5WXBGhwcfY.jpg",
+ "photo_1280": "https://pp.userap...ccd/nnHrhvWIFv0.jpg",
+ "width": 1036,
+ "height": 588,
+ "text": "В Турции перевернулся микроавтобус с российскими туристами: https://ria.ru/world/20170518/1494542911.html",
+ "date": 1495094448,
+ "post_id": 16044279,
+ "access_key": "e2ebfef470360df391",
+ "likes": {
+ "user_likes": 0,
+ "count": 28
+ },
+ "comments": {
+ "count": 25
+ },
+ "can_comment": 1,
+ "can_repost": 1
+ }, {
+ "id": 456512227,
+ "album_id": -7,
+ "owner_id": -15755094,
+ "user_id": 100,
+ "photo_75": "https://pp.userap...ca9/-Y9q2O4VhX4.jpg",
+ "photo_130": "https://pp.userap...caa/jleL-s_dg64.jpg",
+ "photo_604": "https://pp.userap...cab/2avDkMG7dDs.jpg",
+ "photo_807": "https://pp.userap...cac/s-d0WlUUxl4.jpg",
+ "photo_1280": "https://pp.userap...cad/0QfNR0cLOk4.jpg",
+ "width": 1024,
+ "height": 681,
+ "text": "В Минюсте назвали условия, при которых могут изъять единственное жилье: https://ria.ru/society/20170518/1494537882.html",
+ "date": 1495093185,
+ "post_id": 16044070,
+ "access_key": "c1c55079beae811832",
+ "likes": {
+ "user_likes": 0,
+ "count": 50
+ },
+ "comments": {
+ "count": 45
+ },
+ "can_comment": 1,
+ "can_repost": 1
+ }, {
+ "id": 456512215,
+ "album_id": -7,
+ "owner_id": -15755094,
+ "user_id": 100,
+ "photo_75": "https://pp.userap...ca1/Rj_iDRRUMAE.jpg",
+ "photo_130": "https://pp.userap...ca2/aMocKsWPris.jpg",
+ "photo_604": "https://pp.userap...ca3/0Y0cNSBq2Y4.jpg",
+ "photo_807": "https://pp.userap...ca4/7nvn1-pcOv8.jpg",
+ "width": 640,
+ "height": 363,
+ "text": "СМИ назвали главных фигурантов дела о "вмешательстве" России в выборы США: https://ria.ru/world/20170518/1494535783.html",
+ "date": 1495092020,
+ "post_id": 16043872,
+ "access_key": "0e6c161b36ed7c7c42",
+ "likes": {
+ "user_likes": 0,
+ "count": 55
+ },
+ "comments": {
+ "count": 41
+ },
+ "can_comment": 1,
+ "can_repost": 1
+ }, {
+ "id": 456512194,
+ "album_id": -7,
+ "owner_id": -15755094,
+ "user_id": 100,
+ "photo_75": "https://pp.userap...c98/ZwbJUSVwgcg.jpg",
+ "photo_130": "https://pp.userap...c99/oBsBFHcRxh4.jpg",
+ "photo_604": "https://pp.userap...c9a/vdkQneuX6Ew.jpg",
+ "photo_807": "https://pp.userap...c9b/SiCac1pGUPc.jpg",
+ "photo_1280": "https://pp.userap...c9c/L14TwTg9hGg.jpg",
+ "width": 1024,
+ "height": 682,
+ "text": "В Крыму сожалеют, что Порошенко решил стать "командиром евродепутатов": https://ria.ru/world/20170518/1494534733.html",
+ "date": 1495090754,
+ "post_id": 16043539,
+ "access_key": "90217a2c844d212995",
+ "likes": {
+ "user_likes": 0,
+ "count": 105
+ },
+ "comments": {
+ "count": 77
+ },
+ "can_comment": 1,
+ "can_repost": 1
+ }, {
+ "id": 456512140,
+ "album_id": -7,
+ "owner_id": -15755094,
+ "user_id": 100,
+ "photo_75": "https://pp.userap...c87/2iipmzJRbQw.jpg",
+ "photo_130": "https://pp.userap...c88/Hc-FSwnu0w8.jpg",
+ "photo_604": "https://pp.userap...c89/FO6xp0uiyKE.jpg",
+ "photo_807": "https://pp.userap...c8a/OdZ5hIUXpbI.jpg",
+ "photo_1280": "https://pp.userap...c8b/z9c2finpZLk.jpg",
+ "width": 1024,
+ "height": 682,
+ "text": "В США приняли законопроект, обвиняющий Россию в "бомбардировках сирийцев": https://ria.ru/syria/20170518/1494528207.html",
+ "date": 1495088042,
+ "post_id": 16042970,
+ "access_key": "b96ee637e0210a9f74",
+ "likes": {
+ "user_likes": 0,
+ "count": 98
+ },
+ "comments": {
+ "count": 265
+ },
+ "can_comment": 1,
+ "can_repost": 1
+ }]
+ },
+ "post_id": 1495054800
+ 
+ */

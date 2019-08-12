@@ -77,7 +77,6 @@ class NewsViewController: UITableViewController {
 
         switch newsList[indexPath.row].newsType {
         case "photo":
-            print("photo")
             cell.viewsCountsLabel.alpha = 0
             cell.viewsIcon.alpha = 0
             cell.newsPhotosView.image = cachePhotoService.getPhoto(with: newsList[indexPath.row].photo, for: indexPath)
@@ -86,7 +85,6 @@ class NewsViewController: UITableViewController {
             cell.commentsCountsLabel.text = String(newsList[indexPath.row].comments)
             
         case "post":
-            print("post")
             cell.newsTextLabel.text = String(newsList[indexPath.row].postText)
             cell.newsPhotosView.image = cachePhotoService.getPhoto(with: newsList[indexPath.row].photo, for: indexPath)
             
@@ -108,6 +106,7 @@ class NewsViewController: UITableViewController {
                 cell.documentSubview.backgroundColor = .lightGray
                 cell.documentLabel.text = String("VIDEO")
                 cell.documentLabel.textColor = .red
+                print(newsList[indexPath.row].photoAspectRatio)
             } else {
                 cell.newsTextLabel.text = String(newsList[indexPath.row].postText)
 //                cell.newsTextLabel.backgroundColor = .purple
@@ -116,7 +115,6 @@ class NewsViewController: UITableViewController {
             cell.commentsCountsLabel.text = String(newsList[indexPath.row].comments)
             cell.viewsCountsLabel.text = String(newsList[indexPath.row].views)
         case "wall_photo":
-            print("wall_photo")
             cell.newsPhotosView.image = cachePhotoService.getPhoto(with: newsList[indexPath.row].photo, for: indexPath)
             cell.newsTextLabel.text = String(newsList[indexPath.row].postText)
             cell.likeCountsLabel.text = String(newsList[indexPath.row].likes)
@@ -129,23 +127,34 @@ class NewsViewController: UITableViewController {
             cell.newsPhotosView.image = cachePhotoService.getPhoto(with: newsList[indexPath.row].photo, for: indexPath)
             cell.newsTextLabel.backgroundColor = .magenta
         }
-        print(newsList[indexPath.row].postID)
-        
         
         let width = tableView.frame.width
-        let defaultScale = CGFloat(16 / 9)
+        let defaultScale = CGFloat(240 / 320)
         var scale = CGFloat(newsList[indexPath.row].photoAspectRatio)
         if scale.isNaN {
             scale = defaultScale
         }
-        let height = width * scale
-        cell.newsPhotosView.frame.size = CGSize(width: width, height: height)
+        let heightNewsImage = width * scale
+        cell.newsPhotosView.frame.size = CGSize(width: width, height: heightNewsImage)
         
         // Height Cell config
-        let heightRowWithoutContent = CGFloat(121) //Рассчитал из сториборда 121 без картинки
-        tableView.estimatedRowHeight = heightRowWithoutContent
-        let heightText = cell.newsTextLabel.frame.height
-        tableView.rowHeight = heightRowWithoutContent + height + heightText
+//        tableView.rowHeight = UITableView.automaticDimension
+//        let heightRowWithoutContent = CGFloat(121) //Рассчитал из сториборда 121 без картинки
+//        tableView.estimatedRowHeight = heightRowWithoutContent
+//        tableView.rowHeight = heightRowWithoutContent + height + heightText
+        
+        let offset = CGFloat(10)
+        let elementsOnView = CGFloat(5)
+        let avatarHeight = cell.groupImageView.frame.height
+        let textHeight = cell.newsTextLabel.frame.height
+        let likeHeight = cell.likeImageView.frame.height
+        
+//        tableView.estimatedRowHeight = (offset * elementsOnView) + avatarHeight + textHeight + likeHeight
+        
+        tableView.rowHeight = (offset * elementsOnView) + avatarHeight + textHeight + likeHeight + heightNewsImage
+
+        //PRINT info about post and attachments
+        print("📰 \(newsList[indexPath.row].newsType) - \(newsList[indexPath.row].postID) Attach: " + newsList[indexPath.row].attachmentsType)
 
         return cell
     }
@@ -153,8 +162,10 @@ class NewsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseID, for: indexPath) as? NewsCell else { fatalError() }
         
-        if newsList[indexPath.row].attachmentsType == "doc" {
-            cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].attachmentsUrl))
+        if cell.isHighlighted {
+            if newsList[indexPath.row].attachmentsType == "doc" {
+                cell.newsPhotosView.kf.setImage(with: URL(string: newsList[indexPath.row].attachmentsUrl))
+            }
         }
         
     }

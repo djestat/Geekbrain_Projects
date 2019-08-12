@@ -100,14 +100,14 @@ class CachePhotoService {
         
         //TODO: - Refactor
         if let image = images[urlString] {
-            print("💾 FIND IN DICTIONARY")
+//            print("💾 FIND IN DICTIONARY")
             return image
         } else if let image = getImageFromCache(urlString: urlString) {
-            print("💾 FIND IN CACHE")
+//            print("💾 FIND IN CACHE")
             return image
         } else {
             let image = loadPhoto(with: urlString, for: indexPath)
-            print("💾 MAYBE LOADED")  
+//            print("💾 MAYBE LOADED")  
             return image
         }
     }

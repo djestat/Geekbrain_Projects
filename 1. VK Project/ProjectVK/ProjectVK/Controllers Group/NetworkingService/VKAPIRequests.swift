@@ -212,7 +212,8 @@ class VKAPIRequests {
 //            "source_id" : sourceID,
             "start_from" : nextList,
             "count" : "100",
-            "v" : "5.95"
+//            "v" : "5.95"
+            "v" : "5.101"
         ]
         
         Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON(queue: .global()) {
@@ -242,7 +243,7 @@ class VKAPIRequests {
             "count" : "200",
             "filter" : "all",
             "extended": "1",
-            "v" : "5.95"
+            "v" : "5.101"
         ]
         
         Alamofire.request(baseURL + path, method: .get, parameters: params).responseJSON(queue: .global()) {
