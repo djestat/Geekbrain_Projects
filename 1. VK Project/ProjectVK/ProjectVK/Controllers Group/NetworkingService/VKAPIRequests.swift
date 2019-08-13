@@ -211,7 +211,7 @@ class VKAPIRequests {
 //            "filters" : "post,photo,wall_photo",
 //            "source_id" : sourceID,
             "start_from" : nextList,
-            "count" : "100",
+            "count" : "10",
 //            "v" : "5.95"
             "v" : "5.101"
         ]
@@ -342,10 +342,10 @@ class VKAPIRequests {
                 DispatchQueue.main.async {
                     completion?(.success(messages))
                 }
-                print("📬 Messages \n", messages.items.count)
+                /*print("📬 Messages", messages.items.count)
                 for i in 0..<messages.items.count {
                     print("📃 Message text is here -->\(messages.items[i].text)<--")
-                }
+                }*/
             case .failure(let error):
                 completion?(.failure(error))
             }
@@ -377,6 +377,36 @@ class VKAPIRequests {
                     completion?(.success(messages))
                 }
                 print("✉️ Message send \n", messages)
+            case .failure(let error):
+                completion?(.failure(error))
+            }
+        }
+    }
+    
+    public func sendMessagesTest(_ peerID: Int,_ message: String,_ randomID: Int64, completion: ((Swift.Result<SendMessageResponse, Error>) -> Void)? = nil) {
+        
+        let baseURL = "https://api.vk.com"
+        let path = "/method/messages.send"
+        
+        let params: Parameters = [
+            "access_token" : token,
+            "peer_id" : "\(peerID)",
+            "message" : message,
+            "random_id": randomID,
+            "extended": "1",
+            "v" : "5.101"
+        ]
+        
+        Alamofire.request(baseURL + path, method: .post, parameters: params).responseJSON(queue: .global()) { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+//                let response = json["response"].self
+                let messages = SendMessageResponse(json)
+                DispatchQueue.main.async {
+                    completion?(.success(messages))
+                }
+                print("✉️ Message send \nОтвет =>", messages)
             case .failure(let error):
                 completion?(.failure(error))
             }

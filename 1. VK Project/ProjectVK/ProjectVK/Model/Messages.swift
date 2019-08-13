@@ -146,3 +146,25 @@ class ReplyMessage {
 //921 Невозможно переслать выбранные сообщения
 //936 Contact not found
 //940 Too many posts in messages
+
+
+class SendMessageResponse {
+    let response: Int
+    let error: SendMessageResponseError
+    
+    init(_ json: JSON) {
+        self.response = json["response"].intValue
+        let error = json["error"].self
+        self.error = SendMessageResponseError(error)
+    }
+}
+
+class SendMessageResponseError {
+    let errorCode: Int
+    let errorMsg: String
+    
+    init(_ json: JSON) {
+        self.errorCode = json["error_code"].intValue
+        self.errorMsg = json["error_msg"].stringValue
+    }
+}

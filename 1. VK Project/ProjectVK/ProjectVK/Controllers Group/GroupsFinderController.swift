@@ -57,15 +57,24 @@ class GroupsFinderController: UITableViewController {
         view.endEditing(true)
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView.cellForRow(at: indexPath)?.isSelected == true {
+    //MARK: - editingStyle and editActions
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
             let groupId = groupList[indexPath.row].id
             request.joinGroup(groupId)
             self.navigationController?.popViewController(animated: true)
             print("Join in Group with ID \(groupId).")
-
         }
-        
+    }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleteButton = UITableViewRowAction(style: .default, title: "Вступить!") { (action, indexPath) in
+            self.tableView.dataSource?.tableView!(self.tableView, commit: .delete, forRowAt: indexPath)
+            return
+        }
+        deleteButton.backgroundColor = .blue
+        return [deleteButton]
     }
 
 }

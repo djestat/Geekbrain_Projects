@@ -70,13 +70,25 @@ class GroupsViewController: UITableViewController {
         return cell
     }
     
+    //MARK: - editingStyle and editActions
+
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let groupId = groupsList[indexPath.row].id
             request.leaveGroup(groupId)
             RealmProvider.deletGroup(objectID: groupId)
             print("Leave Group with ID \(groupId).")
+            
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleteButton = UITableViewRowAction(style: .default, title: "Покинуть!") { (action, indexPath) in
+            self.tableView.dataSource?.tableView!(self.tableView, commit: .delete, forRowAt: indexPath)
+            return
+        }
+        deleteButton.backgroundColor = .red
+        return [deleteButton]
     }
     
     //MARK: - REALM Function

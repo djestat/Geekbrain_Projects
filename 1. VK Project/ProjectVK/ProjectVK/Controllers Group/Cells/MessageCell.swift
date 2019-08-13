@@ -14,6 +14,7 @@ class MessageCell: UITableViewCell {
     
     @IBOutlet weak var messageTextLabel: UILabel!
     
+    @IBOutlet weak var messageView: UIView!
     @IBOutlet weak var messageTextView: UITextView!
     
     override func awakeFromNib() {
@@ -28,13 +29,14 @@ class MessageCell: UITableViewCell {
     }
     
     override func layoutSubviews() {
-        TextLabelConfigure()
+        TextViewConfigure()
     }
     
-    func TextLabelConfigure() {
+    func TextViewConfigure() {
         let cornerRadius: CGFloat = 10
-        messageTextLabel.layer.cornerRadius = cornerRadius
-        messageTextLabel.layer.opacity = Float(cornerRadius - CGFloat(5))
+        messageView.layer.cornerRadius = cornerRadius
+        messageView.layer.opacity = Float(cornerRadius - CGFloat(5))
+//        messageView.backgroundColor = .darkGray
         
 //        messageTextLabel.layer.maskedCorners = CACornerMask(rawValue: CACornerMask.RawValue.init(bitPattern: 7))
 //        messageTextLabel.layer.masksToBounds = true

@@ -79,7 +79,7 @@ class CachePhotoService {
             DispatchQueue.main.async {
                 self.images[urlString] = newImage
                 self.saveImageToCache(urlString: urlString, image: newImage)
-                self.tableView.reloadRows(at: [indexPath], with: .none)
+//                self.tableView.reloadRows(at: [indexPath], with: .none)
 //                self.tableView.cellForRow(at: indexPath)?.contentView.reloadInputViews()
 //                self.tableView.reloadRows(at: [indexPath], with: .automatic)
 //                guard let cell = self.tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseID, for: indexPath) as? NewsCell else { fatalError() }

@@ -155,13 +155,13 @@ class FetchNewsDataOperation: AsyncOperation {
                 switch items[i].type {
                 case "photo":
                     let countPhotos = items[i].photos.items[0].sizes.count
-                    news.photo = items[i].photos.items[0].sizes[countPhotos / 2].url
+                    news.photo = items[i].photos.items[0].sizes[countPhotos - 2].url
                     news.postText = items[i].text
                     news.likes = items[i].photos.items[0].likes.count
                     news.comments = items[i].photos.items[0].comments.count
                     
-                    let imageHeight = items[i].photos.items[0].sizes[countPhotos / 2].height
-                    let imageWidth = items[i].photos.items[0].sizes[countPhotos / 2].width
+                    let imageHeight = items[i].photos.items[0].sizes[countPhotos - 2].height
+                    let imageWidth = items[i].photos.items[0].sizes[countPhotos - 2].width
                     let aspectRatio = Double(imageHeight) / Double(imageWidth)
                     news.photoAspectRatio = aspectRatio
                     
@@ -171,19 +171,19 @@ class FetchNewsDataOperation: AsyncOperation {
                         news.postText = String(items[i].text)
                         if items[i].attachments[0].type == "photo" {
                             let countPhotos = items[i].attachments[0].photo.sizes.count
-                            news.photo = items[i].attachments[0].photo.sizes[countPhotos / 2].url
+                            news.photo = items[i].attachments[0].photo.sizes[countPhotos - 2].url
                             
-                            let imageHeight = items[i].attachments[0].photo.sizes[countPhotos / 2].height
-                            let imageWidth = items[i].attachments[0].photo.sizes[countPhotos / 2].width
+                            let imageHeight = items[i].attachments[0].photo.sizes[countPhotos - 2].height
+                            let imageWidth = items[i].attachments[0].photo.sizes[countPhotos - 2].width
                             let aspectRatio = Double(imageHeight) / Double(imageWidth)
                             news.photoAspectRatio = aspectRatio
                             
                         } else if items[i].attachments[0].type == "doc" {
                             news.postText = String(items[i].text)
                             let indexSizes = items[i].attachments[0].doc.preview.photo.sizes.count
-                            news.photo = items[i].attachments[0].doc.preview.photo.sizes[indexSizes / 2].src
-                            let imageHeight = items[i].attachments[0].doc.preview.photo.sizes[indexSizes / 2].height
-                            let imageWidth = items[i].attachments[0].doc.preview.photo.sizes[indexSizes / 2].width
+                            news.photo = items[i].attachments[0].doc.preview.photo.sizes[indexSizes - 2].src
+                            let imageHeight = items[i].attachments[0].doc.preview.photo.sizes[indexSizes - 2].height
+                            let imageWidth = items[i].attachments[0].doc.preview.photo.sizes[indexSizes - 2].width
                             let aspectRatio = Double(imageHeight) / Double(imageWidth)
                             news.photoAspectRatio = aspectRatio
                             
@@ -194,19 +194,19 @@ class FetchNewsDataOperation: AsyncOperation {
                             news.postText = String(items[i].text + "\n"  + items[i].attachments[0].link.title + "\n" + items[i].attachments[0].link.description)
                             let indexSizes = items[i].attachments[0].link.photo.sizes.count
                             if indexSizes != 0 {
-                                news.photo = items[i].attachments[0].link.photo.sizes[indexSizes / 2].url
-                                let imageHeight = items[i].attachments[0].link.photo.sizes[indexSizes / 2].height
-                                let imageWidth = items[i].attachments[0].link.photo.sizes[indexSizes / 2].width
+                                news.photo = items[i].attachments[0].link.photo.sizes[indexSizes - 2].url
+                                let imageHeight = items[i].attachments[0].link.photo.sizes[indexSizes - 2].height
+                                let imageWidth = items[i].attachments[0].link.photo.sizes[indexSizes - 2].width
                                 let aspectRatio = Double(imageHeight) / Double(imageWidth)
                                 news.photoAspectRatio = aspectRatio
                             }
                         } else if items[i].attachments[0].type == "video"{
+                            news.attachmentsType = items[i].attachments[0].type
                             news.postText = String(items[i].attachments[0].video.title)
                             let indexSizes = items[i].attachments[0].video.image.count
-                            news.photo = items[i].attachments[0].video.image[indexSizes / 2].url
-                            news.attachmentsType = items[i].attachments[0].type
-                            let imageHeight = items[i].attachments[0].video.image[indexSizes / 2].height
-                            let imageWidth = items[i].attachments[0].video.image[indexSizes / 2].width
+                            news.photo = items[i].attachments[0].video.image[indexSizes - 2].url
+                            let imageHeight = items[i].attachments[0].video.image[indexSizes - 2].height
+                            let imageWidth = items[i].attachments[0].video.image[indexSizes - 2].width
                             let aspectRatio = Double(imageHeight) / Double(imageWidth)
                             news.photoAspectRatio = aspectRatio
                         } else {

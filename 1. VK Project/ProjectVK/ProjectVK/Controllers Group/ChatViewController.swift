@@ -15,7 +15,9 @@ class ChatViewController: UITableViewController {
     let refreshControler = UIRefreshControl()
     let request = VKAPIRequests()
     var resultNotificationToken: NotificationToken?
-    var chats = [ChatsRealm]()
+    var chats: Results<ChatsRealm> = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(ChatsRealm.self).sorted(byKeyPath: "date", ascending: false)
+
+    // MARK: - VC Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,17 +34,19 @@ class ChatViewController: UITableViewController {
         tableView.addSubview(refreshControler)
     }
     
-    @objc func didPullToRefresh() {
-        getChats()
-        // For End refrshing
-        refreshControler.endRefreshing()
-    }
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
         resultNotificationToken?.invalidate()
         KingfisherManager.shared.cache.clearMemoryCache()
         //        KingfisherManager.shared.cache.clearDiskCache()
+    }
+    
+    // MARK: - Helpers
+    
+    @objc func didPullToRefresh() {
+        getChats()
+        // For End refrshing
+        refreshControler.endRefreshing()
     }
     
     // MARK: - Table view data source
@@ -150,11 +154,11 @@ class ChatViewController: UITableViewController {
             guard let self = self else { return }
             switch change {
             case .initial(let collection):
-                self.chats = Array(collection)
+                self.chats = collection
                 self.tableView.reloadData()
                 print("INITIAAAAAAAAALLLLLLLLLLLLLL")
             case .update(let collection, deletions: let deletion, insertions: let insertions, modifications: let modification):
-                self.chats = Array(collection)
+                self.chats = collection
                 self.tableView.reloadData()
                 print("UPDAAAAAAAAAATEEEEEE")
                 print("\(collection.count) , \(deletion.count), \(insertions.count), \(modification.count)")
