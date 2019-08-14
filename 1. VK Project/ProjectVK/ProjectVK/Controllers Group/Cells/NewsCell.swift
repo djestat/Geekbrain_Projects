@@ -11,7 +11,8 @@ import UIKit
 class NewsCell: UITableViewCell {
     
     static let reuseID = "NewsCell"
-    public var aspectRatio: CGFloat = 1
+    public var aspectRatio: CGFloat = 0.2
+    public var photoWidth: CGFloat = 375
     
     @IBOutlet weak var groupImageView: UIImageView!
     @IBOutlet weak var groupNameLabel: UILabel!
@@ -28,7 +29,18 @@ class NewsCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-
+        setImageSize()
+    }
+    override func setNeedsLayout() {
+        super.setNeedsLayout()
+//        Если вы хотите принудительно обновить макет, вместо этого вызовите метод setNeedsLayout (), чтобы сделать это до следующего обновления чертежа.
+        setImageSize()
+    }
+    
+    override func layoutIfNeeded() {
+        super.layoutIfNeeded()
+//        Если вы хотите немедленно обновить макет ваших представлений, вызовите метод layoutIfNeeded ().
+        setImageSize()
     }
     
     override func awakeFromNib() {
@@ -36,7 +48,6 @@ class NewsCell: UITableViewCell {
         // Initialization code
 
         animationTappedPhoto()
-
     }
     
     func animationTappedPhoto() {
@@ -62,6 +73,12 @@ class NewsCell: UITableViewCell {
             },
                            completion: nil)
         }
+    }
+    
+    func setImageSize() {
+        let width = self.photoWidth
+        let heightNewsImage = width * aspectRatio
+        newsPhotosView.frame.size = CGSize(width: width, height: heightNewsImage)
     }
 
 }

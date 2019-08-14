@@ -29,6 +29,9 @@ class NewsViewController: UITableViewController {
         //Refresh Control
         refreshControler.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControler)
+        self.tableView.estimatedRowHeight = CGFloat(115)
+        self.tableView.rowHeight = UITableView.automaticDimension
+        
     }
     
     @objc func didPullToRefresh() {
@@ -55,6 +58,21 @@ class NewsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseID, for: indexPath) as? NewsCell else { fatalError() }
+        
+        cell.photoWidth = tableView.frame.width
+        
+        let defaultScale = CGFloat(240 / 320)
+        var scale = CGFloat(newsList[indexPath.row].photoAspectRatio)
+        if scale.isNaN {
+            scale = defaultScale
+        }
+        cell.aspectRatio = scale
+        
+        
+        cell.setNeedsLayout()
+        cell.layoutSubviews()
+        cell.layoutIfNeeded()
+        
         /*
         // Height Cell config
         let width = tableView.frame.width
@@ -142,6 +160,9 @@ class NewsViewController: UITableViewController {
         //PRINT info about post and attachments
         print("📰 \(newsList[indexPath.row].newsType) - \(newsList[indexPath.row].postID) Attach: " + newsList[indexPath.row].attachmentsType)
 
+        cell.setNeedsLayout()
+        cell.layoutSubviews()
+        cell.layoutIfNeeded()
         return cell
     }
     /*
@@ -166,8 +187,10 @@ class NewsViewController: UITableViewController {
         }
         propertyAnimator.startAnimation()
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseID, for: indexPath) as? NewsCell else { fatalError() }
         
+        /*
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseID, for: indexPath) as? NewsCell else { fatalError() }
+      
         // Height Cell config
         let width = tableView.frame.width
 //        let width = cell.newsPhotosView.frame.width
@@ -178,7 +201,7 @@ class NewsViewController: UITableViewController {
         }
         let heightNewsImage = width * scale
         cell.newsPhotosView.frame.size = CGSize(width: width, height: heightNewsImage)
-
+        
         let offset = CGFloat(10)
         let elementsOnView = CGFloat(5)
         let avatarHeight = cell.groupImageView.frame.height
@@ -203,7 +226,7 @@ class NewsViewController: UITableViewController {
             tableView.rowHeight = (offset * elementsOnView) + avatarHeight + textHeight + likeHeight
 //            tableView.rowHeight = (offset * elementsOnView) + avatarHeight + likeHeight + heightNewsImage
         }
-        
+        */
     }
     
     

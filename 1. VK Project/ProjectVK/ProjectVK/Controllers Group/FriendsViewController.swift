@@ -51,7 +51,7 @@ class FriendsViewController: UITableViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        resultNotificationToken?.invalidate()
+        self.resultNotificationToken?.invalidate()
     }
 
     // MARK: - Table view data source

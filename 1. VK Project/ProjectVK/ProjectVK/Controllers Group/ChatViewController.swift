@@ -24,7 +24,7 @@ class ChatViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = self.editButtonItem
 
         //Realm Notification
-        resultNotificationObjects()
+        self.resultNotificationObjects()
         
         //VK Request get chats
         getChats()
@@ -36,7 +36,7 @@ class ChatViewController: UITableViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
-        resultNotificationToken?.invalidate()
+        self.resultNotificationToken?.invalidate()
         KingfisherManager.shared.cache.clearMemoryCache()
         //        KingfisherManager.shared.cache.clearDiskCache()
     }
@@ -44,7 +44,10 @@ class ChatViewController: UITableViewController {
     // MARK: - Helpers
     
     @objc func didPullToRefresh() {
-        getChats()
+        DispatchQueue.main.async {
+            self.getChats()
+        }
+//        tableView.reloadData()
         // For End refrshing
         refreshControler.endRefreshing()
     }

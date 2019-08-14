@@ -527,6 +527,7 @@
                                         <constraint firstItem="7lR-Wp-s8e" firstAttribute="centerY" secondItem="PUy-x3-MVO" secondAttribute="centerY" id="N8Z-ec-nyE"/>
                                         <constraint firstItem="EGW-iJ-W0a" firstAttribute="centerY" secondItem="PUy-x3-MVO" secondAttribute="centerY" id="NNY-zL-oAB"/>
                                         <constraint firstItem="PUy-x3-MVO" firstAttribute="leading" secondItem="Nqh-eH-bA5" secondAttribute="leading" constant="10" id="SIv-op-U4b"/>
+                                        <constraint firstItem="LLZ-ly-EAP" firstAttribute="top" secondItem="Nqh-eH-bA5" secondAttribute="top" constant="60" id="ZbB-jY-E8S"/>
                                         <constraint firstItem="PUy-x3-MVO" firstAttribute="top" secondItem="wjK-f1-TcQ" secondAttribute="bottom" constant="10" id="aCR-48-9FJ"/>
                                         <constraint firstItem="5cd-zI-BaR" firstAttribute="centerY" secondItem="r85-bQ-OKO" secondAttribute="centerY" id="be8-bk-0lK"/>
                                         <constraint firstItem="r85-bQ-OKO" firstAttribute="leading" secondItem="Nqh-eH-bA5" secondAttribute="leading" constant="12" id="dYH-2t-2ih"/>
@@ -542,6 +543,7 @@
                                         <constraint firstItem="wjK-f1-TcQ" firstAttribute="top" secondItem="LLZ-ly-EAP" secondAttribute="bottom" constant="10" id="pEd-Pv-Q20"/>
                                         <constraint firstItem="PUy-x3-MVO" firstAttribute="width" secondItem="PUy-x3-MVO" secondAttribute="height" multiplier="1:1" id="pXm-Ya-jr8"/>
                                         <constraint firstItem="7lR-Wp-s8e" firstAttribute="leading" secondItem="Udx-AQ-Lfr" secondAttribute="trailing" constant="5" id="qUm-ZQ-hmY"/>
+                                        <constraint firstAttribute="bottom" secondItem="wjK-f1-TcQ" secondAttribute="bottom" constant="44.999999999999943" id="syG-gi-tBx"/>
                                         <constraint firstAttribute="trailing" secondItem="wjK-f1-TcQ" secondAttribute="trailing" id="t6X-eX-nS9"/>
                                         <constraint firstItem="Udx-AQ-Lfr" firstAttribute="centerY" secondItem="PUy-x3-MVO" secondAttribute="centerY" id="tLa-RT-N2a"/>
                                         <constraint firstItem="feM-R9-7BY" firstAttribute="centerY" secondItem="PUy-x3-MVO" secondAttribute="centerY" id="use-mp-SYe"/>

@@ -14,6 +14,8 @@ class MessageViewController: UIViewController {
     public var senderID: Int?
     public var senderType: String?
     public var senderName: String?
+    var keyboardHeightCurrent: CGFloat = 0
+    var keyboardWillChange: Bool = false
     var messages = [MessageItems]()
     
     //MARK: - IBOutlet
@@ -52,9 +54,9 @@ class MessageViewController: UIViewController {
         view.addGestureRecognizer(tapGR)
         
         //Keyboard
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(inputModeDidChange), name: UITextInputMode.currentInputModeDidChangeNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -62,13 +64,18 @@ class MessageViewController: UIViewController {
     }
     
     // MARK: - Helpers
-    
+    /*
     @objc private func keyboardWasShow(notification: Notification) {
+        
+//        let contentInsetsZero = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+//        messageSuperView.frame = messageSuperView.frame.inset(by: contentInsetsZero)
+        
         let info = notification.userInfo as NSDictionary?
         let keyboardHeight = (info?.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size.height
         let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
         
         messageSuperView.frame = messageSuperView.frame.inset(by: contentInsets)
+        print("⌨️ will show")
     }
     
     @objc private func keyboardWasHidden(notification: Notification) {
@@ -77,11 +84,61 @@ class MessageViewController: UIViewController {
         let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: -keyboardHeight, right: 0)
         
         messageSuperView.frame = messageSuperView.frame.inset(by: contentInsets)
+        print("⌨️ will hide")
+    }
+    
+    @objc private func keyboardWasChange(notification: Notification) {
+        let info = notification.userInfo as NSDictionary?
+        let keyboardHeight = (info?.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size.height
+        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+        
+        messageSuperView.frame = messageSuperView.frame.inset(by: contentInsets)
+        print("⌨️ will change")
+
+    }*/
+    
+    @objc private func keyboardChange(notification: Notification) {
+        
+        let info = notification.userInfo as NSDictionary?
+        let keyboardHeight = (info?.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size.height
+        var contentInsets: UIEdgeInsets?
+
+        if notification.name == UIResponder.keyboardWillShowNotification {
+            contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+            print("⌨️ will show")
+            self.keyboardHeightCurrent = keyboardHeight
+            self.keyboardWillChange = true
+            print("keyboardHeight => \(self.keyboardHeightCurrent)")
+        } else if notification.name == UIResponder.keyboardWillHideNotification {
+            contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: -keyboardHeight, right: 0)
+            print("⌨️ will hide")
+        } else if notification.name == UITextInputMode.currentInputModeDidChangeNotification {
+            contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: -keyboardHeight, right: 0)
+            print("⌨️ was change - language keys")
+        } else {
+            print("⌨️ will change - frame")
+        }
+
+        messageSuperView.frame = messageSuperView.frame.inset(by: contentInsets!)
+
+    }
+    
+    @objc func inputModeDidChange(_ notification: Notification) {
+        let keyboardHeight = self.keyboardHeightCurrent
+        if notification.name == UITextInputMode.currentInputModeDidChangeNotification {
+            if self.keyboardWillChange == true {
+                let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: -keyboardHeight, right: 0)
+                messageSuperView.frame = messageSuperView.frame.inset(by: contentInsets)
+                self.keyboardWillChange = false
+                print("⌨️ was change - language keys")
+            }
+        }
+        print("keyboardHeight => \(self.keyboardHeightCurrent)")
     }
     
     @objc func dissmissKeyboard() {
         view.endEditing(true)
-//        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: -50, right: 0)
+//        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 //        messageSuperView.frame = messageSuperView.frame.inset(by: contentInsets)
     }
     
@@ -167,12 +224,10 @@ class MessageViewController: UIViewController {
     // MARK: - Send message
 
     func sendMessage() {
-        
         let message = messageTextField.text!
-        let randomID = Int64.random(in: Int64.min...Int64.max)
-        print("Рандомное число \(randomID)")
-//        switch senderType {
-//        case "user":
+        if !message.isEmpty {
+            let randomID = Int64.random(in: Int64.min...Int64.max)
+            print("Рандомное число \(randomID)")
             let peerID = self.senderID!
             request.sendMessagesTest(peerID, message, randomID) { [weak self] result in
                 guard let self = self else { return }
@@ -188,21 +243,13 @@ class MessageViewController: UIViewController {
                     print("\(error.localizedDescription)")
                 }
             }
-            
-        /*  case "chat":
-            print("chat")
-//            let userID = ""
-//            let peerID = self.senderID!
-//            request.getMessages(userID, peerID)
-        case "group":
-            print("group")
-//            let userID = ""
-//            let peerID = self.senderID!
-//           request.getMessages(userID, peerID)
-        default:
-            print("Strangely")
-        }*/
-        
+        } else if message.isEmpty {
+            messageTextField.backgroundColor = .red
+            let dispatchTime = DispatchTime.now() + 0.5
+            DispatchQueue.main.asyncAfter(deadline: dispatchTime) {
+                self.messageTextField.backgroundColor = .clear
+            }
+        }
     }
 
     //MARK: - IBAction
@@ -222,7 +269,7 @@ class MessageViewController: UIViewController {
 //        print("TEXTFIELD TEXT =>\(messageTextField.text!)<=")
 //        print("TEXTFIELD TEXT IS EMPTY =>\(messageTextField.text!.isEmpty)<=")
 
-        let dispatchTime = DispatchTime.now() + 1
+        let dispatchTime = DispatchTime.now() + 0.5
         print("⏱ before 1sec?")
         DispatchQueue.global().asyncAfter(deadline: dispatchTime) {
             self.sendRequest()
@@ -244,7 +291,7 @@ extension MessageViewController: UITableViewDataSource {
         if messages[indexPath.row].text.count != 0 {
             cell.messageTextLabel.text = messages[indexPath.row].text
         } else {
-            cell.messageTextLabel.text = "NOT TEXT \nAttachment OR nil \n \(messages[indexPath.row].id)"
+            cell.messageTextLabel.text = "NOT TEXT \n🌄 OR 🎥 OR 🌐 OR nil \n \(messages[indexPath.row].id)"
         }
         
         let offset = CGFloat(15)
