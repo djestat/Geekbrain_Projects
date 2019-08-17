@@ -36,7 +36,7 @@ class ChatViewController: UITableViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
-        self.resultNotificationToken?.invalidate()
+//        self.resultNotificationToken?.invalidate()
         KingfisherManager.shared.cache.clearMemoryCache()
         //        KingfisherManager.shared.cache.clearDiskCache()
     }
@@ -50,6 +50,16 @@ class ChatViewController: UITableViewController {
 //        tableView.reloadData()
         // For End refrshing
         refreshControler.endRefreshing()
+    }
+    
+    func hideTabBar() {
+        tabBarController?.delegate = self as? UITabBarControllerDelegate
+        let width = tabBarController?.tabBar.frame.width
+        UIView.animate(withDuration: 0.75, animations: {
+            self.tabBarController?.tabBar.transform = CGAffineTransform(translationX: -width!, y: 0)
+        }) { _ in
+            self.tabBarController?.tabBar.isHidden = true
+        }
     }
     
     // MARK: - Table view data source
@@ -185,6 +195,7 @@ class ChatViewController: UITableViewController {
             controller.senderID = senderID
             controller.senderType = senderType
             controller.senderName = senderName
+            hideTabBar()
         }
     }
     

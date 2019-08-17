@@ -14,8 +14,7 @@ class MessageViewController: UIViewController {
     public var senderID: Int?
     public var senderType: String?
     public var senderName: String?
-    var keyboardHeightCurrent: CGFloat = 0
-    var keyboardWillChange: Bool = false
+    var keyboardHeightWas: CGFloat = 0
     var messages = [MessageItems]()
     
     //MARK: - IBOutlet
@@ -36,7 +35,6 @@ class MessageViewController: UIViewController {
         // Do any additional setup after loading the view.
         sendRequest()
         print("📨 <= 👤 \(senderID!) and \(senderType!)")
-        hideTabBar()
     }
     
     // MARK: - View lifecycle
@@ -54,9 +52,8 @@ class MessageViewController: UIViewController {
         view.addGestureRecognizer(tapGR)
         
         //Keyboard
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(inputModeDidChange), name: UITextInputMode.currentInputModeDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardChange), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardChange), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -64,93 +61,52 @@ class MessageViewController: UIViewController {
     }
     
     // MARK: - Helpers
-    /*
-    @objc private func keyboardWasShow(notification: Notification) {
-        
-//        let contentInsetsZero = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-//        messageSuperView.frame = messageSuperView.frame.inset(by: contentInsetsZero)
-        
-        let info = notification.userInfo as NSDictionary?
-        let keyboardHeight = (info?.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size.height
-        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
-        
-        messageSuperView.frame = messageSuperView.frame.inset(by: contentInsets)
-        print("⌨️ will show")
-    }
-    
-    @objc private func keyboardWasHidden(notification: Notification) {
-        let info = notification.userInfo as NSDictionary?
-        let keyboardHeight = (info?.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size.height
-        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: -keyboardHeight, right: 0)
-        
-        messageSuperView.frame = messageSuperView.frame.inset(by: contentInsets)
-        print("⌨️ will hide")
-    }
-    
-    @objc private func keyboardWasChange(notification: Notification) {
-        let info = notification.userInfo as NSDictionary?
-        let keyboardHeight = (info?.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size.height
-        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
-        
-        messageSuperView.frame = messageSuperView.frame.inset(by: contentInsets)
-        print("⌨️ will change")
-
-    }*/
     
     @objc private func keyboardChange(notification: Notification) {
-        
         let info = notification.userInfo as NSDictionary?
         let keyboardHeight = (info?.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size.height
         var contentInsets: UIEdgeInsets?
 
+        print("⌨️ Keyboard Height Was => \(self.keyboardHeightWas)")
+
         if notification.name == UIResponder.keyboardWillShowNotification {
             contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
             print("⌨️ will show")
-            self.keyboardHeightCurrent = keyboardHeight
-            self.keyboardWillChange = true
-            print("keyboardHeight => \(self.keyboardHeightCurrent)")
         } else if notification.name == UIResponder.keyboardWillHideNotification {
             contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: -keyboardHeight, right: 0)
+            messageSuperView.frame = messageSuperView.frame.inset(by: contentInsets!)
+            self.keyboardHeightWas = 0
             print("⌨️ will hide")
-        } else if notification.name == UITextInputMode.currentInputModeDidChangeNotification {
-            contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: -keyboardHeight, right: 0)
-            print("⌨️ was change - language keys")
-        } else {
-            print("⌨️ will change - frame")
-        }
-
-        messageSuperView.frame = messageSuperView.frame.inset(by: contentInsets!)
-
-    }
-    
-    @objc func inputModeDidChange(_ notification: Notification) {
-        let keyboardHeight = self.keyboardHeightCurrent
-        if notification.name == UITextInputMode.currentInputModeDidChangeNotification {
-            if self.keyboardWillChange == true {
-                let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: -keyboardHeight, right: 0)
-                messageSuperView.frame = messageSuperView.frame.inset(by: contentInsets)
-                self.keyboardWillChange = false
-                print("⌨️ was change - language keys")
+        } else if notification.name == UIResponder.keyboardWillChangeFrameNotification {
+            if self.keyboardHeightWas == 0 {
+                contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+                messageSuperView.frame = messageSuperView.frame.inset(by: contentInsets!)
+                self.keyboardHeightWas = keyboardHeight
+                print("⌨️ will add \(keyboardHeight)")
+            } else if self.keyboardHeightWas == keyboardHeight {
+                print("⌨️ no need change")
+            } else if self.keyboardHeightWas < keyboardHeight {
+                let differenceHeight = keyboardHeight - self.keyboardHeightWas
+                contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: differenceHeight, right: 0)
+                messageSuperView.frame = messageSuperView.frame.inset(by: contentInsets!)
+                self.keyboardHeightWas = keyboardHeight
+                print("⌨️ will change view for \(differenceHeight)")
+            } else if self.keyboardHeightWas > keyboardHeight {
+                let differenceHeight = self.keyboardHeightWas - keyboardHeight
+                contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: -differenceHeight, right: 0)
+                messageSuperView.frame = messageSuperView.frame.inset(by: contentInsets!)
+                self.keyboardHeightWas = keyboardHeight
+                print("⌨️ will change view for -\(differenceHeight)")
             }
         }
-        print("keyboardHeight => \(self.keyboardHeightCurrent)")
+        print("⌨️ Keyboard Height Now => \(self.keyboardHeightWas)")
     }
     
     @objc func dissmissKeyboard() {
         view.endEditing(true)
-//        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-//        messageSuperView.frame = messageSuperView.frame.inset(by: contentInsets)
     }
     
-    func hideTabBar() {
-        tabBarController?.delegate = self as? UITabBarControllerDelegate
-        let width = tabBarController?.tabBar.frame.width
-        UIView.animate(withDuration: 0.75, animations: {
-            self.tabBarController?.tabBar.transform = CGAffineTransform(translationX: -width!, y: 0)
-        }) { _ in
-            self.tabBarController?.tabBar.isHidden = true
-        }
-    }
+    
     
     func showTabBar() {
         tabBarController?.delegate = self as? UITabBarControllerDelegate
@@ -161,15 +117,9 @@ class MessageViewController: UIViewController {
         }, completion: nil)
     }
 
-    /*
+    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     // MARK: - Send request to get history
     
@@ -234,10 +184,10 @@ class MessageViewController: UIViewController {
                 switch result {
                 case .success(let response):
                     if response.response > 0 {
-                        print("📮 отправлено с результатом", response.response)
+                        print("📮 отправлено успешно с результатом", response.response)
                         self.messageTextField.text?.removeAll()
                     } else if response.error.errorCode > 0 {
-                        print("📮 отправлено но не принято, код ошибки: \(response.error.errorCode)\nТекст ошибки:\(response.error.errorMsg)")
+                        print("📮 отправлено некорректно, код ошибки: \(response.error.errorCode)\nТекст ошибки:\(response.error.errorMsg)")
                     }
                 case .failure(let error):
                     print("\(error.localizedDescription)")
@@ -263,17 +213,12 @@ class MessageViewController: UIViewController {
     @IBAction func sendButtonAction(_ sender: Any) {
         
         print("👤 => ✉️ \(senderID!) and \(senderName!)")
-        
         sendMessage()
-        
-//        print("TEXTFIELD TEXT =>\(messageTextField.text!)<=")
-//        print("TEXTFIELD TEXT IS EMPTY =>\(messageTextField.text!.isEmpty)<=")
-
         let dispatchTime = DispatchTime.now() + 0.5
-        print("⏱ before 1sec?")
+        print("⏱ before 0.5 sec?")
         DispatchQueue.global().asyncAfter(deadline: dispatchTime) {
             self.sendRequest()
-            print("⏱ after 1sec?")
+            print("⏱ after 0.5 sec?")
         }
     }
     

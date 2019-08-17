@@ -29,8 +29,10 @@ class NewsViewController: UITableViewController {
         //Refresh Control
         refreshControler.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControler)
-        self.tableView.estimatedRowHeight = CGFloat(115)
-        self.tableView.rowHeight = UITableView.automaticDimension
+        
+        
+//        self.tableView.estimatedRowHeight = CGFloat(115)
+//        self.tableView.rowHeight = UITableView.automaticDimension
         
     }
     
@@ -58,40 +60,35 @@ class NewsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseID, for: indexPath) as? NewsCell else { fatalError() }
+       
         
+        // Height Cell config
+        print("🔳 SIZE NOW show : \(tableView.rowHeight)")
+
         cell.photoWidth = tableView.frame.width
-        
         let defaultScale = CGFloat(240 / 320)
         var scale = CGFloat(newsList[indexPath.row].photoAspectRatio)
         if scale.isNaN {
             scale = defaultScale
         }
         cell.aspectRatio = scale
-        
-        
-        cell.setNeedsLayout()
-        cell.layoutSubviews()
-        cell.layoutIfNeeded()
-        
-        /*
-        // Height Cell config
-        let width = tableView.frame.width
-        let defaultScale = CGFloat(240 / 320)
-        var scale = CGFloat(newsList[indexPath.row].photoAspectRatio)
-        if scale.isNaN {
-            scale = defaultScale
-        }
-        let heightNewsImage = width * scale
-        cell.newsPhotosView.frame.size = CGSize(width: width, height: heightNewsImage)
-        
+ 
         let offset = CGFloat(10)
         let elementsOnView = CGFloat(5)
         let avatarHeight = cell.groupImageView.frame.height
         let textHeight = cell.newsTextLabel.frame.height
         let likeHeight = cell.likeImageView.frame.height
+        let heightNewsImage = cell.newsPhotosView.frame.height
+        let rowHeight = (offset * elementsOnView) + avatarHeight + textHeight + likeHeight + heightNewsImage
         
-        tableView.rowHeight = (offset * elementsOnView) + avatarHeight + textHeight + likeHeight + heightNewsImage
-        */
+//        cell.contentView.frame.size = CGSize(width: tableView.frame.width, height: cellHeight)
+        self.tableView.rowHeight = rowHeight
+        self.tableView.cellForRow(at: indexPath)?.frame.size = CGSize(width: tableView.frame.width, height: rowHeight)
+        
+        print("🔳 SIZE IMAGE: \(tableView.frame.width) * \(scale) = \(tableView.frame.width * scale)")
+        print("🔳 SIZE Cell NOW after set: \(tableView.rowHeight)")
+        print("🔳 SIZE MUST BE: \(rowHeight)\n\n")
+        
          // Configure the cell VERSION2 EXTENDED...
         cell.newsPhotosView.image = UIImage(named: "noimage")
         cell.viewsCountsLabel.alpha = 1
@@ -137,7 +134,7 @@ class NewsViewController: UITableViewController {
 //                tableView.rowHeight = (offset * elementsOnView) + avatarHeight + textHeight + likeHeight
             } else {
                 cell.newsTextLabel.text = String(newsList[indexPath.row].postText)
-                //                cell.newsTextLabel.backgroundColor = .purple
+                //cell.newsTextLabel.backgroundColor = .purple
             }
             cell.likeCountsLabel.text = String(newsList[indexPath.row].likes)
             cell.commentsCountsLabel.text = String(newsList[indexPath.row].comments)
@@ -156,13 +153,9 @@ class NewsViewController: UITableViewController {
             cell.newsTextLabel.backgroundColor = .magenta
         }
         
-        
         //PRINT info about post and attachments
         print("📰 \(newsList[indexPath.row].newsType) - \(newsList[indexPath.row].postID) Attach: " + newsList[indexPath.row].attachmentsType)
 
-        cell.setNeedsLayout()
-        cell.layoutSubviews()
-        cell.layoutIfNeeded()
         return cell
     }
     /*
@@ -175,6 +168,31 @@ class NewsViewController: UITableViewController {
             }
         }
         
+    }*/
+/*
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+     
+        // Height Cell config
+        let width = tableView.frame.width
+        //        let width = cell.newsPhotosView.frame.width
+        let defaultScale = CGFloat(240 / 320)
+        var scale = CGFloat(newsList[indexPath.row].photoAspectRatio)
+        if scale.isNaN {
+            scale = defaultScale
+        }
+        let heightNewsImage = width * scale
+        
+        let offset = CGFloat(10)
+        let elementsOnView = CGFloat(5)
+        let avatarHeight = cell.groupImageView.frame.height
+        let textHeight = cell.newsTextLabel.frame.height
+        let likeHeight = cell.likeImageView.frame.height
+        
+        let heightRowWithoutContent = (offset * elementsOnView) + avatarHeight + likeHeight
+        let rowHeight = (offset * elementsOnView) + avatarHeight + likeHeight + heightNewsImage
+        
+        
+        return 115 + 375
     }*/
     
     // MARK: - Table view animation initialising
@@ -193,7 +211,6 @@ class NewsViewController: UITableViewController {
       
         // Height Cell config
         let width = tableView.frame.width
-//        let width = cell.newsPhotosView.frame.width
         let defaultScale = CGFloat(240 / 320)
         var scale = CGFloat(newsList[indexPath.row].photoAspectRatio)
         if scale.isNaN {
@@ -206,25 +223,18 @@ class NewsViewController: UITableViewController {
         let elementsOnView = CGFloat(5)
         let avatarHeight = cell.groupImageView.frame.height
         let textHeight = cell.newsTextLabel.frame.height
-//        cell.newsTextLabel.frame.size = .zero
         let likeHeight = cell.likeImageView.frame.height
         
         let heightRowWithoutContent = (offset * elementsOnView) + avatarHeight + likeHeight
-//        tableView.estimatedRowHeight = heightRowWithoutContent
         
-//        tableView.rowHeight = heightRowWithoutContent + textHeight + heightNewsImage
         let rowHeight = (offset * elementsOnView) + avatarHeight + likeHeight + heightNewsImage
+        tableView.rowHeight = rowHeight
         
-        print("\n\n🔳 SIZE CELL Without Content: \(avatarHeight) + \(textHeight) + \(likeHeight) = \(heightRowWithoutContent)")
-        print("🔳 SIZE IMAGE: \(width) * \(scale) = \(heightNewsImage)")
-        print("🔳 SIZE NOW: \(tableView.rowHeight)")
-        print("🔳 SIZE MUST BE: \(rowHeight)\n\n")
         
         if newsList[indexPath.row].attachmentsType == "No Attach"{
             cell.newsTextLabel.text = String(newsList[indexPath.row].postText)
-//            cell.newsPhotosView.frame.size = .zero
+            cell.newsPhotosView.frame.size = .zero
             tableView.rowHeight = (offset * elementsOnView) + avatarHeight + textHeight + likeHeight
-//            tableView.rowHeight = (offset * elementsOnView) + avatarHeight + likeHeight + heightNewsImage
         }
         */
     }

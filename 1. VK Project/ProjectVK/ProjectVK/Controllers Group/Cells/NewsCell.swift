@@ -29,12 +29,13 @@ class NewsCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        setImageSize()
+//        setImageSize()
     }
+    
     override func setNeedsLayout() {
         super.setNeedsLayout()
 //        Если вы хотите принудительно обновить макет, вместо этого вызовите метод setNeedsLayout (), чтобы сделать это до следующего обновления чертежа.
-        setImageSize()
+//        setImageSize()
     }
     
     override func layoutIfNeeded() {
@@ -78,6 +79,7 @@ class NewsCell: UITableViewCell {
     func setImageSize() {
         let width = self.photoWidth
         let heightNewsImage = width * aspectRatio
+        newsPhotosView.autoresizingMask = .flexibleHeight
         newsPhotosView.frame.size = CGSize(width: width, height: heightNewsImage)
     }
 
