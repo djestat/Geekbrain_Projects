@@ -8,46 +8,75 @@
 
 import UIKit
 
-class NewsCell: UITableViewCell {
+class GroupNewsCell: UITableViewCell {
     
-    static let reuseID = "NewsCell"
-    public var aspectRatio: CGFloat = 0.2
-    public var photoWidth: CGFloat = 375
+    static let reuseID = "GroupNewsCell"
     
     @IBOutlet weak var groupImageView: UIImageView!
     @IBOutlet weak var groupNameLabel: UILabel!
-    @IBOutlet weak var newsText: UITextView!
-    @IBOutlet weak var newsPhotosView: UIImageView!
-    @IBOutlet weak var newsTextLabel: UILabel!
-    @IBOutlet weak var likeImageView: UIImageView!
-    @IBOutlet weak var likeCountsLabel: UILabel!
-    @IBOutlet weak var commentsCountsLabel: UILabel!
-    @IBOutlet weak var viewsIcon: UIImageView!
-    @IBOutlet weak var viewsCountsLabel: UILabel!
-    @IBOutlet weak var documentSubview: UIView!
-    @IBOutlet weak var documentLabel: UILabel!
     
     override func layoutSubviews() {
         super.layoutSubviews()
-//        setImageSize()
     }
     
     override func setNeedsLayout() {
         super.setNeedsLayout()
 //        Если вы хотите принудительно обновить макет, вместо этого вызовите метод setNeedsLayout (), чтобы сделать это до следующего обновления чертежа.
-//        setImageSize()
     }
     
     override func layoutIfNeeded() {
         super.layoutIfNeeded()
 //        Если вы хотите немедленно обновить макет ваших представлений, вызовите метод layoutIfNeeded ().
-        setImageSize()
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+    }
 
+}
+
+class TextNewsCell: UITableViewCell {
+    
+    static let reuseID = "TextNewsCell"
+    
+    @IBOutlet weak var newsTextLabel: UILabel!
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+    
+}
+
+class ContentNewsCell: UITableViewCell {
+    
+    static let reuseID = "ContentNewsCell"
+    
+    @IBOutlet weak var newsPhotosView: UIImageView!
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+    }
+    
+    override func setNeedsLayout() {
+        super.setNeedsLayout()
+        //        Если вы хотите принудительно обновить макет, вместо этого вызовите метод setNeedsLayout (), чтобы сделать это до следующего обновления чертежа.
+    }
+    
+    override func layoutIfNeeded() {
+        super.layoutIfNeeded()
+        //        Если вы хотите немедленно обновить макет ваших представлений, вызовите метод layoutIfNeeded ().
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+        
         animationTappedPhoto()
     }
     
@@ -76,11 +105,27 @@ class NewsCell: UITableViewCell {
         }
     }
     
-    func setImageSize() {
-        let width = self.photoWidth
-        let heightNewsImage = width * aspectRatio
-        newsPhotosView.autoresizingMask = .flexibleHeight
-        newsPhotosView.frame.size = CGSize(width: width, height: heightNewsImage)
-    }
+}
 
+class ActivitiesNewsCell: UITableViewCell {
+    
+    static let reuseID = "ActivitiesNewsCell"
+    
+    @IBOutlet weak var likeImageView: UIImageView!
+    @IBOutlet weak var likeCountsLabel: UILabel!
+    @IBOutlet weak var commentsCountsLabel: UILabel!
+    @IBOutlet weak var viewsIcon: UIImageView!
+    @IBOutlet weak var viewsCountsLabel: UILabel!
+
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+    }
+    
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+    
 }

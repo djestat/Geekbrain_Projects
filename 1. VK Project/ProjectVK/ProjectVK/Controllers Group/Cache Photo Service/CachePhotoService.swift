@@ -65,32 +65,31 @@ class CachePhotoService {
         var image = UIImage(named: "downloading")!
         guard let request = URL(string: urlString) else { return noimage }
         
-        let dispGroup = DispatchGroup()
-        
-        dispGroup.enter()
-        URLSession.shared.dataTask(with: request) { [weak self] data, response , error in
-            guard let self = self,
-                let httpURLResponse = response as? HTTPURLResponse,
-                httpURLResponse.statusCode == 200,
-                let data = data, error == nil,
-                let newImage = UIImage(data: data)
-                else { return }
-            
-            DispatchQueue.main.async {
+        let semaphore = DispatchSemaphore(value: 5)
+        DispatchQueue.main.async {
+            semaphore.wait()
+            URLSession.shared.dataTask(with: request) { [weak self] data, response , error in
+                guard let self = self,
+                    let httpURLResponse = response as? HTTPURLResponse,
+                    httpURLResponse.statusCode == 200,
+                    let data = data, error == nil,
+                    let newImage = UIImage(data: data)
+                    else { return }
+                
                 self.images[urlString] = newImage
                 self.saveImageToCache(urlString: urlString, image: newImage)
-//                self.tableView.reloadRows(at: [indexPath], with: .none)
-//                self.tableView.cellForRow(at: indexPath)?.contentView.reloadInputViews()
-//                self.tableView.reloadRows(at: [indexPath], with: .automatic)
-//                guard let cell = self.tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseID, for: indexPath) as? NewsCell else { fatalError() }
-//                cell.newsPhotosView.image = newImage
+                DispatchQueue.main.async {
+                    self.tableView.reloadRows(at: [indexPath], with: .none)
+                }
+                //                self.tableView.cellForRow(at: indexPath)?.contentView.reloadInputViews()
+                //                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                //                guard let cell = self.tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseID, for: indexPath) as? NewsCell else { fatalError() }
+                //                cell.newsPhotosView.image = newImage
+                semaphore.signal()
                 
-            }
-            image = newImage
-            }.resume()
-        
-        dispGroup.leave()
-        
+                image = newImage
+                }.resume()
+        }
         return image
     }
 
