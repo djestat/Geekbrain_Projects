@@ -92,7 +92,7 @@ class ContentNewsCell: UITableViewCell {
         if sender.state == .ended {
             // handling code
             self.newsPhotosView.transform = CGAffineTransform(scaleX: 0.2, y: 0.2)
-            
+            /*
             UIView.animate(withDuration: 0.75,
                            delay: 0,
                            usingSpringWithDamping: 0.3,
@@ -102,6 +102,19 @@ class ContentNewsCell: UITableViewCell {
                             self.newsPhotosView.transform = .identity
             },
                            completion: nil)
+            */
+            UIView.animate(withDuration: 0.75,
+                           delay: 0,
+                           usingSpringWithDamping: 0.3,
+                           initialSpringVelocity: 5,
+                           options: .curveEaseInOut,
+                           animations: {
+                            self.newsPhotosView.transform = .identity
+            }) { _ in
+                self.newsPhotosView.setNeedsDisplay()
+                self.newsPhotosView.setNeedsLayout()
+                self.newsPhotosView.reloadInputViews()
+            }
         }
     }
     

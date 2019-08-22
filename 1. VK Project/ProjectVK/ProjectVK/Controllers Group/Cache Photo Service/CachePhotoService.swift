@@ -18,6 +18,12 @@ class CachePhotoService {
         self.tableView = tableView
     }
     
+//    private let imageView: UIImageView
+//
+//    init(imageView: UIImageView) {
+//        self.imageView = imageView
+//    }
+
     private static let pathName: String = {
         let pathName = "images"
         
@@ -60,12 +66,12 @@ class CachePhotoService {
         return image
     }
     
-    private func loadPhoto(with urlString: String, for indexPath: IndexPath) -> UIImage {
+    private func loadPhoto(with urlString: String, for indexPath: IndexPath, for imageView: UIImageView) -> UIImage {
         let noimage: UIImage = UIImage(named: "noimage")!
         var image = UIImage(named: "downloading")!
         guard let request = URL(string: urlString) else { return noimage }
         
-        let semaphore = DispatchSemaphore(value: 5)
+        let semaphore = DispatchSemaphore(value: 15)
         DispatchQueue.main.async {
             semaphore.wait()
             URLSession.shared.dataTask(with: request) { [weak self] data, response , error in
@@ -79,12 +85,14 @@ class CachePhotoService {
                 self.images[urlString] = newImage
                 self.saveImageToCache(urlString: urlString, image: newImage)
                 DispatchQueue.main.async {
-                    self.tableView.reloadRows(at: [indexPath], with: .none)
+//                    self.tableView.reloadRows(at: [indexPath], with: .none)
+//                    imageView.setNeedsDisplay()
+//                    imageView.setNeedsLayout()
+                    imageView.image = newImage
+//                    self.tableView.setNeedsDisplay()
+//                    self.tableView.setNeedsLayout()
+//                    imageView.reloadInputViews()
                 }
-                //                self.tableView.cellForRow(at: indexPath)?.contentView.reloadInputViews()
-                //                self.tableView.reloadRows(at: [indexPath], with: .automatic)
-                //                guard let cell = self.tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseID, for: indexPath) as? NewsCell else { fatalError() }
-                //                cell.newsPhotosView.image = newImage
                 semaphore.signal()
                 
                 image = newImage
@@ -92,10 +100,15 @@ class CachePhotoService {
         }
         return image
     }
+    
+    private func setImageAfterDownload(_ imageView: UIImageView) {
+        
+    }
+
 
     //MARK: - Public API
     
-    public func getPhoto(with urlString: String, for indexPath: IndexPath) -> UIImage {
+    public func getPhoto(with urlString: String, for indexPath: IndexPath, for imageView: UIImageView) -> UIImage {
         
         //TODO: - Refactor
         if let image = images[urlString] {
@@ -105,7 +118,7 @@ class CachePhotoService {
 //            print("💾 FIND IN CACHE")
             return image
         } else {
-            let image = loadPhoto(with: urlString, for: indexPath)
+            let image = loadPhoto(with: urlString, for: indexPath, for: imageView)
 //            print("💾 MAYBE LOADED")  
             return image
         }

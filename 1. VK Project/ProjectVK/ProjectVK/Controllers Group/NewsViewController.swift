@@ -15,7 +15,9 @@ class NewsViewController: UITableViewController {
     let refreshControler = UIRefreshControl()
     let request = VKAPIRequests()
     var resultNotificationToken: NotificationToken?
+//    lazy var cachePhotoService = CachePhotoService(tableView: self.tableView)
     lazy var cachePhotoService = CachePhotoService(tableView: self.tableView)
+
     private var cellHeight = [IndexPath: CGFloat]()
     
     var newsList = [NewsRealm]()
@@ -50,6 +52,13 @@ class NewsViewController: UITableViewController {
     }
     
     // MARK: - Table view data source
+//    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        tableView.sectionFooterHeight = 10
+//        let headerView = UIView()
+//        headerView.layer.shadowColor = UIColor.darkGray.cgColor
+//        headerView.backgroundColor = .magenta
+//        return headerView
+//    }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         
@@ -72,7 +81,7 @@ class NewsViewController: UITableViewController {
         if indexPath.row == 0 {
             guard let cell0 = tableView.dequeueReusableCell(withIdentifier: GroupNewsCell.reuseID, for: indexPath) as? GroupNewsCell else { fatalError() }
             cell0.groupNameLabel.text = String(newsList[indexPath.section].sourceName)
-            cell0.groupImageView.image = cachePhotoService.getPhoto(with: newsList[indexPath.section].sourcePhoto, for: indexPath)
+            cell0.groupImageView.image = cachePhotoService.getPhoto(with: newsList[indexPath.section].sourcePhoto, for: indexPath, for: cell0.groupImageView)
             cell = cell0
         } else if indexPath.row == 1 {
             guard let cell1 = tableView.dequeueReusableCell(withIdentifier: TextNewsCell.reuseID, for: indexPath) as? TextNewsCell else { fatalError() }
@@ -121,9 +130,9 @@ class NewsViewController: UITableViewController {
 
             switch newsList[indexPath.section].newsType {
             case "photo":
-                cell2.newsPhotosView.image = cachePhotoService.getPhoto(with: newsList[indexPath.section].photo, for: indexPath)
+                cell2.newsPhotosView.image = cachePhotoService.getPhoto(with: newsList[indexPath.section].photo, for: indexPath, for: cell2.newsPhotosView)
             case "post":
-                cell2.newsPhotosView.image = cachePhotoService.getPhoto(with: newsList[indexPath.section].photo, for: indexPath)
+                cell2.newsPhotosView.image = cachePhotoService.getPhoto(with: newsList[indexPath.section].photo, for: indexPath, for: cell2.newsPhotosView)
                 if newsList[indexPath.section].attachmentsType == "photo" {
                 } else if newsList[indexPath.section].attachmentsType == "doc" {
 //                    cell.documentSubview.backgroundColor = .lightGray
@@ -137,12 +146,11 @@ class NewsViewController: UITableViewController {
                 } else {
                 }
             case "wall_photo":
-                cell2.newsPhotosView.image = cachePhotoService.getPhoto(with: newsList[indexPath.section].photo, for: indexPath)
+                cell2.newsPhotosView.image = cachePhotoService.getPhoto(with: newsList[indexPath.section].photo, for: indexPath, for: cell2.newsPhotosView)
             default:
                 print("ЧТО-ТО ЕЩЕ")
-                cell2.newsPhotosView.image = cachePhotoService.getPhoto(with: newsList[indexPath.section].photo, for: indexPath)
+                cell2.newsPhotosView.image = cachePhotoService.getPhoto(with: newsList[indexPath.section].photo, for: indexPath, for: cell2.newsPhotosView)
             }
-            
             // For GIF & Video Property
 //            cell.documentSubview.backgroundColor = .clear
 //            cell.documentLabel.textColor = .clear
@@ -171,6 +179,7 @@ class NewsViewController: UITableViewController {
                 print("ЧТО-ТО ЕЩЕ")
             }
             cell = cell3
+            cell.setNeedsLayout()
         }
         return cell
     }

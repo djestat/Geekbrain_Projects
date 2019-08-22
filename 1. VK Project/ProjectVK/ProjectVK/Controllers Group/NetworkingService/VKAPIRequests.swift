@@ -211,7 +211,7 @@ class VKAPIRequests {
 //            "filters" : "post,photo,wall_photo",
 //            "source_id" : sourceID,
             "start_from" : nextList,
-            "count" : "10",
+            "count" : "100",
 //            "v" : "5.95"
             "v" : "5.101"
         ]
