@@ -418,103 +418,90 @@ enum SizeType: String {
 }
 
 /*
- "sizes": [{
+ 
  "type": "s",
- "url": "https://sun1-24.u...f91/NpCw5dK58PQ.jpg",
+ "type": "m",
+ "type": "o",
+ "type": "p",
+ "type": "q",
+ "type": "r",
+ "type": "w",
+ "type": "x",
+ "type": "y",
+ "type": "z",
+ 
+ "type": "s",
  "width": 63,
  "height": 75
  }, {
+ "sizes": [{
  "type": "m",
- "url": "https://sun1-88.u...f92/ek2StkZ70qY.jpg",
  "width": 110,
  "height": 130
  }, {
- "type": "x",
- "url": "https://sun1-25.u...f93/LeK4PLGj8O4.jpg",
- "width": 511,
- "height": 604
- }, {
- "type": "y",
- "url": "https://sun1-29.u...f94/Kpw2KW5VXcQ.jpg",
- "width": 683,
- "height": 807
- }, {
- "type": "z",
- "url": "https://sun1-84.u...f95/aWjhs0OplaQ.jpg",
- "width": 812,
- "height": 960
- }, {
  "type": "o",
- "url": "https://sun1-27.u...f96/hP8TaJxnsKM.jpg",
  "width": 130,
  "height": 154
  }, {
  "type": "p",
- "url": "https://sun1-25.u...f97/xUt-SkgkbeA.jpg",
  "width": 200,
  "height": 236
  }, {
  "type": "q",
- "url": "https://sun1-84.u...f98/t5RCZXN3zzw.jpg",
  "width": 320,
  "height": 378
  }, {
  "type": "r",
- "url": "https://sun1-30.u...f99/iBcYgEFmVis.jpg",
  "width": 510,
  "height": 603
- }],
- 
- 
- "type": "photo",
- "photo": {
- "id": 457281803,
- "album_id": -7,
- "owner_id": -45608667,
- "user_id": 100,
- "sizes": [{
+ }
+ "type": "x",
+ "width": 511,
+ "height": 604
+ }, {
+ "type": "y",
+ "width": 683,
+ "height": 807
+ }, {
+ "type": "z",
+ "width": 812,
+ "height": 960
+ }, {
+
+ [{
+ "type": "s",
+ "width": 67,
+ "height": 75
+ }, {
  "type": "m",
- "url": "https://sun1-23.u...aed/wLQtK-rGz0Y.jpg",
  "width": 117,
  "height": 130
  }, {
  "type": "o",
- "url": "https://sun1-17.u...af1/G1p05A09kto.jpg",
  "width": 130,
  "height": 145
  }, {
  "type": "p",
- "url": "https://sun1-30.u...af2/eH9r0JRJR-c.jpg",
  "width": 200,
  "height": 223
  }, {
  "type": "q",
- "url": "https://sun1-25.u...af3/FPLEiOMmnpQ.jpg",
  "width": 320,
  "height": 357
  }, {
  "type": "r",
- "url": "https://sun1-20.u...af4/iEL56bGQqVo.jpg",
  "width": 510,
  "height": 568
  }, {
- "type": "s",
- "url": "https://sun1-17.u...aec/0kBHvSk0QGc.jpg",
- "width": 67,
- "height": 75
- }, {
  "type": "x",
- "url": "https://sun1-89.u...aee/qztqo860ME8.jpg",
  "width": 542,
  "height": 604
  }, {
  "type": "y",
- "url": "https://sun1-87.u...aef/Y7HOwS3fEpQ.jpg",
  "width": 724,
  "height": 807
  }, {
  "type": "z",
- "url": "https://sun1-17.u...af0/Mso57zMjIBk.jpg",
  "width": 829,
  "height": 924
  }],

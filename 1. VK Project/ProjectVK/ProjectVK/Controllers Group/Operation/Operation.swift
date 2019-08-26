@@ -154,36 +154,36 @@ class FetchNewsDataOperation: AsyncOperation {
                 
                 switch items[i].type {
                 case "photo":
-                    let countPhotos = items[i].photos.items[0].sizes.count
-                    news.photo = items[i].photos.items[0].sizes[countPhotos - 2].url
+                    let index = getIndexSizes(items[i].photos.items[0].sizes)
+                    news.photo = items[i].photos.items[0].sizes[index].url
                     news.postText = items[i].text
                     news.likes = items[i].photos.items[0].likes.count
                     news.comments = items[i].photos.items[0].comments.count
                     
-                    let imageHeight = items[i].photos.items[0].sizes[countPhotos - 2].height
-                    let imageWidth = items[i].photos.items[0].sizes[countPhotos - 2].width
+                    let imageHeight = items[i].photos.items[0].sizes[index].height
+                    let imageWidth = items[i].photos.items[0].sizes[index].width
                     let aspectRatio = Double(imageHeight) / Double(imageWidth)
                     news.photoAspectRatio = aspectRatio
-                    
+                    print(items[i].photos.items[0].sizes[index].type)
                 case "post":
                     news.postText = String(items[i].text)
                     if items[i].attachments.count != 0 {
                         news.postText = String(items[i].text)
                         if items[i].attachments[0].type == "photo" {
-                            let countPhotos = items[i].attachments[0].photo.sizes.count
-                            news.photo = items[i].attachments[0].photo.sizes[countPhotos - 2].url
+                            let index = getIndexSizes(items[i].attachments[0].photo.sizes)
+                            news.photo = items[i].attachments[0].photo.sizes[index].url
                             
-                            let imageHeight = items[i].attachments[0].photo.sizes[countPhotos - 2].height
-                            let imageWidth = items[i].attachments[0].photo.sizes[countPhotos - 2].width
+                            let imageHeight = items[i].attachments[0].photo.sizes[index].height
+                            let imageWidth = items[i].attachments[0].photo.sizes[index].width
                             let aspectRatio = Double(imageHeight) / Double(imageWidth)
                             news.photoAspectRatio = aspectRatio
                             
                         } else if items[i].attachments[0].type == "doc" {
                             news.postText = String(items[i].text)
-                            let indexSizes = items[i].attachments[0].doc.preview.photo.sizes.count
-                            news.photo = items[i].attachments[0].doc.preview.photo.sizes[indexSizes - 2].src
-                            let imageHeight = items[i].attachments[0].doc.preview.photo.sizes[indexSizes - 2].height
-                            let imageWidth = items[i].attachments[0].doc.preview.photo.sizes[indexSizes - 2].width
+                            let index = getIndexSizes(items[i].attachments[0].doc.preview.photo.sizes)
+                            news.photo = items[i].attachments[0].doc.preview.photo.sizes[index].src
+                            let imageHeight = items[i].attachments[0].doc.preview.photo.sizes[index].height
+                            let imageWidth = items[i].attachments[0].doc.preview.photo.sizes[index].width
                             let aspectRatio = Double(imageHeight) / Double(imageWidth)
                             news.photoAspectRatio = aspectRatio
                             
@@ -194,9 +194,10 @@ class FetchNewsDataOperation: AsyncOperation {
                             news.postText = String(items[i].text + "\n"  + items[i].attachments[0].link.title + "\n" + items[i].attachments[0].link.description)
                             let indexSizes = items[i].attachments[0].link.photo.sizes.count
                             if indexSizes != 0 {
-                                news.photo = items[i].attachments[0].link.photo.sizes[indexSizes - 2].url
-                                let imageHeight = items[i].attachments[0].link.photo.sizes[indexSizes - 2].height
-                                let imageWidth = items[i].attachments[0].link.photo.sizes[indexSizes - 2].width
+                                let index = getIndexSizes(items[i].attachments[0].link.photo.sizes)
+                                news.photo = items[i].attachments[0].link.photo.sizes[index].url
+                                let imageHeight = items[i].attachments[0].link.photo.sizes[index].height
+                                let imageWidth = items[i].attachments[0].link.photo.sizes[index].width
                                 let aspectRatio = Double(imageHeight) / Double(imageWidth)
                                 news.photoAspectRatio = aspectRatio
                             }
@@ -255,6 +256,35 @@ class FetchNewsDataOperation: AsyncOperation {
             self.state = .finished
         }
         
+        func getIndexSizes(_ array: Array<Size>) -> Int {
+            var index = 0
+            
+            for i in 0..<array.count {
+                let type = array[i].type
+                if type == "s" {
+                    index = i
+                } else if type == "m" {
+                    index = i
+                } else if type == "o" {
+                    index = i
+                } else if type == "p" {
+                    index = i
+                } else if type == "q" {
+                    index = i
+                } else if type == "r" {
+                    index = i
+                } else if type == "w" {
+                    index = i
+                } else if type == "x" {
+                    index = i
+                } else if type == "y" {
+                    index = i
+                } else if type == "z" {
+                    index = i
+                }
+            }
+            return index
+        }
         
     }
     

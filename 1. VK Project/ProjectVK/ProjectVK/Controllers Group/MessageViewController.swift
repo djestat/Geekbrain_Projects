@@ -263,3 +263,9 @@ extension MessageViewController: UITableViewDataSource {
 extension MessageViewController: UITableViewDelegate {
     
 }
+
+extension MessageViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        
+    }
+}
