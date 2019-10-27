@@ -787,6 +787,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fm0-GJ-7zr"/>
                     </view>
+                    <navigationItem key="navigationItem" id="MnH-hk-7e8"/>
                     <connections>
                         <outlet property="messageSuperView" destination="dEG-6O-zt1" id="Yns-B3-8WH"/>
                         <outlet property="messageTextField" destination="s6c-x0-lfN" id="tCp-kN-Y3S"/>
@@ -888,6 +889,7 @@
                             <outlet property="delegate" destination="4Vf-kZ-QAc" id="xQc-aC-MmV"/>
                         </connections>
                     </collectionView>
+                    <navigationItem key="navigationItem" id="jYc-mj-rSx"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6DS-yd-ogW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -937,6 +939,7 @@
                             <outlet property="delegate" destination="qmR-UA-MMl" id="KLa-qr-ZBq"/>
                         </connections>
                     </collectionView>
+                    <navigationItem key="navigationItem" id="LSf-la-BUU"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hdy-yd-jLd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -999,6 +1002,7 @@
                             </tableViewCell>
                         </prototypes>
                     </tableView>
+                    <navigationItem key="navigationItem" id="AvO-0y-u48"/>
                     <connections>
                         <outlet property="searchBar" destination="JjS-OO-CFd" id="ePD-CP-lwU"/>
                     </connections>
