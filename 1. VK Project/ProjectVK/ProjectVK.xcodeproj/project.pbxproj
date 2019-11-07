@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1D1919E5EA5548961D8DFEB4 /* Pods_ProjectVK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA46B2D910E83BB215F82517 /* Pods_ProjectVK.framework */; };
+		CE080E8C2374AFE0002D710F /* InterfaceColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE080E8B2374AFE0002D710F /* InterfaceColor.swift */; };
 		CE08E76422AC3C8E0087FD13 /* RealmProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE08E76322AC3C8E0087FD13 /* RealmProvider.swift */; };
 		CE20760E22FB731C00CC0B7E /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE20760D22FB731C00CC0B7E /* Messages.swift */; };
 		CE2914942291B9BD003A86B2 /* VKLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2914932291B9BD003A86B2 /* VKLoginViewController.swift */; };
@@ -53,6 +54,7 @@
 /* Begin PBXFileReference section */
 		6953169940E4749696549195 /* Pods-ProjectVK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectVK.debug.xcconfig"; path = "Target Support Files/Pods-ProjectVK/Pods-ProjectVK.debug.xcconfig"; sourceTree = "<group>"; };
 		81C8ADCFDCED6E798569FFB5 /* Pods-ProjectVK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectVK.release.xcconfig"; path = "Target Support Files/Pods-ProjectVK/Pods-ProjectVK.release.xcconfig"; sourceTree = "<group>"; };
+		CE080E8B2374AFE0002D710F /* InterfaceColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceColor.swift; sourceTree = "<group>"; };
 		CE08E76322AC3C8E0087FD13 /* RealmProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmProvider.swift; sourceTree = "<group>"; };
 		CE20760D22FB731C00CC0B7E /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
 		CE2914912291AC4F003A86B2 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -120,6 +122,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		CE080E8A2374AFA8002D710F /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				CE080E8B2374AFE0002D710F /* InterfaceColor.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		CE08E76222AC3BCC0087FD13 /* Realm */ = {
 			isa = PBXGroup;
 			children = (
@@ -164,6 +174,7 @@
 		CE8EF5C6225897870015EC00 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CE080E8A2374AFA8002D710F /* UI */,
 				CEB75529224F9B5000E5A718 /* Main.storyboard */,
 				CEB7552C224F9B5200E5A718 /* Assets.xcassets */,
 				CEB7552E224F9B5200E5A718 /* LaunchScreen.storyboard */,
@@ -410,6 +421,7 @@
 				CEA18FAE22859C8C00A25FD6 /* FriendsBigPhotoCollectionViewController.swift in Sources */,
 				CED0A49C22C1663300C8724E /* ChatCell.swift in Sources */,
 				CE8EF5CC2258AB2C0015EC00 /* FriendsViewController.swift in Sources */,
+				CE080E8C2374AFE0002D710F /* InterfaceColor.swift in Sources */,
 				CE08E76422AC3C8E0087FD13 /* RealmProvider.swift in Sources */,
 				CE2914942291B9BD003A86B2 /* VKLoginViewController.swift in Sources */,
 				CEA6147D225BD7C40012F4F6 /* FriendsPhotoCell.swift in Sources */,

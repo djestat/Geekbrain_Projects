@@ -243,16 +243,16 @@ extension MessageViewController: UITableViewDataSource {
         
         if messages[indexPath.row].fromID == Session.authData.userid {
             cell.messageTextLabel.backgroundColor = .clear
-            cell.messageView.backgroundColor = #colorLiteral(red: 0.1215686275, green: 0.6784313725, blue: 0.9215686275, alpha: 1)
+            cell.messageView.backgroundColor = .chatMyMessageBackgroundColor
             cell.messageTextLabel.textAlignment = .right
             cell.messageView.transform = CGAffineTransform(translationX: offset, y: 0)
         } else {
             cell.messageTextLabel.backgroundColor = .clear
-            cell.messageView.backgroundColor = #colorLiteral(red: 0, green: 0.8167479038, blue: 0.2984552681, alpha: 1)
+            cell.messageView.backgroundColor = .chatSenderMessageBackgroundColor
             cell.messageTextLabel.textAlignment = .left
             cell.messageView.transform = CGAffineTransform(translationX: -offset, y: 0)
         }
-        cell.contentView.backgroundColor = #colorLiteral(red: 0, green: 0.4982398152, blue: 0.8465595841, alpha: 1)
+        cell.contentView.backgroundColor = .chatBackgroundColor
         //Revert Table for message listing
         cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
         return cell
