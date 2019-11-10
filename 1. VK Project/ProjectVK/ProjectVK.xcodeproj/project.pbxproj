@@ -14,6 +14,8 @@
 		CE26442423784C5A0008DE33 /* FriendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE26442323784C5A0008DE33 /* FriendModel.swift */; };
 		CE26442623784EB30008DE33 /* VKAPIAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE26442523784EB30008DE33 /* VKAPIAdapter.swift */; };
 		CE264428237851D50008DE33 /* GroupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE264427237851D50008DE33 /* GroupModel.swift */; };
+		CE26442B23786F510008DE33 /* GroupCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE26442A23786F510008DE33 /* GroupCellModel.swift */; };
+		CE26442D23786F900008DE33 /* CellModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE26442C23786F900008DE33 /* CellModelFactory.swift */; };
 		CE2914942291B9BD003A86B2 /* VKLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2914932291B9BD003A86B2 /* VKLoginViewController.swift */; };
 		CE2914952291CAAB003A86B2 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2914912291AC4F003A86B2 /* WebKit.framework */; };
 		CE2914982291DAEA003A86B2 /* VKAPIRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2914972291DAEA003A86B2 /* VKAPIRequests.swift */; };
@@ -63,6 +65,8 @@
 		CE26442323784C5A0008DE33 /* FriendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendModel.swift; sourceTree = "<group>"; };
 		CE26442523784EB30008DE33 /* VKAPIAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKAPIAdapter.swift; sourceTree = "<group>"; };
 		CE264427237851D50008DE33 /* GroupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupModel.swift; sourceTree = "<group>"; };
+		CE26442A23786F510008DE33 /* GroupCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCellModel.swift; sourceTree = "<group>"; };
+		CE26442C23786F900008DE33 /* CellModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellModelFactory.swift; sourceTree = "<group>"; };
 		CE2914912291AC4F003A86B2 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		CE2914932291B9BD003A86B2 /* VKLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKLoginViewController.swift; sourceTree = "<group>"; };
 		CE2914972291DAEA003A86B2 /* VKAPIRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKAPIRequests.swift; sourceTree = "<group>"; };
@@ -162,6 +166,15 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		CE26442923786F210008DE33 /* CellModel */ = {
+			isa = PBXGroup;
+			children = (
+				CE26442C23786F900008DE33 /* CellModelFactory.swift */,
+				CE26442A23786F510008DE33 /* GroupCellModel.swift */,
+			);
+			path = CellModel;
+			sourceTree = "<group>";
+		};
 		CE2914902291AC4E003A86B2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -225,6 +238,7 @@
 		CEA61482225BE4D90012F4F6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				CE26442923786F210008DE33 /* CellModel */,
 				CEA6147A225BD7750012F4F6 /* FriendsCell.swift */,
 				CEA6147C225BD7C40012F4F6 /* FriendsPhotoCell.swift */,
 				CEA18FAF22859D2100A25FD6 /* FriendsBigPhotoCell.swift */,
@@ -457,11 +471,13 @@
 				CE598CDD22FC411800602F38 /* MessageCell.swift in Sources */,
 				CE20760E22FB731C00CC0B7E /* Messages.swift in Sources */,
 				CEED578622C0074400227C7A /* ChatViewController.swift in Sources */,
+				CE26442D23786F900008DE33 /* CellModelFactory.swift in Sources */,
 				CEE7AC2B2287126700C0668D /* CustomAnimator.swift in Sources */,
 				CE8EF5CE2258AB410015EC00 /* GroupsViewController.swift in Sources */,
 				CE2914982291DAEA003A86B2 /* VKAPIRequests.swift in Sources */,
 				CEA61484225BE7BB0012F4F6 /* Profiles.swift in Sources */,
 				CEED578822C00C8B00227C7A /* Chats.swift in Sources */,
+				CE26442B23786F510008DE33 /* GroupCellModel.swift in Sources */,
 				CED6D46322BD6E7000479358 /* VKResponse.swift in Sources */,
 				CEA6147F225BDA620012F4F6 /* GroupsCell.swift in Sources */,
 				CE65CF582265271700D5221A /* LikeControl.swift in Sources */,

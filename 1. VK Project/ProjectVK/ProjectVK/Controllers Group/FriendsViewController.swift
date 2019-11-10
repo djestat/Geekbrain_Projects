@@ -15,10 +15,9 @@ class FriendsViewController: UITableViewController {
 //    let vkRequest = VKAPIRequests()
 //    var resultNotificationToken: NotificationToken?
 //    private var friendsList = [REALMFriendProfile]()
-    let vkAdapter = VKAPIAdapter()
+    let vkapiAdapter = VKAPIAdapter()
     private var friendsList = [FriendProfile]()
 
-    
     var sectionTitle = [String]()
     var sectionDictionary = [String: [FriendProfile]]()
     var searchingSectionTitle = [String]()
@@ -37,7 +36,7 @@ class FriendsViewController: UITableViewController {
                 print(error.localizedDescription)
             }
         }*/
-        vkAdapter.getFriends { [weak self] friends in
+        vkapiAdapter.getFriends { [weak self] friends in
             self?.friendsList = friends
             self?.sectionArrayPrepare()
         }

@@ -25,13 +25,7 @@ final class VKAPIAdapter {
         realmNotificationTokens = friendList.observe { [weak self] change in
             guard let self = self else { return }
             switch change {
-            /*case .initial(let realmFriends):
-                var friends: [FriendProfile] = []
-                for friend in realmFriends {
-                    friends.append(self.friends(from: friend))
-                }
-                self.realmNotificationTokens?.invalidate()
-                completion(friends)*/
+           
             case .update(let realmFriends, _, _, _):
                 var friends: [FriendProfile] = []
                 for friend in realmFriends {
@@ -41,8 +35,13 @@ final class VKAPIAdapter {
                 completion(friends)
             case .error(let error):
                 print(error.localizedDescription)
-            case .initial(_):
-                break
+            case .initial(let realmFriends):
+                var friends: [FriendProfile] = []
+                for friend in realmFriends {
+                    friends.append(self.friends(from: friend))
+                }
+                self.realmNotificationTokens?.invalidate()
+                completion(friends)
             }
         }
         
