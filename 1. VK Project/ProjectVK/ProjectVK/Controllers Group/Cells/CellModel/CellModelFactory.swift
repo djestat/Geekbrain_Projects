@@ -15,8 +15,10 @@ final class CellModelFactory {
     }
     
     private func viewModel(from group: REALMGroup) -> GroupCellModel {
-        let groupName = String(group.name)
-        let groupPhoto = String(group.image)
-        return GroupCellModel(groupName: groupName, groupPhoto: groupPhoto)
+        let id = group.id
+        let groupName = group.name
+        let groupPhoto = group.image
+        let isMember = group.isMember
+        return GroupCellModel(id: id, groupName: groupName, groupPhoto: groupPhoto, isMember: isMember)
     }
 }

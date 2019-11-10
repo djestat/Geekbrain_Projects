@@ -9,6 +9,8 @@
 import UIKit
 
 struct GroupCellModel {
+    let id: Int
     let groupName: String
     let groupPhoto: String
+    let isMember: Int
 }
