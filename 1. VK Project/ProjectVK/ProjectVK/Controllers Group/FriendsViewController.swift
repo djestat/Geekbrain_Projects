@@ -12,9 +12,12 @@ import RealmSwift
 
 class FriendsViewController: UITableViewController {
     
-    let vkRequest = VKAPIRequests()
-    var resultNotificationToken: NotificationToken?
+//    let vkRequest = VKAPIRequests()
+//    var resultNotificationToken: NotificationToken?
+//    private var friendsList = [REALMFriendProfile]()
+    let vkAdapter = VKAPIAdapter()
     private var friendsList = [FriendProfile]()
+
     
     var sectionTitle = [String]()
     var sectionDictionary = [String: [FriendProfile]]()
@@ -26,20 +29,23 @@ class FriendsViewController: UITableViewController {
     
      // MARK: - View lifecycle
     override func viewWillAppear(_ animated: Bool) {
-        vkRequest.loadFriends { result in
+       /* vkRequest.loadFriends { result in
             switch result {
             case .success(let friendList):
                 RealmProvider.save(data: friendList)
             case .failure(let error):
                 print(error.localizedDescription)
             }
+        }*/
+        vkAdapter.getFriends { [weak self] friends in
+            self?.friendsList = friends
+            self?.sectionArrayPrepare()
         }
-        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.resultNotificationObjects()
+//        self.resultNotificationObjects()
 
         // Setup the SearchBar Controller
         searchController.searchResultsUpdater = self
@@ -51,7 +57,7 @@ class FriendsViewController: UITableViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        self.resultNotificationToken?.invalidate()
+//        self.resultNotificationToken?.invalidate()
     }
 
     // MARK: - Table view data source
@@ -178,10 +184,10 @@ class FriendsViewController: UITableViewController {
         for lastname in friendsList {
             let lastnameKey = String(lastname.lastname.prefix(1))
             if var lastnameValues = sectionDictionary[lastnameKey] {
-                lastnameValues.append(FriendProfile(id: lastname.id, name: lastname.name, lastname: lastname.lastname, avatarImage: lastname.avatarImage, online: lastname.online))
+                lastnameValues.append(FriendProfile(id: lastname.id, name: lastname.name, lastname: lastname.lastname, avatarGroupImage: lastname.avatarGroupImage, avatarImage: lastname.avatarImage, online: lastname.online))
                 sectionDictionary[lastnameKey] = lastnameValues
             } else {
-                sectionDictionary[lastnameKey] = [FriendProfile(id: lastname.id, name: lastname.name, lastname: lastname.lastname, avatarImage: lastname.avatarImage, online: lastname.online)]
+                sectionDictionary[lastnameKey] = [FriendProfile(id: lastname.id, name: lastname.name, lastname: lastname.lastname, avatarGroupImage: lastname.avatarGroupImage, avatarImage: lastname.avatarImage, online: lastname.online)]
             }
         }
         
@@ -208,10 +214,10 @@ class FriendsViewController: UITableViewController {
         for lastname in searchingFriendList {
             let lastnameKey = String(lastname.lastname.prefix(1))
             if var lastnameValues = searchingSectionDictionary[lastnameKey] {
-                lastnameValues.append(FriendProfile(id: lastname.id, name: lastname.name, lastname: lastname.lastname, avatarImage: lastname.avatarImage, online: lastname.online))
+                lastnameValues.append(FriendProfile(id: lastname.id, name: lastname.name, lastname: lastname.lastname, avatarGroupImage: lastname.avatarGroupImage, avatarImage: lastname.avatarImage, online: lastname.online))
                 searchingSectionDictionary[lastnameKey] = lastnameValues
             } else {
-                searchingSectionDictionary[lastnameKey] = [FriendProfile(id: lastname.id, name: lastname.name, lastname: lastname.lastname, avatarImage: lastname.avatarImage, online: lastname.online)]
+                searchingSectionDictionary[lastnameKey] = [FriendProfile(id: lastname.id, name: lastname.name, lastname: lastname.lastname, avatarGroupImage: lastname.avatarGroupImage, avatarImage: lastname.avatarImage, online: lastname.online)]
             }
         }
         
@@ -226,11 +232,11 @@ class FriendsViewController: UITableViewController {
     }
     
     //MARK: - REALM Function
-    
+    /*
     func resultNotificationObjects() {
         let realmConfig = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
         let realm = try! Realm(configuration: realmConfig)
-        let friendList = realm.objects(FriendProfile.self).filter("name != 'DELETED'")
+        let friendList = realm.objects(REALMFriendProfile.self).filter("name != 'DELETED'")
         resultNotificationToken = friendList.observe { [weak self] change in
             guard let self = self else { return }
             switch change {
@@ -247,7 +253,7 @@ class FriendsViewController: UITableViewController {
                 print(error.localizedDescription)
             }
         }
-    }
+    } */
     
 
 }

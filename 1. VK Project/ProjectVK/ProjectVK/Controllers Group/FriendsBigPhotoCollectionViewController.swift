@@ -13,7 +13,7 @@ private let reuseIdentifier = "Cell"
 
 class FriendsBigPhotoCollectionViewController: UICollectionViewController {
     
-    public var friendProfilePhoto: Results<FriendPhoto> = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(FriendPhoto.self)
+    public var friendProfilePhoto: Results<REALMFriendPhoto> = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(REALMFriendPhoto.self)
     public var indexPhoto = 0
 
     // MARK: - View lifecycle

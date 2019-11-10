@@ -15,7 +15,7 @@ class GroupsViewController: UITableViewController {
     let request = VKAPIRequests()
 //    var resultNotificationToken: NotificationToken?
     
-    var groupsList: Results<Group> = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(Group.self).filter("isMember == %i", 1)
+    var groupsList: Results<REALMGroup> = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(REALMGroup.self).filter("isMember == %i", 1)
     
     @IBOutlet weak var searchBar: UISearchBar! {
         didSet {
@@ -120,12 +120,12 @@ class GroupsViewController: UITableViewController {
 extension GroupsViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
-            groupsList = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(Group.self).filter("isMember == %i", 1)
+            groupsList = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(REALMGroup.self).filter("isMember == %i", 1)
             view.endEditing(true)
             tableView.reloadData()
             return
         }
-        let searchingGroup = RealmProvider.searchInGroup(Group.self, searchText).filter("isMember == %i", 1)
+        let searchingGroup = RealmProvider.searchInGroup(REALMGroup.self, searchText).filter("isMember == %i", 1)
         groupsList = searchingGroup
         tableView.reloadData()
     }

@@ -10,16 +10,16 @@ import Foundation
 import SwiftyJSON
 import RealmSwift
 
-class FriendProfile: Object {
+class REALMFriendProfile: Object {
     @objc dynamic var id: Int = 0
     @objc dynamic var name: String = ""
     @objc dynamic var lastname: String = ""
     @objc dynamic var avatarGroupImage: String = ""
     @objc dynamic var avatarImage: String = ""
     @objc dynamic var online: Int = 0
-    let photos = List<FriendPhoto>()
+    let photos = List<REALMFriendPhoto>()
     
-    convenience init(id: Int, name: String, lastname: String, avatarImage: String, online: Int, photos:[FriendPhoto] = []) {
+    convenience init(id: Int, name: String, lastname: String, avatarImage: String, online: Int, photos:[REALMFriendPhoto] = []) {
         self.init()
         self.id = id
         self.name = name
@@ -50,13 +50,13 @@ class FriendProfile: Object {
     
 }
 
-class FriendPhoto: Object {
+class REALMFriendPhoto: Object {
     @objc dynamic var id: Int = 0
     @objc dynamic var ownerid: Int = 0
     @objc dynamic var photo: String = ""
     @objc dynamic var likes: Int = 0
     @objc dynamic var isLiked: Int = 0
-    let owner = LinkingObjects(fromType: FriendProfile.self, property: "photos")
+    let owner = LinkingObjects(fromType: REALMFriendProfile.self, property: "photos")
     
     convenience init(id: Int, ownerid: Int, photo: String, likes: Int, isLiked: Int) {
         self.init()

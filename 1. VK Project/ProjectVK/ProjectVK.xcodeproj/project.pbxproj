@@ -11,6 +11,9 @@
 		CE080E8C2374AFE0002D710F /* InterfaceColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE080E8B2374AFE0002D710F /* InterfaceColor.swift */; };
 		CE08E76422AC3C8E0087FD13 /* RealmProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE08E76322AC3C8E0087FD13 /* RealmProvider.swift */; };
 		CE20760E22FB731C00CC0B7E /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE20760D22FB731C00CC0B7E /* Messages.swift */; };
+		CE26442423784C5A0008DE33 /* FriendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE26442323784C5A0008DE33 /* FriendModel.swift */; };
+		CE26442623784EB30008DE33 /* VKAPIAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE26442523784EB30008DE33 /* VKAPIAdapter.swift */; };
+		CE264428237851D50008DE33 /* GroupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE264427237851D50008DE33 /* GroupModel.swift */; };
 		CE2914942291B9BD003A86B2 /* VKLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2914932291B9BD003A86B2 /* VKLoginViewController.swift */; };
 		CE2914952291CAAB003A86B2 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2914912291AC4F003A86B2 /* WebKit.framework */; };
 		CE2914982291DAEA003A86B2 /* VKAPIRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2914972291DAEA003A86B2 /* VKAPIRequests.swift */; };
@@ -57,6 +60,9 @@
 		CE080E8B2374AFE0002D710F /* InterfaceColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceColor.swift; sourceTree = "<group>"; };
 		CE08E76322AC3C8E0087FD13 /* RealmProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmProvider.swift; sourceTree = "<group>"; };
 		CE20760D22FB731C00CC0B7E /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
+		CE26442323784C5A0008DE33 /* FriendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendModel.swift; sourceTree = "<group>"; };
+		CE26442523784EB30008DE33 /* VKAPIAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKAPIAdapter.swift; sourceTree = "<group>"; };
+		CE264427237851D50008DE33 /* GroupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupModel.swift; sourceTree = "<group>"; };
 		CE2914912291AC4F003A86B2 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		CE2914932291B9BD003A86B2 /* VKLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKLoginViewController.swift; sourceTree = "<group>"; };
 		CE2914972291DAEA003A86B2 /* VKAPIRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKAPIRequests.swift; sourceTree = "<group>"; };
@@ -138,6 +144,24 @@
 			path = Realm;
 			sourceTree = "<group>";
 		};
+		CE26442123784BA20008DE33 /* Adapter */ = {
+			isa = PBXGroup;
+			children = (
+				CE26442223784C0C0008DE33 /* Model */,
+				CE26442523784EB30008DE33 /* VKAPIAdapter.swift */,
+			);
+			path = Adapter;
+			sourceTree = "<group>";
+		};
+		CE26442223784C0C0008DE33 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CE26442323784C5A0008DE33 /* FriendModel.swift */,
+				CE264427237851D50008DE33 /* GroupModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		CE2914902291AC4E003A86B2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +174,7 @@
 		CE2914962291D964003A86B2 /* NetworkingService */ = {
 			isa = PBXGroup;
 			children = (
+				CE26442123784BA20008DE33 /* Adapter */,
 				CE2914972291DAEA003A86B2 /* VKAPIRequests.swift */,
 			);
 			path = NetworkingService;
@@ -409,9 +434,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEB1E11D224FB04D00991D1D /* LoginViewController.swift in Sources */,
+				CE264428237851D50008DE33 /* GroupModel.swift in Sources */,
+				CE26442423784C5A0008DE33 /* FriendModel.swift in Sources */,
 				CEEB4B9622EB9A3500D3DEB4 /* AsyncOperation.swift in Sources */,
 				CEFE5D582280CB690089E6B4 /* LoadingAnimatedView.swift in Sources */,
 				CE7208AB225D34980069A952 /* FriendsProfileController.swift in Sources */,
+				CE26442623784EB30008DE33 /* VKAPIAdapter.swift in Sources */,
 				CE33DAB3225E95B600B2389B /* GroupsFinderController.swift in Sources */,
 				CEA6147B225BD7750012F4F6 /* FriendsCell.swift in Sources */,
 				CEA61486225BE7D20012F4F6 /* Group.swift in Sources */,

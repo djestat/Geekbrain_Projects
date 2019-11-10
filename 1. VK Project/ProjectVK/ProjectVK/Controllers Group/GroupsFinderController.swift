@@ -19,7 +19,7 @@ class GroupsFinderController: UITableViewController {
     
     var searchingText = "Something"
     let request = VKAPIRequests()
-    public var groupList = [Group]()
+    public var groupList = [REALMGroup]()
     
     
     override func viewDidLoad() {
