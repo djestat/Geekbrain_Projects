@@ -12,7 +12,7 @@ import RealmSwift
 
 class GroupsViewController: UITableViewController {
     
-    let request = VKAPIRequests()
+    let request = VKAPIRequestsProxy()
 //    var resultNotificationToken: NotificationToken?
     
     var groupsList: Results<REALMGroup> = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(REALMGroup.self).filter("isMember == %i", 1)

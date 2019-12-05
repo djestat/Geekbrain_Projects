@@ -44,6 +44,7 @@
 		CEB7552B224F9B5000E5A718 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEB75529224F9B5000E5A718 /* Main.storyboard */; };
 		CEB7552D224F9B5200E5A718 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEB7552C224F9B5200E5A718 /* Assets.xcassets */; };
 		CEB75530224F9B5200E5A718 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEB7552E224F9B5200E5A718 /* LaunchScreen.storyboard */; };
+		CEC79AD12381ED0900CA163C /* Proxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC79AD02381ED0900CA163C /* Proxy.swift */; };
 		CED0A49C22C1663300C8724E /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED0A49B22C1663300C8724E /* ChatCell.swift */; };
 		CED6D46322BD6E7000479358 /* VKResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED6D46222BD6E7000479358 /* VKResponse.swift */; };
 		CEE7AC2B2287126700C0668D /* CustomAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE7AC2A2287126700C0668D /* CustomAnimator.swift */; };
@@ -97,6 +98,7 @@
 		CEB7552C224F9B5200E5A718 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEB7552F224F9B5200E5A718 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CEB75531224F9B5200E5A718 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEC79AD02381ED0900CA163C /* Proxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Proxy.swift; sourceTree = "<group>"; };
 		CED0A49B22C1663300C8724E /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
 		CED6D46222BD6E7000479358 /* VKResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKResponse.swift; sourceTree = "<group>"; };
 		CEE7AC2A2287126700C0668D /* CustomAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimator.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 			children = (
 				CE26442123784BA20008DE33 /* Adapter */,
 				CE2914972291DAEA003A86B2 /* VKAPIRequests.swift */,
+				CEC79AD02381ED0900CA163C /* Proxy.swift */,
 			);
 			path = NetworkingService;
 			sourceTree = "<group>";
@@ -483,6 +486,7 @@
 				CE65CF582265271700D5221A /* LikeControl.swift in Sources */,
 				CEACD2C8226B958F003400B4 /* NewsViewController.swift in Sources */,
 				CEA87625229B28C7000CAC9A /* News.swift in Sources */,
+				CEC79AD12381ED0900CA163C /* Proxy.swift in Sources */,
 				CEE7AC2F228731B100C0668D /* CustomNavigationController.swift in Sources */,
 				CEE938372290483A005E3E08 /* Session.swift in Sources */,
 				CEACD2C6226B9549003400B4 /* NewsCell.swift in Sources */,

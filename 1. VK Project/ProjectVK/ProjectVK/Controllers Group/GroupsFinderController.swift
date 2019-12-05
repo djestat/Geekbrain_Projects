@@ -18,7 +18,7 @@ class GroupsFinderController: UITableViewController {
     }
     
     var searchingText = "Something"
-    let request = VKAPIRequests()
+    let request = VKAPIRequestsProxy()
     public var groupList = [REALMGroup]()
     
     
