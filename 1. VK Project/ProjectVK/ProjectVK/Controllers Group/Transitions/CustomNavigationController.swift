@@ -32,7 +32,6 @@ class CustomNavigationController: UINavigationController, UINavigationController
     
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
-        
         switch operation {
         case .push:
             return PushAnimator()
@@ -44,7 +43,6 @@ class CustomNavigationController: UINavigationController, UINavigationController
     }
     
     func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        
         
         return interactiveTransition.hasStarted ? interactiveTransition : nil
     }
