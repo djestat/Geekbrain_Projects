@@ -47,15 +47,15 @@ class MessagesResponse {
     let count: Int
     let items: [MessageItems]
     let conversations: [Conversations]
-    let profiles: [FriendProfile]
-    let groups: [Group]
+    let profiles: [REALMFriendProfile]
+    let groups: [REALMGroup]
     
     init(_ json: JSON) {
         self.count = json["count"].intValue
         self.items = json["items"].arrayValue.map { MessageItems($0) }
         self.conversations = json["conversations"].arrayValue.map { Conversations($0) }
-        self.profiles = json["profiles"].arrayValue.map { FriendProfile($0) }
-        self.groups = json["groups"].arrayValue.map { Group($0) }
+        self.profiles = json["profiles"].arrayValue.map { REALMFriendProfile($0) }
+        self.groups = json["groups"].arrayValue.map { REALMGroup($0) }
     }
 }
 

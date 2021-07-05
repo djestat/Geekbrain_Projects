@@ -60,11 +60,11 @@ class RealmProvider {
     static func deletGroup(objectID: Int) {
         let realm = try! Realm(configuration: deletIfMigration)
         try! realm.write {
-            let deleteData = realm.objects(Group.self).filter("id == %i", objectID).first
+            let deleteData = realm.objects(REALMGroup.self).filter("id == %i", objectID).first
             realm.delete(deleteData!)
         }
         print(realm.configuration.fileURL!)
-        print("DELETE DATA INTO REALM NOW HERE!! TYPE------>\(Group.self)<------")
+        print("DELETE DATA INTO REALM NOW HERE!! TYPE------>\(REALMGroup.self)<------")
     }
     
 }

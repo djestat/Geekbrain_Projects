@@ -18,7 +18,7 @@ class FriendsProfileController: UICollectionViewController {
     public var friendProfileUserId: Int = 1
     public var friendProfileName = ""
     public var friendProfileLastname = ""
-    public var friendProfilePhoto: Results<FriendPhoto> = try! Realm().objects(FriendPhoto.self)
+    public var friendProfilePhoto: Results<REALMFriendPhoto> = try! Realm().objects(REALMFriendPhoto.self)
     
     // MARK: - View lifecycle
     
@@ -99,7 +99,7 @@ class FriendsProfileController: UICollectionViewController {
     func resultNotificationObjects() {
         let realmConfig = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
         let realm = try! Realm(configuration: realmConfig)
-        let friendPhotos = realm.objects(FriendPhoto.self).filter("ownerid = \(friendProfileUserId)")
+        let friendPhotos = realm.objects(REALMFriendPhoto.self).filter("ownerid = \(friendProfileUserId)")
         resultNotificationToken = friendPhotos.observe { [weak self] change in
             guard let self = self else { return }
             switch change {

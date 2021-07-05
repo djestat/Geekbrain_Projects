@@ -38,14 +38,14 @@ class ChatsRealm: Object {
 class Chats {
     let count: Int
     let items: [Item]
-    let profiles: [FriendProfile]
-    let groups: [Group]
+    let profiles: [REALMFriendProfile]
+    let groups: [REALMGroup]
     
     init(_ json: JSON) {
         self.count = json["count"].intValue
         self.items = json["items"].arrayValue.map { Item($0) }
-        self.profiles = json["profiles"].arrayValue.map { FriendProfile($0) }
-        self.groups = json["groups"].arrayValue.map { Group($0) }
+        self.profiles = json["profiles"].arrayValue.map { REALMFriendProfile($0) }
+        self.groups = json["groups"].arrayValue.map { REALMGroup($0) }
     }
 }
 

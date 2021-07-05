@@ -27,7 +27,7 @@ class FetchDataOperation: AsyncOperation {
 }
 
 class ParseDataOperation: AsyncOperation {
-    var groupList = [Group]()
+    var groupList = [REALMGroup]()
     
     override func main() {
         guard let fetchDataOps = dependencies.filter({ $0 is FetchDataOperation }).first as? FetchDataOperation else { return }
@@ -36,7 +36,7 @@ class ParseDataOperation: AsyncOperation {
         let data = fetchDataOps.data as Any
         print("🔥 OPERATIONS PDO \(data)")
         let json = JSON(data)
-        self.groupList = json["response"]["items"].arrayValue.map { Group($0) }
+        self.groupList = json["response"]["items"].arrayValue.map { REALMGroup($0) }
         print("🔥 OPERATIONS PDO \(groupList.count)")
         self.state = .finished
     }
@@ -68,7 +68,7 @@ class DisplayDataOperation: AsyncOperation {
         guard (dependencies.first(where: { $0 is SaveToRealmOperation }) as? SaveToRealmOperation) != nil
             else { return }
         
-        let groups2 = RealmProvider.read(Group.self).filter("isMember == %i", 1)
+        let groups2 = RealmProvider.read(REALMGroup.self).filter("isMember == %i", 1)
         controller.groupsList = groups2
         controller.tableView.reloadData()
         
@@ -84,8 +84,8 @@ class DisplayDataOperation: AsyncOperation {
 class FetchNewsDataOperation: AsyncOperation {
     let vkRequest = VKAPIRequests()
     var items = [ResponseItem]()
-    var friendList = [FriendProfile]()
-    var groupList = [Group]()
+    var friendList = [REALMFriendProfile]()
+    var groupList = [REALMGroup]()
     var nextList = ""
     
     override func main() {

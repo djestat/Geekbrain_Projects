@@ -12,10 +12,13 @@ import RealmSwift
 
 class GroupsViewController: UITableViewController {
     
-    let request = VKAPIRequests()
+    let request = VKAPIRequestsProxy()
 //    var resultNotificationToken: NotificationToken?
     
-    var groupsList: Results<Group> = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(Group.self).filter("isMember == %i", 1)
+    var groupsList: Results<REALMGroup> = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(REALMGroup.self).filter("isMember == %i", 1)
+    
+    private let viewModelFactory = CellModelFactory()
+    private var viewModels: [GroupCellModel] = []
     
     @IBOutlet weak var searchBar: UISearchBar! {
         didSet {
@@ -40,10 +43,10 @@ class GroupsViewController: UITableViewController {
         ddo.addDependency(sdo)
         OperationQueue.main.addOperations([fdo, pdo, sdo, ddo], waitUntilFinished: false)
 
+        viewModelRelease()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-//        resultNotificationToken?.invalidate()
         KingfisherManager.shared.cache.clearMemoryCache()
     }
 
@@ -57,15 +60,15 @@ class GroupsViewController: UITableViewController {
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return groupsList.count
+        return viewModels.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupsCell.reuseID, for: indexPath) as? GroupsCell else { fatalError("Cell cannot be dequeued") }
         
-        cell.groupName.text = groupsList[indexPath.row].name
-        cell.groupPhoto.kf.setImage(with: URL(string: groupsList[indexPath.row].image))
+        //Factory
+        cell.configure(with: viewModels[indexPath.row])
         
         return cell
     }
@@ -74,7 +77,7 @@ class GroupsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let groupId = groupsList[indexPath.row].id
+            let groupId = viewModels[indexPath.row].id
             request.leaveGroup(groupId)
             RealmProvider.deletGroup(objectID: groupId)
             print("Leave Group with ID \(groupId).")
@@ -91,43 +94,25 @@ class GroupsViewController: UITableViewController {
         return [deleteButton]
     }
     
-    //MARK: - REALM Function
-    /*
-    func resultNotificationObjects() {
-        let realmConfig = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
-        let realm = try! Realm(configuration: realmConfig)
-        let groups = realm.objects(Group.self).filter("isMember == %i", 1)
-        resultNotificationToken = groups.observe { [weak self] change in
-            guard let self = self else { return }
-            switch change {
-            case .initial(let collection):
-                self.groupsList = collection
-                self.tableView.reloadData()
-                print("INITIAAAAAAAAALLLLLLLLLLLLLL")
-            case .update(let collection, deletions: let deletion, insertions: let insertions, modifications: let modification):
-                self.groupsList = collection
-                self.tableView.reloadData()
-                print("UPDAAAAAAAAAATEEEEEE")
-                print("\(collection.count) , \(deletion.count), \(insertions.count), \(modification.count)")
-            case .error(let error):
-                print(error.localizedDescription)
-            }
-        }
+    //MARK: - Factory Function
+    
+    func viewModelRelease() {
+        viewModels = viewModelFactory.constructGroupViewModels(from: Array(groupsList))
+        tableView.reloadData()
     }
-    */
 }
 
 extension GroupsViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
-            groupsList = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(Group.self).filter("isMember == %i", 1)
+            groupsList = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true)).objects(REALMGroup.self).filter("isMember == %i", 1)
             view.endEditing(true)
-            tableView.reloadData()
+            viewModelRelease()
             return
         }
-        let searchingGroup = RealmProvider.searchInGroup(Group.self, searchText).filter("isMember == %i", 1)
+        let searchingGroup = RealmProvider.searchInGroup(REALMGroup.self, searchText).filter("isMember == %i", 1)
         groupsList = searchingGroup
-        tableView.reloadData()
+        viewModelRelease()
     }
     
 }

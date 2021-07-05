@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class GroupsCell: UITableViewCell {
     
@@ -24,6 +25,11 @@ class GroupsCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func configure(with viewModel: GroupCellModel) {
+        groupName.text = viewModel.groupName
+        groupPhoto.kf.setImage(with: URL(string: viewModel.groupPhoto))
     }
 
 }

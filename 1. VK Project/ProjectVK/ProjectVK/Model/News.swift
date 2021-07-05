@@ -55,14 +55,14 @@ class NewsRealm: Object {
 
 class News {
     let items: [ResponseItem]
-    let profiles: [FriendProfile]
-    let groups: [Group]
+    let profiles: [REALMFriendProfile]
+    let groups: [REALMGroup]
     let nextFrom: String
     
     init(_ json: JSON) {
         self.items = json["items"].arrayValue.map { ResponseItem($0) }
-        self.profiles = json["profiles"].arrayValue.map { FriendProfile($0) }
-        self.groups = json["groups"].arrayValue.map { Group($0) }
+        self.profiles = json["profiles"].arrayValue.map { REALMFriendProfile($0) }
+        self.groups = json["groups"].arrayValue.map { REALMGroup($0) }
         self.nextFrom = json["next_from"].stringValue
     }
 }

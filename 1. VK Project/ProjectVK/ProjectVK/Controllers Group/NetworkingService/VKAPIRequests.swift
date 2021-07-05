@@ -18,7 +18,7 @@ class VKAPIRequests {
     
     // MARK: - Group
     // MARK: - Load VKgroup
-    public func userGroups(completion: ((Swift.Result<[Group], Error>) -> Void)? = nil) {
+    public func userGroups(completion: ((Swift.Result<[REALMGroup], Error>) -> Void)? = nil) {
         
         let baseURL = "https://api.vk.com"
         let path = "/method/groups.get"
@@ -34,7 +34,7 @@ class VKAPIRequests {
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                let groupList = json["response"]["items"].arrayValue.map { Group($0) }
+                let groupList = json["response"]["items"].arrayValue.map { REALMGroup($0) }
                 completion?(.success(groupList))
             case .failure(let error):
                 completion?(.failure(error))
@@ -68,7 +68,7 @@ class VKAPIRequests {
     }
     
     // MARK: - Search VKgroup
-    public func findGroups(_ searchingGroup: String, completion: ((Swift.Result<[Group], Error>) -> Void)? = nil) {
+    public func findGroups(_ searchingGroup: String, completion: ((Swift.Result<[REALMGroup], Error>) -> Void)? = nil) {
         
         let baseURL = "https://api.vk.com"
         let path = "/method/groups.search"
@@ -85,7 +85,7 @@ class VKAPIRequests {
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                let groupList = json["response"]["items"].arrayValue.map { Group($0) }
+                let groupList = json["response"]["items"].arrayValue.map { REALMGroup($0) }
                 DispatchQueue.main.async {
                     completion?(.success(groupList))
                 }
@@ -148,7 +148,7 @@ class VKAPIRequests {
     
     // MARK: - Users
     // MARK: - Load VKfriends
-    public func loadFriends(completion: ((Swift.Result<[FriendProfile], Error>) -> Void)? = nil) {
+    public func loadFriends(completion: ((Swift.Result<[REALMFriendProfile], Error>) -> Void)? = nil) {
         
         let baseURL = "https://api.vk.com"
         let path = "/method/friends.get"
@@ -163,7 +163,7 @@ class VKAPIRequests {
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                let friendList = json["response"]["items"].arrayValue.map { FriendProfile($0) }
+                let friendList = json["response"]["items"].arrayValue.map { REALMFriendProfile($0) }
                 completion?(.success(friendList))
             case .failure(let error):
                 completion?(.failure(error))
@@ -172,7 +172,7 @@ class VKAPIRequests {
     }
     
     // MARK: - Load Friend photo
-    public func loadPhotos(_ userID: Int, completion: ((Swift.Result<[FriendPhoto], Error>) -> Void)? = nil) {
+    public func loadPhotos(_ userID: Int, completion: ((Swift.Result<[REALMFriendPhoto], Error>) -> Void)? = nil) {
 
         let baseURL = "https://api.vk.com"
         let path = "/method/photos.getAll"
@@ -190,7 +190,7 @@ class VKAPIRequests {
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                let photoList = json["response"]["items"].arrayValue.map { FriendPhoto($0) }
+                let photoList = json["response"]["items"].arrayValue.map { REALMFriendPhoto($0) }
                 completion?(.success(photoList))
             case .failure(let error):
                 completion?(.failure(error))

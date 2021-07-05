@@ -87,7 +87,6 @@ class PopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             }
             transitionContext.completeTransition(finished && !transitionContext.transitionWasCancelled)
         })
-        
-        
+
     }
 }
